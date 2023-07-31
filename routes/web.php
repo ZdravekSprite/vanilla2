@@ -37,5 +37,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/euros', [EuroController::class, 'index'])->name('euros');
+Route::post('/euroimport', [EuroController::class, 'import'])->name('euros.import');
 
 require __DIR__ . '/auth.php';

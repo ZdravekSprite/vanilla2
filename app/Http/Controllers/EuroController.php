@@ -6,6 +6,7 @@ use App\Models\Euro;
 use App\Http\Requests\StoreEuroRequest;
 use App\Http\Requests\UpdateEuroRequest;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class EuroController extends Controller
 {
@@ -14,11 +15,35 @@ class EuroController extends Controller
    */
   public function index()
   {
+    $selected = ['time', 'no1', 'no2', 'no3', 'no4', 'no5', 'bn1', 'bn2'];
+    $euros = Euro::select($selected)->get()->toArray();
     return Inertia::render('Euros', [
-      'euros' => [],
+      'euros' => $euros,
     ]);
   }
 
+  public function import(Request $request)
+  {
+    set_time_limit(0);
+    $fileName = $request->fileName;
+    $csvData = fopen(public_path('temp/' . $fileName), 'r');
+    $columns = ['time', 'no1', 'no2', 'no3', 'no4', 'no5', 'bn1', 'bn2'];
+    while (($data = fgetcsv($csvData, 555, ',')) !== false) {
+      $dataRow = array_combine($columns, $data);
+      if (!Euro::where('time', $dataRow['time'])->first()) {
+        Euro::insert([
+          'time' => $dataRow['time'],
+          'no1' => $dataRow['no1'],
+          'no2' => $dataRow['no2'],
+          'no3' => $dataRow['no3'],
+          'no4' => $dataRow['no4'],
+          'no5' => $dataRow['no5'],
+          'bn1' => $dataRow['bn1'],
+          'bn2' => $dataRow['bn2'],
+        ]);
+      }
+    }
+  }
   /**
    * Show the form for creating a new resource.
    */
