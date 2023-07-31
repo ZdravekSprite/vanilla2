@@ -69,3 +69,8 @@ npm install && npm run dev
 ```bash
 php artisan serve
 ```
+
+```bash
+git add . && git commit -am "v0002"
+git push
+```
