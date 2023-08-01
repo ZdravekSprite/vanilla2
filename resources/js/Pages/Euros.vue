@@ -12,8 +12,7 @@ defineProps<{
 const range = () =>
   Array(Math.ceil(50)).fill(1).map((x, y) => x + y);
 
-const shuffleArray = () => {
-  let array = range();
+const shuffleArray = (array:Array<number>) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     const temp = array[i];
@@ -23,23 +22,28 @@ const shuffleArray = () => {
   return array;
 }
 
-const rndNo = () => {
-  return Math.ceil(Math.random() * 50);
+const rndNo = (no:number) => {
+  return Math.ceil(Math.random() * no);
 };
 
-let rnd1 = rndNo();
-let rnd2 = rndNo();
-let rnd3 = rndNo();
-let rnd4 = rndNo();
-let rnd5 = rndNo();
+let rnd1 = rndNo(50);
+let rnd2 = rndNo(50);
+let rnd3 = rndNo(50);
+let rnd4 = rndNo(50);
+let rnd5 = rndNo(50);
 
 const rndCalc = () => {
-  rnd1 = rndNo();
-  rnd2 = rndNo();
-  rnd3 = rndNo();
-  rnd4 = rndNo();
-  rnd5 = rndNo();
-  console.log(rnd1, rnd2, rnd3, rnd4, rnd5, range(), shuffleArray())
+  let array = shuffleArray(range());
+  const n1 = array.pop();
+  array = shuffleArray(array);
+  const n2 = array.pop();
+  array = shuffleArray(array);
+  const n3 = array.pop();
+  array = shuffleArray(array);
+  const n4 = array.pop();
+  array = shuffleArray(array);
+  const n5 = array.pop();
+  console.log(n1,n2,n3,n4,n5,array)
 };
 
 </script>
