@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import ImportForm from '@/Components/ImportForm.vue';
+import FileForm from '@/Components/fileForm.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Pagination from '@/Components/Pagination.vue';
-import ExportForm from '@/Components/ExportForm.vue';
 
 const props = defineProps<{
   all: number;
@@ -120,8 +119,8 @@ const rndCalc = () => {
   <AuthenticatedLayout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-flex pr-4">EuroJackPot</h2>
-      <ImportForm fileName="euros.csv" link="euros.import" class="p-1 inline-flex" />
-      <ExportForm fileName="euros.csv" link="euros.export" class="p-1 inline-flex" />
+      <FileForm fileName="euros.csv" link="euros.import" title="Import" class="p-1 inline-flex" />
+      <FileForm fileName="euros.csv" link="euros.export" title="Export" class="p-1 inline-flex" />
       <SecondaryButton @click="rndCalc"> Calc </SecondaryButton>
     </template>
 
