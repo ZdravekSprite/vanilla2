@@ -54,6 +54,28 @@ class EuroController extends Controller
     }
   }
 
+  public function export(Request $request)
+  {
+    $arrayData = Euro::all()->map(fn ($e) => [
+      'time' => $e->time,
+      'no1' => $e->no1,
+      'no2' => $e->no2,
+      'no3' => $e->no3,
+      'no4' => $e->no4,
+      'no5' => $e->no5,
+      'bn1' => $e->bn1,
+      'bn2' => $e->bn2,
+    ]);
+    $fileName = 'euros.csv';
+    $columns = array_keys($arrayData[0]);
+    $file = fopen(public_path('temp/' . $fileName), 'w');
+    fputcsv($file, $columns);
+    foreach ($arrayData as $data) {
+      fputcsv($file, $data);
+    }
+    fclose($file);
+  }
+
   public function hl(Request $request)
   {
     $this->validate($request, [
