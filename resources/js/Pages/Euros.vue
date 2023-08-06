@@ -3,11 +3,27 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import ImportForm from '@/Components/ImportForm.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import { ref } from 'vue';
+import Pagination from '@/Components/Pagination.vue';
 
 const props = defineProps<{
-  euros?: Array<any>;
+  all: number;
+  euros: {
+    data: Array<{
+      id: number;
+      time: Date;
+      no1: number;
+      no2: number;
+      no3: number;
+      no4: number;
+      no5: number;
+      bn1: number;
+      bn2: number;
+    }>;
+    links: Array<object>
+  };
 }>();
+
+//console.log(props.euros);
 
 const range = (n: number) =>
   Array(Math.ceil(n)).fill(1).map((x, y) => x + y);
@@ -21,12 +37,6 @@ const shuffleArray = (array: Array<number>) => {
   }
   return array;
 }
-
-const rndNo = (no: number) => {
-  return Math.ceil(Math.random() * no);
-};
-
-let rnd = [rndNo(50), rndNo(50), rndNo(50), rndNo(50), rndNo(50)].sort(function (a: number, b: number) { return a - b });
 
 const setNArr = () => {
   let array = shuffleArray(range(50));
@@ -70,7 +80,6 @@ const setTArr = (nArr: Array<number>) => {
 }
 
 const rndTest = () => {
-  //const n = [2, 9, 38, 40, 44];
   const n = setNArr();
   const b = setBArr();
   const tSet = setTArr(n);
@@ -79,8 +88,8 @@ const rndTest = () => {
     const test = tSet[index];
     log = log + (index + 1);
     if (props.euros) {
-      for (let i = 0; i < props.euros.length; i++) {
-        const element = props.euros[i];
+      for (let i = 0; i < props.euros.data.length; i++) {
+        const element = props.euros.data[i];
         const haystack = [element.no1, element.no2, element.no3, element.no4, element.no5];
         if (test.every((v: any) => haystack.includes(v))) {
           console.log(log, n, test, haystack);
@@ -89,7 +98,7 @@ const rndTest = () => {
       }
     }
   }
-  console.log(n,b)
+  console.log(n, b)
   return n;
 };
 
@@ -99,13 +108,6 @@ const rndCalc = () => {
     test = rndTest();
     if (test && test[0] < 10) test = false;
     if (test && test[4] > 39) test = false;
-    /*
-    if (test && test[0] != last[0]) test = false;
-    if (test && test[1] != last[1]) test = false;
-    if (test && test[2] != last[2]) test = false;
-    if (test && test[3] != last[3]) test = false;
-    if (test && test[4] != last[4]) test = false;
-    */
   }
 };
 
@@ -116,17 +118,57 @@ const rndCalc = () => {
 
   <AuthenticatedLayout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">EuroJackPot</h2>
-      <ImportForm fileName="euros.csv" link="euros.import" class="p-1" />
+      <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-flex pr-4">EuroJackPot</h2>
+      <ImportForm fileName="euros.csv" link="euros.import" class="p-1 inline-flex" />
       <SecondaryButton @click="rndCalc"> Calc </SecondaryButton>
     </template>
 
-    <div class="py-12">
+    <div class="py-12 space-y-4">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-          <div class="p-6 text-gray-900 dark:text-gray-100">EuroJackPot! {{ euros ? euros.length : 0 }}</div>
-          <div class="p-6 text-gray-900 dark:text-gray-100">{{ rnd[0] }} {{ rnd[1] }} {{ rnd[2] }} {{ rnd[3] }} {{ rnd[4]
-          }}</div>
+          <div class="p-6 text-gray-900 dark:text-gray-100">All: {{ all }}</div>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+          <div class="p-6 text-gray-900 dark:text-gray-100">
+            <table v-if="euros" class="table-auto w-full">
+              <caption class="caption-top">
+                EuroJackPot!
+              </caption>
+              <thead class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                <tr>
+                  <th>time</th>
+                  <th>no1</th>
+                  <th>no2</th>
+                  <th>no3</th>
+                  <th>no4</th>
+                  <th>no5</th>
+                  <th>bn1</th>
+                  <th>bn2</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(e, i) in euros.data" :key="e.id">
+                  <td>{{ e['time'] }}</td>
+                  <td>{{ e['no1'] }}</td>
+                  <td>{{ e['no2'] }}</td>
+                  <td>{{ e['no3'] }}</td>
+                  <td>{{ e['no4'] }}</td>
+                  <td>{{ e['no5'] }}</td>
+                  <td>{{ e['bn1'] }}</td>
+                  <td>{{ e['bn2'] }}</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th colspan="8">
+                    <Pagination v-if="euros" :links="euros.links" />
+                  </th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
         </div>
       </div>
     </div>

@@ -16,8 +16,11 @@ class EuroController extends Controller
   public function index()
   {
     $selected = ['time', 'no1', 'no2', 'no3', 'no4', 'no5', 'bn1', 'bn2'];
-    $euros = Euro::select($selected)->get()->toArray();
+    //$euros = Euro::select($selected)->get()->toArray();
+    $all = Euro::all()->count();
+    $euros = Euro::select($selected)->paginate(15);
     return Inertia::render('Euros', [
+      'all' => $all,
       'euros' => $euros,
     ]);
   }
@@ -28,22 +31,66 @@ class EuroController extends Controller
     $fileName = $request->fileName;
     $csvData = fopen(public_path('temp/' . $fileName), 'r');
     $columns = ['time', 'no1', 'no2', 'no3', 'no4', 'no5', 'bn1', 'bn2'];
+    $frstrow = true;
     while (($data = fgetcsv($csvData, 555, ',')) !== false) {
-      $dataRow = array_combine($columns, $data);
-      if (!Euro::where('time', $dataRow['time'])->first()) {
-        Euro::insert([
-          'time' => $dataRow['time'],
-          'no1' => $dataRow['no1'],
-          'no2' => $dataRow['no2'],
-          'no3' => $dataRow['no3'],
-          'no4' => $dataRow['no4'],
-          'no5' => $dataRow['no5'],
-          'bn1' => $dataRow['bn1'],
-          'bn2' => $dataRow['bn2'],
-        ]);
+      if (!$frstrow) {
+        $dataRow = array_combine($columns, $data);
+        $date = date("Y-m-d H:i:s", strtotime($dataRow['time']));
+        if (!Euro::where('time', $date)->first()) {
+          Euro::insert([
+            'time' => $date,
+            'no1' => $dataRow['no1'],
+            'no2' => $dataRow['no2'],
+            'no3' => $dataRow['no3'],
+            'no4' => $dataRow['no4'],
+            'no5' => $dataRow['no5'],
+            'bn1' => $dataRow['bn1'],
+            'bn2' => $dataRow['bn2'],
+          ]);
+        }
+      } else {
+        $frstrow = false;
       }
     }
   }
+
+  public function hl(Request $request)
+  {
+    $this->validate($request, [
+      'datum' => 'required',
+      'brojevi' => 'required'
+    ]);
+    //dd($request);
+    $datum = date("Y-m-d H:i:s", strtotime($request->input('datum')));
+    $brojevi = $request->input('brojevi');
+    $no = explode( ',', explode( ';', $brojevi )[0] );
+    $bn = explode( ',', explode( ';', $brojevi )[1] );
+    $draw_exist = Euro::where('time', '=', $datum)->first();
+    if ($draw_exist) {
+      $draw_txt = $draw_exist->time . ": ";
+      $draw_txt .= $draw_exist->no1 . ",";
+      $draw_txt .= $draw_exist->no2 . ",";
+      $draw_txt .= $draw_exist->no3 . ",";
+      $draw_txt .= $draw_exist->no4 . ",";
+      $draw_txt .= $draw_exist->no5 . ";";
+      $draw_txt .= $draw_exist->bn1 . ",";
+      $draw_txt .= $draw_exist->bn2;
+      return "več postoji: " . $draw_txt . "(" . $datum . ":" . $brojevi . ")";
+    } else {
+      $draw = new Euro;
+      $draw->time = date("Y-m-d H:i:s", strtotime($datum));
+      $draw->no1 = $no[0];
+      $draw->no2 = $no[1];
+      $draw->no3 = $no[2];
+      $draw->no4 = $no[3];
+      $draw->no5 = $no[4];
+      $draw->bn1 = $bn[0];
+      $draw->bn2 = $bn[1];
+      $draw->save();
+    }
+    return $datum . ":" . $brojevi;
+  }
+
   /**
    * Show the form for creating a new resource.
    */

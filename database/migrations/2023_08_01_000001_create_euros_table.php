@@ -13,7 +13,7 @@ return new class extends Migration
   {
     Schema::create('euros', function (Blueprint $table) {
       $table->id();
-      $table->date('time')->unique();
+      $table->dateTime('time')->unique();
       $table->tinyInteger('no1');
       $table->tinyInteger('no2');
       $table->tinyInteger('no3');
