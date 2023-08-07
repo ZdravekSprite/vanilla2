@@ -33,6 +33,9 @@ const showingNavigationDropdown = ref(false);
                 <NavLink :href="route('euros')" :active="route().current('euros')">
                   EuroJackPot
                 </NavLink>
+                <NavLink :href="route('holidays')" :active="route().current('holidays')">
+                  Holidays
+                </NavLink>
               </div>
             </div>
 
@@ -95,6 +98,9 @@ const showingNavigationDropdown = ref(false);
             </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('euros')" :active="route().current('euros')">
               EuroJackPot
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('holidays')" :active="route().current('holidays')">
+              Holidays
             </ResponsiveNavLink>
           </div>
 
