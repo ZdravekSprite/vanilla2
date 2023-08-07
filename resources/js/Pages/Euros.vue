@@ -119,7 +119,7 @@ const rndCalc = () => {
   <AuthenticatedLayout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-flex pr-4">EuroJackPot</h2>
-      <FileForm fileName="euros.csv" link="euros.import" title="Import" class="p-1 inline-flex" />
+      <FileForm fileName="euros.csv" link="import" model="euro" title="Import" class="p-1 inline-flex" />
       <FileForm fileName="euros.csv" link="export" model="euro" title="Export" class="p-1 inline-flex" />
       <SecondaryButton @click="rndCalc"> Calc </SecondaryButton>
     </template>

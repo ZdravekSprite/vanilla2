@@ -25,57 +25,6 @@ class EuroController extends Controller
     ]);
   }
 
-  public function import(Request $request)
-  {
-    set_time_limit(0);
-    $fileName = $request->fileName;
-    $csvData = fopen(public_path('temp/' . $fileName), 'r');
-    $columns = ['time', 'no1', 'no2', 'no3', 'no4', 'no5', 'bn1', 'bn2'];
-    $frstrow = true;
-    while (($data = fgetcsv($csvData, 555, ',')) !== false) {
-      if (!$frstrow) {
-        $dataRow = array_combine($columns, $data);
-        $date = date("Y-m-d H:i:s", strtotime($dataRow['time']));
-        if (!Euro::where('time', $date)->first()) {
-          Euro::insert([
-            'time' => $date,
-            'no1' => $dataRow['no1'],
-            'no2' => $dataRow['no2'],
-            'no3' => $dataRow['no3'],
-            'no4' => $dataRow['no4'],
-            'no5' => $dataRow['no5'],
-            'bn1' => $dataRow['bn1'],
-            'bn2' => $dataRow['bn2'],
-          ]);
-        }
-      } else {
-        $frstrow = false;
-      }
-    }
-  }
-
-  public function export(Request $request)
-  {
-    $arrayData = Euro::all()->map(fn ($e) => [
-      'time' => $e->time,
-      'no1' => $e->no1,
-      'no2' => $e->no2,
-      'no3' => $e->no3,
-      'no4' => $e->no4,
-      'no5' => $e->no5,
-      'bn1' => $e->bn1,
-      'bn2' => $e->bn2,
-    ]);
-    $fileName = 'euros.csv';
-    $columns = array_keys($arrayData[0]);
-    $file = fopen(public_path('temp/' . $fileName), 'w');
-    fputcsv($file, $columns);
-    foreach ($arrayData as $data) {
-      fputcsv($file, $data);
-    }
-    fclose($file);
-  }
-
   public function hl(Request $request)
   {
     $this->validate($request, [

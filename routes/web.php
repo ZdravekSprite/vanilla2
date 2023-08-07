@@ -26,7 +26,7 @@ Route::get('/', function () {
     'laravelVersion' => Application::VERSION,
     'phpVersion' => PHP_VERSION,
   ]);
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
   return Inertia::render('Dashboard');
@@ -40,15 +40,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/euros', [EuroController::class, 'index'])->name('euros');
-Route::post('/euro/import', [EuroController::class, 'import'])->name('euros.import');
-Route::post('/euro/export', [EuroController::class, 'export'])->name('euros.export');
 Route::get('/euro/hl', [EuroController::class, 'hl'])->name('euro.hl');
 
 Route::get('/holidays', [HolidayController::class, 'index'])->name('holidays');
-Route::post('/holiday/import', [HolidayController::class, 'import'])->name('holidays.import');
-Route::post('/holiday/export', [HolidayController::class, 'export'])->name('holidays.export');
 
 Route::post('/export', [ExportImportController::class, 'export'])->name('export');
+Route::post('/import', [ExportImportController::class, 'import'])->name('import');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/artisan.php';

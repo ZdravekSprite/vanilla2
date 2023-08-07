@@ -24,47 +24,6 @@ class HolidayController extends Controller
     ]);
   }
 
-  public function import(Request $request)
-  {
-    set_time_limit(0);
-    $fileName = $request->fileName;
-    $csvData = fopen(public_path('temp/' . $fileName), 'r');
-    $columns = ['date', 'name'];
-    $frstrow = true;
-    while (($data = fgetcsv($csvData, 555, ',')) !== false) {
-      if (!$frstrow) {
-        $dataRow = array_combine($columns, $data);
-        $date = date("Y-m-d H:i:s", strtotime($dataRow['date']));
-        if (!Holiday::where('date', $date)->first()) {
-          Holiday::insert([
-            'date' => $date,
-            'name' => $dataRow['name'],
-          ]);
-        }
-      } else {
-        $frstrow = false;
-      }
-    }
-  }
-
-  public function export(Request $request)
-  {
-    $arrayData = Holiday::all()->map(fn ($e) => [
-      'date' => $e->date,
-      'name' => $e->name,
-    ]);
-    if (count($arrayData)) {
-      $fileName = $request->fileName;
-      $columns = array_keys($arrayData[0]);
-      $file = fopen(public_path('temp/' . $fileName), 'w');
-      fputcsv($file, $columns);
-      foreach ($arrayData as $data) {
-        fputcsv($file, $data);
-      }
-      fclose($file);
-    }
-  }
-
   /**
    * Show the form for creating a new resource.
    */
