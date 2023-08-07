@@ -7,5 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Holiday extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  /**
+   * The attributes that should be cast to native types.
+   *
+   * @var array
+   */
+  protected $casts = [
+    'date' => 'datetime:d.m.Y',
+  ];
 }

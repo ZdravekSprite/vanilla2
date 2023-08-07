@@ -2,8 +2,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import FileForm from '@/Components/FileForm.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Pagination from '@/Components/Pagination.vue';
+import NewForm from '@/Components/NewForm.vue';
 
 const props = defineProps<{
   all: number;
@@ -23,9 +23,12 @@ const props = defineProps<{
 
   <AuthenticatedLayout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-flex pr-4">Holidays</h2>
-      <FileForm fileName="holidays.csv" link="import" model="holiday" title="Import" class="p-1 inline-flex" />
-      <FileForm fileName="holidays.csv" link="export" model="holiday" title="Export" class="p-1 inline-flex" />
+      <div class="hidden sm:-my-px sm:ml-10 sm:flex items-center">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pr-4">Holidays</h2>
+        <FileForm fileName="holidays.csv" link="import" model="holiday" title="Import" class="p-1" />
+        <FileForm fileName="holidays.csv" link="export" model="holiday" title="Export" class="p-1" />
+        <NewForm :storeRoute="'holiday.store'" :labels="[['date'], ['name']]" class="p-1" />
+      </div>
     </template>
 
     <div class="py-12 space-y-4">
