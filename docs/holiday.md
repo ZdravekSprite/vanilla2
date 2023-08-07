@@ -15,16 +15,6 @@ php artisan make:model Holiday -a
     });
 ```
 
-```bash
-php artisan migrate
-```
-
-- .gitignore
-
-```text
-/public/temp
-```
-
 - resources\js\Pages\Holidays.vue
 - app\Http\Controllers\HolidayController.php
 - routes\web.php

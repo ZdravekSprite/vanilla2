@@ -21,16 +21,6 @@ php artisan make:model Euro -a
     });
 ```
 
-```bash
-php artisan migrate
-```
-
-- .gitignore
-
-```text
-/public/temp
-```
-
 - resources\js\Pages\Euros.vue
 - app\Http\Controllers\EuroController.php
 - routes\web.php

@@ -13,6 +13,10 @@ const props = defineProps({
     type: String,
     default: "Form",
   },
+  model: {
+    type: String,
+    default: "user",
+  },
   link: {
     type: String,
     default: "",
@@ -27,6 +31,7 @@ const confirmingForm = ref(false);
 const fileNameInput = ref(props.fileName);
 
 const form = useForm({
+  model: props.model,
   fileName: props.fileName,
 });
 

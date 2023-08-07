@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EuroController;
+use App\Http\Controllers\ExportImportController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -46,6 +47,8 @@ Route::get('/euro/hl', [EuroController::class, 'hl'])->name('euro.hl');
 Route::get('/holidays', [HolidayController::class, 'index'])->name('holidays');
 Route::post('/holiday/import', [HolidayController::class, 'import'])->name('holidays.import');
 Route::post('/holiday/export', [HolidayController::class, 'export'])->name('holidays.export');
+
+Route::post('/export', [ExportImportController::class, 'export'])->name('export');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/artisan.php';

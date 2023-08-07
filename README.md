@@ -5,6 +5,12 @@ composer create-project laravel/laravel vanilla2
 touch database/database.sqlite
 ```
 
+- .gitignore
+
+```text
+/public/temp
+```
+
 - .env
 
 ```edit
@@ -71,7 +77,7 @@ php artisan serve
 ```
 
 ```bash
-git add . && git commit -am "v0008"
+git add . && git commit -am "v0009"
 git push
 ```
 

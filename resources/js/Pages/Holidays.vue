@@ -25,7 +25,7 @@ const props = defineProps<{
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-flex pr-4">Holidays</h2>
       <FileForm fileName="holidays.csv" link="holidays.import" title="Import" class="p-1 inline-flex" />
-      <FileForm fileName="holidays.csv" link="holidays.export" title="Export" class="p-1 inline-flex" />
+      <FileForm fileName="holidays.csv" link="export" model="holiday" title="Export" class="p-1 inline-flex" />
     </template>
 
     <div class="py-12 space-y-4">
