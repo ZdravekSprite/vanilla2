@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -13,7 +14,13 @@ class UserController extends Controller
    */
   public function index()
   {
-    //
+    $selected = ['id','name', 'email', 'password'];
+    $all = User::all()->count();
+    $users = User::select($selected)->paginate(15);
+    return Inertia::render('Admin/Users', [
+      'all' => $all,
+      'users' => $users,
+    ]);
   }
 
   /**

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ExportImportController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\EuroController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\ProfileController;
@@ -49,6 +50,11 @@ Route::delete('/holiday', [HolidayController::class, 'destroy'])->name('holiday.
 
 Route::post('/export', [ExportImportController::class, 'export'])->name('export');
 Route::post('/import', [ExportImportController::class, 'import'])->name('import');
+
+Route::get('/users', [UserController::class, 'index'])->name('users');
+Route::post('/user', [UserController::class, 'store'])->name('user.store');
+Route::patch('/user', [UserController::class, 'update'])->name('user.update');
+Route::delete('/user', [UserController::class, 'destroy'])->name('user.destroy');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/artisan.php';

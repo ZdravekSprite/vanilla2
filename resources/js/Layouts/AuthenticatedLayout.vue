@@ -30,6 +30,9 @@ const showingNavigationDropdown = ref(false);
                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                   Dashboard
                 </NavLink>
+                <NavLink :href="route('users')" :active="route().current('users')">
+                  Users
+                </NavLink>
                 <NavLink :href="route('euros')" :active="route().current('euros')">
                   EuroJackPot
                 </NavLink>
@@ -95,6 +98,9 @@ const showingNavigationDropdown = ref(false);
           <div class="pt-2 pb-3 space-y-1">
             <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
               Dashboard
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('users')" :active="route().current('users')">
+              Users
             </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('euros')" :active="route().current('euros')">
               EuroJackPot
