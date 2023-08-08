@@ -1,10 +1,10 @@
 # Export/Import
 
 ```bash
-php artisan make:controller ExportImportController
+php artisan make:controller Admin\\ExportImportController
 ```
 
-- app\Http\Controllers\ExportImportController.php
+- app\Http\Controllers\Admin\ExportImportController.php
 - routes\web.php
 - resources\js\Components\FileForm.vue
 - resources\js\Pages\Euros.vue

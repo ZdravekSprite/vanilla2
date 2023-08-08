@@ -1,3 +1,6 @@
 # Components
 
-- inertia\resources\js\Components\FiletForm.vue
+- resources\js\Components\FileForm.vue
+- resources\js\Components\Pagination.vue
+- resources\js\Components\NewForm.vue
+- resources\js\Components\EditForm.vue

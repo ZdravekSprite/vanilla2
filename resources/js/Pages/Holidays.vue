@@ -4,6 +4,8 @@ import { Head } from '@inertiajs/vue3';
 import FileForm from '@/Components/FileForm.vue';
 import Pagination from '@/Components/Pagination.vue';
 import NewForm from '@/Components/NewForm.vue';
+import EditForm from '@/Components/EditForm.vue';
+import DeleteForm from '@/Components/DeleteForm.vue';
 
 const props = defineProps<{
   all: number;
@@ -16,6 +18,14 @@ const props = defineProps<{
     links: Array<object>
   };
 }>();
+
+const dateFormat = (date: Date) => {
+  let objectDate = new Date(date);
+  let day = objectDate.getDate();
+  let month = objectDate.getMonth() + 1;
+  let year = objectDate.getFullYear();
+  return day + '. ' + month + '. ' + year + '.'
+}
 </script>
 
 <template>
@@ -48,17 +58,23 @@ const props = defineProps<{
                 <tr>
                   <th>date</th>
                   <th>name</th>
+                  <th>actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(e, i) in holidays.data" :key="e.id">
-                  <td>{{ e['date'] }}</td>
+                  <td>{{ dateFormat(e['date']) }}</td>
                   <td>{{ e['name'] }}</td>
+                  <td>
+                    <EditForm class="float-left" :element="e" updateRoute="holiday.update"
+                      :labels="[['date'], ['name']]" />
+                    <DeleteForm class="float-right" :element="e" destroyRoute="holiday.destroy" />
+                  </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <th colspan="8">
+                  <th colspan="3">
                     <Pagination v-if="holidays" :links="holidays.links" />
                   </th>
                 </tr>

@@ -15,9 +15,9 @@ class HolidayController extends Controller
    */
   public function index()
   {
-    $selected = ['date', 'name'];
+    $selected = ['id', 'date', 'name'];
     $all = Holiday::all()->count();
-    $holidays = Holiday::select($selected)->paginate(15);
+    $holidays = Holiday::select($selected)->paginate(14);
     return Inertia::render('Holidays', [
       'all' => $all,
       'holidays' => $holidays,
@@ -37,7 +37,10 @@ class HolidayController extends Controller
    */
   public function store(StoreHolidayRequest $request)
   {
-    //
+    Holiday::factory()->create([
+      'date' => $request->date,
+      'name' => $request->name,
+    ]);
   }
 
   /**
@@ -61,7 +64,10 @@ class HolidayController extends Controller
    */
   public function update(UpdateHolidayRequest $request, Holiday $holiday)
   {
-    //
+    $holiday = Holiday::findOrFail($request->id);
+    $holiday->name = $request->name;
+    $holiday->date = $request->date;
+    $holiday->save();
   }
 
   /**

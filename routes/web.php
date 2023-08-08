@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\ExportImportController;
 use App\Http\Controllers\EuroController;
-use App\Http\Controllers\ExportImportController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -43,6 +43,9 @@ Route::get('/euros', [EuroController::class, 'index'])->name('euros');
 Route::get('/euro/hl', [EuroController::class, 'hl'])->name('euro.hl');
 
 Route::get('/holidays', [HolidayController::class, 'index'])->name('holidays');
+Route::post('/holiday', [HolidayController::class, 'store'])->name('holiday.store');
+Route::patch('/holiday', [HolidayController::class, 'update'])->name('holiday.update');
+Route::delete('/holiday', [HolidayController::class, 'destroy'])->name('holiday.destroy');
 
 Route::post('/export', [ExportImportController::class, 'export'])->name('export');
 Route::post('/import', [ExportImportController::class, 'import'])->name('import');

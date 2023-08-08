@@ -24,6 +24,15 @@ const props = defineProps<{
 }>();
 
 //console.log(props.euros);
+const dateFormat = (date: Date) => {
+  let objectDate = new Date(date);
+  let day = objectDate.getDate();
+  let month = objectDate.getMonth() + 1;
+  let year = objectDate.getFullYear();
+  let hour = objectDate.getHours();
+  let minute = objectDate.getMinutes() > 9 ? objectDate.getMinutes() : '0' + objectDate.getMinutes();
+  return day + '. ' + month + '. ' + year + '.' + ((hour || minute != '00') ? ' ' + hour + ':' + minute : '');
+}
 
 const range = (n: number) =>
   Array(Math.ceil(n)).fill(1).map((x, y) => x + y);
@@ -151,7 +160,7 @@ const rndCalc = () => {
               </thead>
               <tbody>
                 <tr v-for="(e, i) in euros.data" :key="e.id">
-                  <td>{{ e['time'] }}</td>
+                  <td>{{ dateFormat(e['time']) }}</td>
                   <td>{{ e['no1'] }}</td>
                   <td>{{ e['no2'] }}</td>
                   <td>{{ e['no3'] }}</td>

@@ -19,3 +19,5 @@ php artisan make:model Holiday -a
 - app\Http\Controllers\HolidayController.php
 - routes\web.php
 - resources\js\Layouts\AuthenticatedLayout.vue
+- app\Http\Requests\StoreHolidayRequest.php
+- app\Http\Requests\UpdateHolidayRequest.php
