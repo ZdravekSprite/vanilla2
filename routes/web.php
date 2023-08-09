@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ExportImportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\EuroController;
+use App\Http\Controllers\FirmController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -55,6 +56,11 @@ Route::get('/users', [UserController::class, 'index'])->name('users');
 Route::post('/user', [UserController::class, 'store'])->name('user.store');
 Route::patch('/user', [UserController::class, 'update'])->name('user.update');
 Route::delete('/user', [UserController::class, 'destroy'])->name('user.destroy');
+
+Route::get('/firms', [FirmController::class, 'index'])->name('firms');
+Route::post('/firm', [FirmController::class, 'store'])->name('firm.store');
+Route::patch('/firm', [FirmController::class, 'update'])->name('firm.update');
+Route::delete('/firm', [FirmController::class, 'destroy'])->name('firm.destroy');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/artisan.php';
