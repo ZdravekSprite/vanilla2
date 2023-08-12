@@ -6,6 +6,7 @@ use App\Models\Day;
 use App\Http\Requests\StoreDayRequest;
 use App\Http\Requests\UpdateDayRequest;
 use App\Models\Firm;
+use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,17 +18,27 @@ class DayController extends Controller
   public function index()
   {
     $user_id = Auth::user()->id;
+    $perPage = 10;
     $selected = ['id', 'date', 'user_id', 'state', 'night', 'start', 'end', 'firm_id'];
     //$all = Day::whereUserId($user_id)->count();
     //$days = Day::whereUserId($user_id)->select($selected)->paginate(15);
     $all = Day::all()->count();
-    $days = Day::select($selected)->paginate(15);
+    $days = Day::select($selected)->paginate($perPage);
+    //dd($days);
+    foreach ($days as $key => $value) {
+      $value['firm'] = Firm::where('id', $value['firm_id'])->first()->name;
+      $value['user'] = User::where('id', $value['user_id'])->first()->name;
+    }
     return Inertia::render('Days', [
       'all' => $all,
       'days' => $days,
-      'firms' => Firm::all()->map(fn ($s) => [
-        'id' => $s->id,
-        'name' => $s->name,
+      'firms' => Firm::all()->map(fn ($f) => [
+        'id' => $f->id,
+        'name' => $f->name,
+      ]),
+      'users' => User::all()->map(fn ($u) => [
+        'id' => $u->id,
+        'name' => $u->name,
       ]),
     ]);
   }

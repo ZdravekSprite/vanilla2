@@ -48,7 +48,7 @@ const props = defineProps<{
               <thead class="text-lg font-medium text-gray-900 dark:text-gray-100">
                 <tr>
                   <th>name</th>
-                  <th  class="w-32">actions</th>
+                  <th class="w-32">actions</th>
                 </tr>
               </thead>
               <tbody>

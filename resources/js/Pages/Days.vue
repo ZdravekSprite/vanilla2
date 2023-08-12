@@ -13,7 +13,9 @@ const props = defineProps<{
     data: Array<{
       id: number;
       date: Date;
+      user: String;
       user_id: number;
+      firm: String;
       firm_id: number;
       state: number;
       night: String;
@@ -26,6 +28,10 @@ const props = defineProps<{
     id: number;
     name: String;
   }>;
+  users: Array<{
+    id: number;
+    name: String;
+  }>;
 }>();
 
 const dateFormat = (date: Date) => {
@@ -35,6 +41,8 @@ const dateFormat = (date: Date) => {
   let year = objectDate.getFullYear();
   return day + '. ' + month + '. ' + year + '.'
 }
+
+console.log(props);
 </script>
 
 <template>
@@ -47,7 +55,8 @@ const dateFormat = (date: Date) => {
         <FileForm fileName="days.csv" link="import" model="day" title="Import" class="p-1" />
         <FileForm fileName="days.csv" link="export" model="day" title="Export" class="p-1" />
         <NewForm :storeRoute="'day.store'"
-          :labels="[['date'], ['user_id'], ['firm', props.firms], ['state'], ['night'], ['start'], ['end']]" class="p-1" />
+          :labels="[['date'], ['user_id', props.users], ['firm', props.firms], ['state'], ['night'], ['start'], ['end']]"
+          class="p-1" />
       </div>
     </template>
 
@@ -67,33 +76,34 @@ const dateFormat = (date: Date) => {
               <thead class="text-lg font-medium text-gray-900 dark:text-gray-100">
                 <tr>
                   <th>date</th>
-                  <td>user_id</td>
+                  <td>user</td>
                   <td>firm</td>
                   <td>state</td>
                   <td>night</td>
                   <td>start</td>
                   <td>end</td>
-                  <th>actions</th>
+                  <th class="w-32">actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(e, i) in days.data" :key="e.id">
                   <td>{{ dateFormat(e['date']) }}</td>
-                  <td>{{ e['user_id'] }}</td>
-                  <td>{{ props.firms.find(x => x.id === e.firm_id) ? props.firms.find(x => x.id === e.firm_id).name : '' }}</td>
+                  <td>{{ e['user'] }}</td>
+                  <td>{{ e['firm'] }}</td>
                   <td>{{ e['state'] }}</td>
                   <td>{{ e['night'] }}</td>
                   <td>{{ e['start'] }}</td>
                   <td>{{ e['end'] }}</td>
                   <td>
-                    <EditForm class="float-left" :element="e" updateRoute="day.update" :labels="[['date'], ['name']]" />
+                    <EditForm class="float-left" :element="e" updateRoute="day.update"
+                      :labels="[['date'], ['user_id', props.users], ['firm', props.firms], ['state'], ['night'], ['start'], ['end']]" />
                     <DeleteForm class="float-right" :element="e" destroyRoute="day.destroy" />
                   </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <th colspan="3">
+                  <th colspan="8">
                     <Pagination v-if="days" :links="days.links" />
                   </th>
                 </tr>
