@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Day;
 use App\Models\Euro;
+use App\Models\Firm;
 use App\Models\Holiday;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ExportImportController extends Controller
@@ -30,6 +33,22 @@ class ExportImportController extends Controller
         'date' => $e->date,
         'name' => $e->name,
       ]);
+      $fileName = 'holidays.csv';
+    }
+
+    if ($request->input('model') == 'firm') {
+      $arrayData = Firm::all()->map(fn ($e) => [
+        'name' => $e->name,
+      ]);
+      $fileName = 'firms.csv';
+    }
+
+    if ($request->input('model') == 'user') {
+      $arrayData = User::all()->map(fn ($e) => [
+        'name' => $e->name,
+        'email' => $e->email,
+      ]);
+      $fileName = 'users.csv';
     }
 
     if (count($arrayData)) {
@@ -43,6 +62,46 @@ class ExportImportController extends Controller
     }
   }
 
+  public static function getCompanyId($company_name)
+  {
+    $firm = ExportImportController::getCompany($company_name);
+    $firm_id = $firm ? $firm->id : 1;
+    return $firm_id;
+  }
+
+  public static function getCompany($company_name)
+  {
+    $company_name = trim($company_name);
+    if ($company_name == '') return null;
+    $company = Firm::where('name', 'like', $company_name)->first();
+    if (!$company) {
+      $company = Firm::create([
+        'name' => $company_name,
+      ]);
+    }
+    return $company;
+  }
+
+  public static function getUserId($user_name)
+  {
+    $user = ExportImportController::getUser($user_name);
+    $user_id = $user ? $user->id : 1;
+    return $user_id;
+  }
+
+  public static function getUser($user_name)
+  {
+    $user_name = trim($user_name);
+    if ($user_name == '') return null;
+    $user = User::where('name', 'like', $user_name)->first();
+    if (!$user) {
+      $user = User::factory()->create([
+        'name' => $user_name,
+      ]);
+    }
+    return $user;
+  }
+
   public function import(Request $request)
   {
     set_time_limit(0);
@@ -54,6 +113,15 @@ class ExportImportController extends Controller
     }
     if ($request->input('model') == 'holiday') {
       $columns = ['date', 'name'];
+    }
+    if ($request->input('model') == 'day') {
+      $columns = ['date', 'user', 'state', 'night', 'start', 'end', 'firm'];
+    }
+    if ($request->input('model') == 'firm') {
+      $columns = ['name'];
+    }
+    if ($request->input('model') == 'user') {
+      $columns = ['name', 'email'];
     }
 
     $frstrow = true;
@@ -83,6 +151,42 @@ class ExportImportController extends Controller
             Holiday::insert([
               'date' => $date,
               'name' => $dataRow['name'],
+            ]);
+          }
+        }
+
+        if ($request->input('model') == 'day') {
+          $date = date("Y-m-d H:i:s", strtotime($dataRow['date']));
+          $user_id = ExportImportController::getUserId($dataRow['user']);
+          if (!Day::where('date', $date)->where('user_id', $user_id)->first()) {
+            Day::insert([
+              'date' => $date,
+              'user_id' => $user_id,
+              'firm_id' => ExportImportController::getCompanyId($dataRow['firm']),
+              'state' => $dataRow['state'],
+              'night' => $dataRow['night'],
+              'start' => $dataRow['start'],
+              'end' => $dataRow['end'],
+            ]);
+          }
+        }
+
+        if ($request->input('model') == 'firm') {
+          $name = trim($dataRow['name']);
+          if (!Firm::where('name', $name)->first()) {
+            Firm::insert([
+              'name' => $name,
+            ]);
+          }
+        }
+
+        if ($request->input('model') == 'user') {
+          $user_name = trim($dataRow['name']);
+          $user = User::where('name', $user_name)->first();
+          if (!$user) {
+            $user = User::factory()->create([
+              'name' => $user_name,
+              'email' => trim($dataRow['email']),
             ]);
           }
         }

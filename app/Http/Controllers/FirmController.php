@@ -6,6 +6,7 @@ use App\Models\Firm;
 use App\Http\Requests\StoreFirmRequest;
 use App\Http\Requests\UpdateFirmRequest;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class FirmController extends Controller
 {
@@ -70,8 +71,11 @@ class FirmController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(Firm $firm)
+  public function destroy(Request $request, Firm $firm)
   {
-    //
+    //dd($request);
+    //$firm = Firm::findOrFail($request->id);
+    //dd($firm);
+    $firm->delete();
   }
 }

@@ -19,10 +19,13 @@ const props = defineProps<{
       night: String;
       start: String;
       end: String;
-      name: String;
     }>;
     links: Array<object>
   };
+  firms: Array<{
+    id: number;
+    name: String;
+  }>;
 }>();
 
 const dateFormat = (date: Date) => {
@@ -44,7 +47,7 @@ const dateFormat = (date: Date) => {
         <FileForm fileName="days.csv" link="import" model="day" title="Import" class="p-1" />
         <FileForm fileName="days.csv" link="export" model="day" title="Export" class="p-1" />
         <NewForm :storeRoute="'day.store'"
-          :labels="[['date'], ['user_id'], ['firm_id'], ['state'], ['night'], ['start'], ['end']]" class="p-1" />
+          :labels="[['date'], ['user_id'], ['firm', props.firms], ['state'], ['night'], ['start'], ['end']]" class="p-1" />
       </div>
     </template>
 
@@ -65,7 +68,7 @@ const dateFormat = (date: Date) => {
                 <tr>
                   <th>date</th>
                   <td>user_id</td>
-                  <td>firm_id</td>
+                  <td>firm</td>
                   <td>state</td>
                   <td>night</td>
                   <td>start</td>
@@ -77,7 +80,7 @@ const dateFormat = (date: Date) => {
                 <tr v-for="(e, i) in days.data" :key="e.id">
                   <td>{{ dateFormat(e['date']) }}</td>
                   <td>{{ e['user_id'] }}</td>
-                  <td>{{ e['firm_id'] }}</td>
+                  <td>{{ props.firms.find(x => x.id === e.firm_id) ? props.firms.find(x => x.id === e.firm_id).name : '' }}</td>
                   <td>{{ e['state'] }}</td>
                   <td>{{ e['night'] }}</td>
                   <td>{{ e['start'] }}</td>

@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Firm extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  protected $fillable = [
+    'name',
+  ];
 }
