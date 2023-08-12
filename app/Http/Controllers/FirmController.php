@@ -62,7 +62,9 @@ class FirmController extends Controller
    */
   public function update(UpdateFirmRequest $request, Firm $firm)
   {
-    //
+    $firm = Firm::findOrFail($request->id);
+    $firm->name = $request->name;
+    $firm->save();
   }
 
   /**

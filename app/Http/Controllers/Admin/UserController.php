@@ -36,7 +36,11 @@ class UserController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    User::factory()->create([
+      'name' => $request->name,
+      'email' => $request->email,
+      'password' => $request->password,
+    ]);
   }
 
   /**
@@ -60,7 +64,11 @@ class UserController extends Controller
    */
   public function update(Request $request, User $user)
   {
-    //
+    $user = User::findOrFail($request->id);
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->password = $request->password;
+    $user->save();
   }
 
   /**

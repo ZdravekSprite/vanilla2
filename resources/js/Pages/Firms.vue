@@ -55,8 +55,7 @@ const props = defineProps<{
                 <tr v-for="(e, i) in firms.data" :key="e.id">
                   <td>{{ e['name'] }}</td>
                   <td>
-                    <EditForm class="float-left" :element="e" updateRoute="firm.update"
-                      :labels="[['date'], ['name']]" />
+                    <EditForm class="float-left" :element="e" updateRoute="firm.update" :labels="[['name']]" />
                     <DeleteForm class="float-right" :element="e" destroyRoute="firm.destroy" />
                   </td>
                 </tr>

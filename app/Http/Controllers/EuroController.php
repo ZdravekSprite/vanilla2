@@ -46,7 +46,7 @@ class EuroController extends Controller
       $draw_txt .= $draw_exist->no5 . ";";
       $draw_txt .= $draw_exist->bn1 . ",";
       $draw_txt .= $draw_exist->bn2;
-      return "več postoji: " . $draw_txt . "(" . $datum . ":" . $brojevi . ")";
+      return "več postoji: " . $draw_txt . " (" . $datum . ": " . $brojevi . ")";
     } else {
       $draw = new Euro;
       $draw->time = date("Y-m-d H:i:s", strtotime($datum));
@@ -59,7 +59,7 @@ class EuroController extends Controller
       $draw->bn2 = $bn[1];
       $draw->save();
     }
-    return $datum . ":" . $brojevi;
+    return $datum . ": " . $brojevi;
   }
 
   /**
