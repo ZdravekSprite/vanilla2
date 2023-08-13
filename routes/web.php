@@ -70,6 +70,7 @@ Route::patch('/day', [DayController::class, 'update'])->name('day.update');
 Route::delete('/day', [DayController::class, 'destroy'])->name('day.destroy');
 
 Route::get('/months', [MonthController::class, 'index'])->name('months');
+Route::get('/month/{id}', [MonthController::class, 'show'])->name('month');
 Route::post('/month', [MonthController::class, 'store'])->name('month.store');
 Route::patch('/month', [MonthController::class, 'update'])->name('month.update');
 Route::delete('/month', [MonthController::class, 'destroy'])->name('month.destroy');

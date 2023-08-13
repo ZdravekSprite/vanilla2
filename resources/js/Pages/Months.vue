@@ -6,6 +6,7 @@ import Pagination from '@/Components/Pagination.vue';
 import NewForm from '@/Components/NewForm.vue';
 import EditForm from '@/Components/EditForm.vue';
 import DeleteForm from '@/Components/DeleteForm.vue';
+import { Link } from '@inertiajs/vue3';
 
 const props = defineProps<{
   all: number;
@@ -18,7 +19,7 @@ const props = defineProps<{
     links: Array<object>
   };
 }>();
-
+//console.log(props.months.data);
 </script>
 
 <template>
@@ -55,7 +56,7 @@ const props = defineProps<{
               </thead>
               <tbody>
                 <tr v-for="(e, i) in months.data" :key="e.id">
-                  <td>{{ e['slug'] }}</td>
+                  <td><Link :href="route('month', e.id)">{{ e['slug'] }}</Link></td>
                   <td>
                     <EditForm class="float-left" :element="e" updateRoute="month.update" :labels="[['month']]" />
                     <DeleteForm class="float-right" :element="e" destroyRoute="month.destroy" />

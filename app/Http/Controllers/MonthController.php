@@ -56,9 +56,16 @@ class MonthController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(Month $month)
+  //public function show(Month $month)
+  public function show(Int $month)
   {
-    //
+    //dd($month);
+    $user_id = Auth::user()->id;
+    $m = Month::where('id',$month)->first()->days();
+    //dd($month,$m);
+    return Inertia::render('Month', [
+      'month' => $m,
+    ]);
   }
 
   /**
