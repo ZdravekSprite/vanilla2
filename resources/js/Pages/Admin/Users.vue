@@ -52,7 +52,7 @@ const props = defineProps<{
                   <th>name</th>
                   <th>email</th>
                   <th>password</th>
-                  <th>actions</th>
+                  <th class="w-32">actions</th>
                 </tr>
               </thead>
               <tbody>

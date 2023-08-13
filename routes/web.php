@@ -6,6 +6,7 @@ use App\Http\Controllers\DayController;
 use App\Http\Controllers\EuroController;
 use App\Http\Controllers\FirmController;
 use App\Http\Controllers\HolidayController;
+use App\Http\Controllers\MonthController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -67,6 +68,11 @@ Route::get('/days', [DayController::class, 'index'])->name('days');
 Route::post('/day', [DayController::class, 'store'])->name('day.store');
 Route::patch('/day', [DayController::class, 'update'])->name('day.update');
 Route::delete('/day', [DayController::class, 'destroy'])->name('day.destroy');
+
+Route::get('/months', [MonthController::class, 'index'])->name('months');
+Route::post('/month', [MonthController::class, 'store'])->name('month.store');
+Route::patch('/month', [MonthController::class, 'update'])->name('month.update');
+Route::delete('/month', [MonthController::class, 'destroy'])->name('month.destroy');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/artisan.php';

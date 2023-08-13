@@ -45,6 +45,9 @@ const showingNavigationDropdown = ref(false);
                 <NavLink :href="route('days')" :active="route().current('days')">
                   Days
                 </NavLink>
+                <NavLink :href="route('months')" :active="route().current('months')">
+                  Months
+                </NavLink>
               </div>
             </div>
 
@@ -119,6 +122,9 @@ const showingNavigationDropdown = ref(false);
             </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('days')" :active="route().current('days')">
               Days
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('months')" :active="route().current('months')">
+              Months
             </ResponsiveNavLink>
           </div>
 

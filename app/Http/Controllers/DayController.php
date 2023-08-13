@@ -21,9 +21,9 @@ class DayController extends Controller
     $perPage = 10;
     $selected = ['id', 'date', 'user_id', 'state', 'night', 'start', 'end', 'firm_id'];
     //$all = Day::whereUserId($user_id)->count();
-    //$days = Day::whereUserId($user_id)->select($selected)->paginate(15);
+    $days = Day::where('user_id',$user_id)->select($selected)->paginate(15);
     $all = Day::all()->count();
-    $days = Day::select($selected)->paginate($perPage);
+    //$days = Day::select($selected)->paginate($perPage);
     //dd($days);
     foreach ($days as $key => $value) {
       $value['firm'] = Firm::where('id', $value['firm_id'])->first()->name;

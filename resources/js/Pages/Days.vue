@@ -54,8 +54,8 @@ console.log(props);
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pr-4">Days</h2>
         <FileForm fileName="days.csv" link="import" model="day" title="Import" class="p-1" />
         <FileForm fileName="days.csv" link="export" model="day" title="Export" class="p-1" />
-        <NewForm :storeRoute="'day.store'"
-          :labels="[['date'], ['user_id', props.users], ['firm', props.firms], ['state'], ['night'], ['start'], ['end']]"
+        <NewForm storeRoute="day.store"
+          :labels="[['date'], ['user', props.users], ['firm', props.firms], ['state'], ['night'], ['start'], ['end']]"
           class="p-1" />
       </div>
     </template>
@@ -96,7 +96,7 @@ console.log(props);
                   <td>{{ e['end'] }}</td>
                   <td>
                     <EditForm class="float-left" :element="e" updateRoute="day.update"
-                      :labels="[['date'], ['user_id', props.users], ['firm', props.firms], ['state'], ['night'], ['start'], ['end']]" />
+                      :labels="[['date'], ['user', props.users], ['firm', props.firms], ['state'], ['night'], ['start'], ['end']]" />
                     <DeleteForm class="float-right" :element="e" destroyRoute="day.destroy" />
                   </td>
                 </tr>
