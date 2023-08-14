@@ -23,11 +23,45 @@ class Month extends Model
   /**
    * Get the month slug.
    */
-  public function slug()
+  public function month()
   {
     $m = $this->month % 12 + 1;
+    return $m;
+  }
+
+  /**
+   * Get the month slug.
+   */
+  public function year()
+  {
     $y = ($this->month - $this->month % 12) / 12;
-    return sprintf("%02d.%04d", $m, $y);
+    return $y;
+  }
+
+  /**
+   * Get the month slug.
+   */
+  public function slug()
+  {
+    return sprintf("%02d.%04d", $this->month(), $this->year());
+  }
+
+  /**
+   * Get the next month.
+   */
+  public function next()
+  {
+    $next = Month::orderBy('month', 'asc')->where('user_id', '=', $this->user_id)->where('month', '>', $this->month)->first();
+    return $next ?? $this;
+  }
+
+  /**
+   * Get the prev month.
+   */
+  public function prev()
+  {
+    $prev = Month::orderBy('month', 'desc')->where('user_id', '=', $this->user_id)->where('month', '<', $this->month)->first();
+    return $prev ?? $this;
   }
 
   /**

@@ -81,6 +81,16 @@ const closeModal = () => {
             <template v-if="['date', 'from', 'to', 'expiration'].includes(l[0])">
               <TextInput :id="l[0]" v-model="form[l[0]]" type="date" class="mt-1 block w-3/4" :placeholder="l[0]" />
             </template>
+            <template v-else-if="['_month'].includes(l[0])">
+              <select id="month" name="month" v-model="form[l[0]]" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option v-for="m in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" :selected="l[0] === m" :key="m" :value="m">{{ m }}</option>
+              </select>
+            </template>
+            <template v-else-if="['_year'].includes(l[0])">
+              <select id="year" name="year" v-model="form[l[0]]" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option v-for="y in [2019, 2020, 2021, 2023, 2024, 2025]" :selected="l[0] === y" :key="y" :value="y">{{ y }}</option>
+              </select>
+            </template>
             <template v-else>
               <TextInput :id="l[0]" v-model="form[l[0]]" type="text" class="mt-1 block w-3/4" :placeholder="l[0]" />
             </template>

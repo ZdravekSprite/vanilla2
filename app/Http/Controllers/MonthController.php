@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateMonthRequest;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class MonthController extends Controller
 {
@@ -21,6 +22,8 @@ class MonthController extends Controller
     $months = Month::select($selected)->paginate(14);
     foreach ($months as $key => $value) {
       $value['slug'] = $value->slug();
+      $value['_month'] = $value->month();
+      $value['_year'] = $value->year();
     }
     return Inertia::render('Months', [
       'all' => $all,
@@ -42,11 +45,11 @@ class MonthController extends Controller
   public function store(StoreMonthRequest $request)
   {
     $this->validate($request, [
-      'month' => 'required',
-      'year' => 'required'
+      '_month' => 'required',
+      '_year' => 'required'
     ]);
     $month = new Month;
-    $month->month = $request->input('month') - 1 + $request->input('year') * 12;
+    $month->month = $request->input('_month') - 1 + $request->input('_year') * 12;
     $month->user_id = Auth::user()->id;
     $old_month = Month::where('user_id', $month->user_id)->where('month', '=', $month->month)->first();
     if ($old_month) return redirect(route('months.edit', ['month' => $month->slug()]))->with('new_month', $month)->with('warning', 'Day already exist');
@@ -61,10 +64,14 @@ class MonthController extends Controller
   {
     //dd($month);
     $user_id = Auth::user()->id;
-    $m = Month::where('id',$month)->first()->days();
+    $m = Month::where('id',$month)->first();
     //dd($month,$m);
     return Inertia::render('Month', [
-      'month' => $m,
+      'month' => $m->days(),
+      'next' => $m->next()->slug(),
+      'prev' => $m->prev()->slug(),
+      'next_id' => $m->next()->id,
+      'prev_id' => $m->prev()->id,
     ]);
   }
 
@@ -87,8 +94,12 @@ class MonthController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(Month $month)
+  //public function destroy(Month $month)
+  public function destroy(Request $request)
   {
-    //
+    //dd($request->id);
+    $month = month::findOrFail($request->id);
+    //dd($month);
+    $month->delete();
   }
 }

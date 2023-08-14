@@ -31,7 +31,7 @@ const props = defineProps<{
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pr-4">Months</h2>
         <FileForm fileName="months.csv" link="import" model="month" title="Import" class="p-1" />
         <FileForm fileName="months.csv" link="export" model="month" title="Export" class="p-1" />
-        <NewForm :storeRoute="'month.store'" :labels="[['month'], ['year']]" class="p-1" />
+        <NewForm :storeRoute="'month.store'" :labels="[['_month'], ['_year']]" class="p-1" />
       </div>
     </template>
 
@@ -58,7 +58,7 @@ const props = defineProps<{
                 <tr v-for="(e, i) in months.data" :key="e.id">
                   <td><Link :href="route('month', e.id)">{{ e['slug'] }}</Link></td>
                   <td>
-                    <EditForm class="float-left" :element="e" updateRoute="month.update" :labels="[['month']]" />
+                    <EditForm class="float-left" :element="e" updateRoute="month.update" :labels="[['_month'], ['_year']]" />
                     <DeleteForm class="float-right" :element="e" destroyRoute="month.destroy" />
                   </td>
                 </tr>
