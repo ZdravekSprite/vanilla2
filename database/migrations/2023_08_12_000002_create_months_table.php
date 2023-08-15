@@ -15,6 +15,7 @@ return new class extends Migration
       $table->id();
       $table->smallInteger('month');
       $table->foreignId('user_id')->constrained();
+      $table->foreignId('firm_id')->constrained();
       $table->mediumInteger('bruto')->nullable();
       $table->tinyInteger('minuli')->nullable();
       $table->mediumInteger('odbitak')->nullable();
@@ -33,7 +34,7 @@ return new class extends Migration
       $table->boolean('sindikat')->nullable();
       $table->mediumInteger('kredit')->nullable();
       $table->timestamps();
-      $table->unique(['user_id', 'month']);
+      $table->unique(['user_id', 'firm_id', 'month']);
     });
   }
 

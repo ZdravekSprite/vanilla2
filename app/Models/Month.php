@@ -12,12 +12,18 @@ class Month extends Model
 {
   use HasFactory;
 
+  protected $fillable = [
+    'month',
+    'user_id',
+    'firm_id',
+  ];
+
   /**
    * Get the user that owns the month.
    */
   public function user()
   {
-    return $this->belongsTo(User::class);
+    return $this->belongsTo(User::class)->first();
   }
 
   /**

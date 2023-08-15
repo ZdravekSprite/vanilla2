@@ -21,7 +21,7 @@ return new class extends Migration
       $table->time('start')->nullable();
       $table->time('end')->nullable();
       $table->timestamps();
-      $table->unique(['user_id', 'date']);
+      $table->unique(['user_id', 'firm_id', 'date']);
     });
   }
 

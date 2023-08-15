@@ -7,6 +7,7 @@ use App\Models\Day;
 use App\Models\Euro;
 use App\Models\Firm;
 use App\Models\Holiday;
+use App\Models\Month;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -73,7 +74,7 @@ class ExportImportController extends Controller
   {
     $company_name = trim($company_name);
     if ($company_name == '') return null;
-    $company = Firm::where('name', 'like', $company_name)->first();
+    $company = Firm::where('name', $company_name)->first();
     if (!$company) {
       $company = Firm::create([
         'name' => $company_name,
@@ -93,7 +94,7 @@ class ExportImportController extends Controller
   {
     $user_name = trim($user_name);
     if ($user_name == '') return null;
-    $user = User::where('name', 'like', $user_name)->first();
+    $user = User::where('name', $user_name)->first();
     if (!$user) {
       $user = User::factory()->create([
         'name' => $user_name,
@@ -122,6 +123,9 @@ class ExportImportController extends Controller
     }
     if ($request->input('model') == 'user') {
       $columns = ['name', 'email'];
+    }
+    if ($request->input('model') == 'month') {
+      $columns = ['month','user','bruto','prijevoz','prehrana','odbitak','prirez','minuli','prekovremeni','stari','nocni','bolovanje','nagrada','stimulacija','regres','bozicnica','prigodna','sindikat','kredit','firm'];
     }
 
     $frstrow = true;
@@ -189,6 +193,22 @@ class ExportImportController extends Controller
               'email' => trim($dataRow['email']),
             ]);
           }
+        }
+
+        if ($request->input('model') == 'month') {
+          //month,user,bruto,prijevoz,prehrana,odbitak,prirez,minuli,prekovremeni,stari,nocni,bolovanje,nagrada,stimulacija,regres,bozicnica,prigodna,sindikat,kredit,firm
+          $user_id = ExportImportController::getUserId($dataRow['user']);
+          $firm_id = ExportImportController::getCompanyId($dataRow['firm']);
+          $month = Month::where('month', $dataRow['month'])->where('user_id', $user_id)->where('firm_id', $firm_id)->first();
+          if (!$month) {
+            $month = Month::create([
+              'month' => $dataRow['month'],
+              'user_id' => $user_id,
+              'firm_id' => $firm_id,
+            ]);
+          }
+          $month->bruto = $dataRow['bruto'] ?? 0;
+          $month->save();
         }
       } else {
         $frstrow = false;

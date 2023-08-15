@@ -13,4 +13,9 @@ Route::middleware('auth')->group(function () {
     Artisan::call('migrate');
     return redirect(route('dashboard'))->with('success', 'Database migration success.');
   })->middleware(['auth'])->name('migrate');
+
+  Route::get('fresh', function () {
+    Artisan::call('migrate:fresh --seed');
+    return redirect(route('dashboard'))->with('success', 'Database migration success.');
+  })->middleware(['auth'])->name('fresh');
 });

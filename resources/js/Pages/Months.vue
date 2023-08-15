@@ -14,7 +14,10 @@ const props = defineProps<{
     data: Array<{
       id: number;
       month: number;
+      _year: number;
+      bruto: number;
       slug: String;
+      user: String;
     }>;
     links: Array<object>
   };
@@ -51,12 +54,16 @@ const props = defineProps<{
               <thead class="text-lg font-medium text-gray-900 dark:text-gray-100">
                 <tr>
                   <th>month</th>
+                  <th>user</th>
+                  <th>bruto</th>
                   <th class="w-32">actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(e, i) in months.data" :key="e.id">
                   <td><Link :href="route('month', e.id)">{{ e['slug'] }}</Link></td>
+                  <td>{{ e['user'] }}</td>
+                  <td>{{ e['bruto']/100 + (e['_year'] > 2022 ? ' €' : ' kn') }}</td>
                   <td>
                     <EditForm class="float-left" :element="e" updateRoute="month.update" :labels="[['_month'], ['_year']]" />
                     <DeleteForm class="float-right" :element="e" destroyRoute="month.destroy" />

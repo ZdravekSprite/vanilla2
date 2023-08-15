@@ -17,11 +17,14 @@ class MonthController extends Controller
    */
   public function index()
   {
-    $selected = ['id', 'month'];
+    $selected = ['id', 'month','user_id','bruto'];
+    //$all = Month::where('user_id',Auth::user()->id)->count();
+    //$months = Month::where('user_id',Auth::user()->id)->select($selected)->paginate(14);
     $all = Month::all()->count();
     $months = Month::select($selected)->paginate(14);
     foreach ($months as $key => $value) {
       $value['slug'] = $value->slug();
+      $value['user'] = $value->user()->name;
       $value['_month'] = $value->month();
       $value['_year'] = $value->year();
     }
@@ -52,7 +55,7 @@ class MonthController extends Controller
     $month->month = $request->input('_month') - 1 + $request->input('_year') * 12;
     $month->user_id = Auth::user()->id;
     $old_month = Month::where('user_id', $month->user_id)->where('month', '=', $month->month)->first();
-    if ($old_month) return redirect(route('months.edit', ['month' => $month->slug()]))->with('new_month', $month)->with('warning', 'Day already exist');
+    if ($old_month) return redirect(route('months.edit', ['month' => $month->slug()]))->with('new_month', $month)->with('warning', 'Manth already exist');
     $month->save();
   }
 
