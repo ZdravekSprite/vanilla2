@@ -7,6 +7,15 @@ import Pagination from '@/Components/Pagination.vue';
 
 const props = defineProps<{
   all: number;
+  alleuros: Array<{
+    no1: number;
+    no2: number;
+    no3: number;
+    no4: number;
+    no5: number;
+    bn1: number;
+    bn2: number;
+  }>;
   euros: {
     data: Array<{
       id: number;
@@ -19,7 +28,7 @@ const props = defineProps<{
       bn1: number;
       bn2: number;
     }>;
-    links: Array<object>
+    links: Array<object>;
   };
 }>();
 
@@ -91,23 +100,24 @@ const setTArr = (nArr: Array<number>) => {
 const rndTest = () => {
   const n = setNArr();
   const b = setBArr();
+  if (b[1] - b[0] == 1) return false;
   const tSet = setTArr(n);
   let log = 'test';
   for (let index = 0; index < tSet.length; index++) {
     const test = tSet[index];
     log = log + (index + 1);
-    if (props.euros) {
-      for (let i = 0; i < props.euros.data.length; i++) {
-        const element = props.euros.data[i];
+    if (props.alleuros) {
+      for (let i = 0; i < props.alleuros.length; i++) {
+        const element = props.alleuros[i];
         const haystack = [element.no1, element.no2, element.no3, element.no4, element.no5];
         if (test.every((v: any) => haystack.includes(v))) {
-          console.log(log, n, test, haystack);
+          //console.log(log, n, test, haystack);
           return false;
         }
       }
     }
   }
-  console.log(n, b)
+  console.log(log, n, b)
   return n;
 };
 
@@ -116,7 +126,11 @@ const rndCalc = () => {
   while (!test) {
     test = rndTest();
     if (test && test[0] < 10) test = false;
+    if (test && test[0] > 15) test = false;
+    if (test && test[2] < 20 && test[2] > 29) test = false;
     if (test && test[4] > 39) test = false;
+    if (test && test[4] < 34) test = false;
+    if (test && test.some((v: any) => [13, 23, 34, 36, 37].includes(v))) test = false;
   }
 };
 

@@ -16,12 +16,13 @@ class EuroController extends Controller
   public function index()
   {
     $selected = ['time', 'no1', 'no2', 'no3', 'no4', 'no5', 'bn1', 'bn2'];
-    //$euros = Euro::select($selected)->get()->toArray();
+    $alleuros = Euro::select($selected)->get()->toArray();
     $all = Euro::all()->count();
     $euros = Euro::select($selected)->paginate(15);
     return Inertia::render('Euros', [
       'all' => $all,
       'euros' => $euros,
+      'alleuros' => $alleuros,
     ]);
   }
 
