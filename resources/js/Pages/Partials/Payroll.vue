@@ -72,6 +72,182 @@ const props = defineProps<{
         <td class="w-1/8 border p-2 text-center"><b>SATI</b></td>
         <td class="w-1/8 border p-2 text-right"><b>IZNOS</b></td>
       </tr>
-    </tbody>
-  </table>
-</template>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">1.1. Za redoviti rad</td>
+        <td class="w-1/8 border p-2 text-center">___</td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">1.4 Za prekovremeni rad</td>
+        <td class="w-1/8 border p-2 text-center">___</td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7a Praznici. Blagdani, izbori</td>
+        <td class="w-1/8 border p-2 text-center">___</td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7b Godišnji odmor</td>
+        <td class="w-1/8 border p-2 text-center">___</td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7c Plaćeni dopust</td>
+        <td class="w-1/8 border p-2 text-center">___</td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7d Bolovanje do 42 dana</td>
+        <td class="w-1/8 border p-2 text-center">___</td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7e Dodatak za rad nedjeljom</td>
+        <td class="w-1/8 border p-2 text-center">___</td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7f Dodatak za rad na praznik</td>
+        <td class="w-1/8 border p-2 text-center">___</td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7g Dodatak za noćni rad</td>
+        <td class="w-1/8 border p-2 text-center">___</td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7.P Nagrada za radne rezultate</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2">2. OSTALI OBLICI RADA TEMELJEM KOJIH OSTVARUJE PRAVO NA UVEĆANJE PLAĆE
+          PREMA KOLEKTIVNOM UGOVORU, PRAVILNIKU O RADU ILI UGOVORU O RADU I NOVČANI IZNOS PO TOJ OSNOVI (SATI
+          PRIPRAVNOSTI)</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">2.8. Stimulacija bruto</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2">3. PROPISANI ILI UGOVORENI DODACI NA PLAĆU RADNIKA I NOVČANI IZNOSI PO
+          TOJ OSNOVI</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">3.1. Prijevoz</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">3.7. Regres za godišnji odmor</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2">4. ZBROJENI IZNOSI PRIMITAKA PO SVIM OSNOVAMA PO STAVKAMA 1. DO 3.</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2"><b>5. OSNOVICA ZA OBRAČUN DOPRINOSA</b></td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right"><b>___</b></td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2">6. VRSTE I IZNOSI DOPRINOSA ZA OBVEZNA OSIGURANJA KOJA SE OBUSTAVLJAJU IZ
+          PLAĆ</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right"></td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">6.1. za mirovinsko osiguranje na temelju generacijske solidarnosti
+          (I. STUP)</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">6.2 za mirovinsko osiguranje na temelju individualne kapitalizirane
+          štednje (II. STUP)</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2"><b>7. DOHODAK</b></td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right"><b>___</b></td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2">8. OSOBNI ODBITAK 1.00 / ___</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2">9. POREZNA OSNOVICA</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2">10. IZNOS PREDUJMA POREZA I PRIREZA POREZU NA DOHODAK</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">20.00% ___</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-12" colspan="2">Prirez ___ %</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2"><b>11. NETO PLAĆA</b></td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right"><b>___</b></td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2">12. NAKNADE UKUPNO</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2"><b>13. NETO + NAKNADE</b></td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right"><b>___</b></td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2"><b>14. OBUSTAVE UKUPNO</b></td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right"><b>___</b></td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2"><b>15. IZNOS PLAĆE/NAKNADE PLAĆE ISPLAĆEN RADNIKU NA REDOVAN RAČUN</b>
+        </td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right"><b>___</b></td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2" colspan="2">17.5. vrsta i iznos obustave</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right"></td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">Sindikalna članarina</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+      </tr>
+      <tr>
+        <td class="w-3/4 border p-2 pl-6" colspan="2">Kredit</td>
+        <td class="w-1/8 border p-2 text-center"></td>
+        <td class="w-1/8 border p-2 text-right">___</td>
+    </tr>
+  </tbody>
+</table></template>
