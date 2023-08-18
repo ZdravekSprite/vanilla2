@@ -29,3 +29,7 @@ php artisan make:model Role -a
     Schema::dropIfExists('role_user');
   }
 ```
+
+- app\Http\Middleware\HandleInertiaRequests.php
+- resources\js\types\index.d.ts
+- resources\js\Layouts\AuthenticatedLayout.vue

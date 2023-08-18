@@ -5,9 +5,12 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+const isAuth = usePage().props.auth;
+const hasRole = isAuth ? usePage().props.auth.user.roles : false;
+const isAdmin = hasRole ? usePage().props.auth.user.roles.filter(r => r.name == 'superadmin').length : false;
 </script>
 
 <template>
@@ -30,10 +33,10 @@ const showingNavigationDropdown = ref(false);
                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                   Dashboard
                 </NavLink>
-                <NavLink :href="route('users')" :active="route().current('users')">
+                <NavLink v-if="isAdmin" :href="route('users')" :active="route().current('users')">
                   Users
                 </NavLink>
-                <NavLink :href="route('roles')" :active="route().current('roles')">
+                <NavLink v-if="isAdmin" :href="route('roles')" :active="route().current('roles')">
                   Roles
                 </NavLink>
                 <NavLink :href="route('euros')" :active="route().current('euros')">
