@@ -61,9 +61,9 @@ const props = defineProps<{
                   <td>{{ e['email'] }}</td>
                   <td>{{ e['password'] }}</td>
                   <td>
-                    <EditForm class="float-left" :element="e" updateRoute="holiday.update"
+                    <EditForm class="float-left" :element="e" updateRoute="user.update"
                       :labels="[['name'], ['email'], ['password']]" />
-                    <DeleteForm class="float-right" :element="e" destroyRoute="holiday.destroy" />
+                    <DeleteForm class="float-right" :element="e" destroyRoute="user.destroy" />
                   </td>
                 </tr>
               </tbody>

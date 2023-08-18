@@ -33,6 +33,9 @@ const showingNavigationDropdown = ref(false);
                 <NavLink :href="route('users')" :active="route().current('users')">
                   Users
                 </NavLink>
+                <NavLink :href="route('roles')" :active="route().current('roles')">
+                  Roles
+                </NavLink>
                 <NavLink :href="route('euros')" :active="route().current('euros')">
                   EuroJackPot
                 </NavLink>
@@ -110,6 +113,9 @@ const showingNavigationDropdown = ref(false);
             </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('users')" :active="route().current('users')">
               Users
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('roles')" :active="route().current('roles')">
+              Roles
             </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('euros')" :active="route().current('euros')">
               EuroJackPot

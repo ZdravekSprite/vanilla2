@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ExportImportController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DayController;
 use App\Http\Controllers\EuroController;
@@ -9,7 +10,6 @@ use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\MonthController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -54,6 +54,11 @@ Route::middleware('auth')->group(function () {
 
   Route::post('/export', [ExportImportController::class, 'export'])->name('export');
   Route::post('/import', [ExportImportController::class, 'import'])->name('import');
+
+  Route::get('/roles', [RoleController::class, 'index'])->name('roles');
+  Route::post('/role', [RoleController::class, 'store'])->name('role.store');
+  Route::patch('/role/{role}', [RoleController::class, 'update'])->name('role.update');
+  Route::delete('/role/{role}', [RoleController::class, 'destroy'])->name('role.destroy');
 
   Route::get('/users', [UserController::class, 'index'])->name('users');
   Route::post('/user', [UserController::class, 'store'])->name('user.store');
