@@ -9,6 +9,28 @@ const props = defineProps<{
     v01: string,
     h02: string,
     v02: string,
+    h03: string,
+    v03: string,
+    h04: string,
+    v04: string,
+    h05: string,
+    v05: string,
+    h06: string,
+    v06: string,
+    h07: string,
+    v07: string,
+    h08: string,
+    v08: string,
+    h09: string,
+    v09: string,
+    h10: string,
+    v10: string,
+    h11: string,
+    v11: string,
+    h12: string,
+    v12: string,
+    h13: string,
+    v13: string,
   };
   next: String,
   prev: String,
@@ -76,15 +98,15 @@ const props = defineProps<{
           MJESECU OD ___ DO ___</td>
       </tr>
       <TableTr td1="1. OPIS PLAĆE" td2="SATI" td3="IZNOS" :bold="true" :indent="false"/>
-      <TableTr v-if="month.h01" td1="1.1. Za redoviti rad" :td2="month.h01+''" :td3="month.v01+''"/>
-      <TableTr v-if="month.h02" td1="1.4 Za prekovremeni rad" :td2="month.h02+''" :td3="month.v02+''"/>
-      <TableTr td1="1.7a Praznici. Blagdani, izbori" td2="_" td3="_"/>
-      <TableTr td1="1.7b Godišnji odmor" td2="_" td3="_"/>
-      <TableTr td1="1.7c Plaćeni dopust" td2="_" td3="_"/>
-      <TableTr td1="1.7d Bolovanje do 42 dana" td2="_" td3="_"/>
-      <TableTr td1="1.7e Dodatak za rad nedjeljom" td2="_" td3="_"/>
-      <TableTr td1="1.7f Dodatak za rad na praznik" td2="_" td3="_"/>
-      <TableTr td1="1.7g Dodatak za noćni rad" td2="_" td3="_"/>
+      <TableTr v-if="month.h01 != '0'" td1="1.1. Za redoviti rad" :td2="month.h01+''" :td3="month.v01+''"/>
+      <TableTr v-if="month.h09 != '0'" td1="1.4 Za prekovremeni rad" :td2="month.h09+''" :td3="month.v09+''"/>
+      <TableTr v-if="month.h12 != '0'" td1="1.7a Praznici. Blagdani, izbori" :td2="month.h12+''" :td3="month.v12+''"/>
+      <TableTr v-if="month.h10 != '0'" td1="1.7b Godišnji odmor" :td2="month.h10+''" :td3="month.v10+''"/>
+      <TableTr v-if="month.h13 != '0'" td1="1.7c Plaćeni dopust" :td2="month.h13+''" :td3="month.v13+''"/>
+      <TableTr v-if="month.h11 != '0'" td1="1.7d Bolovanje do 42 dana" :td2="month.h11+''" :td3="month.v11+''"/>
+      <TableTr v-if="month.h03 != '0'" td1="1.7e Dodatak za rad nedjeljom" :td2="month.h03+''" :td3="month.v03+''"/>
+      <TableTr v-if="month.h05 != '0'" td1="1.7f Dodatak za rad na praznik" :td2="month.h05+''" :td3="month.v05+''"/>
+      <TableTr v-if="month.h02 != '0'" td1="1.7g Dodatak za noćni rad" :td2="month.h02+''" :td3="month.v02+''"/>
       <TableTr td1="1.7.P Nagrada za radne rezultate" td3="_"/>
       <tr>
         <td class="w-3/4 border p-2" colspan="2">2. OSTALI OBLICI RADA TEMELJEM KOJIH OSTVARUJE PRAVO NA UVEĆANJE PLAĆE

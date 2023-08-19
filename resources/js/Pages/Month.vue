@@ -55,6 +55,10 @@ const props = defineProps<{
     v10: string,
     h11: string,
     v11: string,
+    h12: string,
+    v12: string,
+    h13: string,
+    v13: string,
   };
   next: String;
   prev: String;
@@ -72,7 +76,7 @@ console.log(props);
       <div class="hidden sm:-my-px sm:ml-10 sm:flex items-center">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pr-4">Month</h2>
         <EditForm class="float-left" :element="data" updateRoute="month.update"
-          :labels="[['bruto'], ['minuli'], ['odbitak'], ['prirez'], ['prijevoz'], ['prehrana'], ['stimulacija'], ['nagrada'], ['regres'], ['bozicnica'], ['prigodna'], ['kredit'], ['sindikat'], ['h01'], ['v01'], ['h02'], ['v02'], ['h03'], ['v03'], ['h04'], ['v04'], ['h05'], ['v05'], ['h06'], ['v06'], ['h07'], ['v07'], ['h08'], ['v08'], ['h09'], ['v09'], ['h10'], ['v10'], ['h11'], ['v11']]" />
+          :labels="[['bruto'], ['minuli'], ['odbitak'], ['prirez'], ['prijevoz'], ['prehrana'], ['stimulacija'], ['nagrada'], ['regres'], ['bozicnica'], ['prigodna'], ['kredit'], ['sindikat'], ['h01'], ['v01'], ['h02'], ['v02'], ['h03'], ['v03'], ['h04'], ['v04'], ['h05'], ['v05'], ['h06'], ['v06'], ['h07'], ['v07'], ['h08'], ['v08'], ['h09'], ['v09'], ['h10'], ['v10'], ['h11'], ['v11'], ['h12'], ['v12'], ['h13'], ['v13']]" />
       </div>
     </template>
 

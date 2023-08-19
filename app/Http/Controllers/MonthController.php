@@ -68,48 +68,52 @@ class MonthController extends Controller
     //dd($month);
     $user_id = Auth::user()->id;
     $m = Month::where('id', $month)->first();
-    $c = $m->year() >2022 ? ' €' : ' kn';
+    $c = $m->year() > 2022 ? ' €' : ' kn';
     //dd($month,$m);
     return Inertia::render('Month', [
       'month' => $m->days(),
       'data' => [
-        'id'=> $m->id,
+        'id' => $m->id,
         'slug' => $m->slug(),
-        'bruto' => round($m->bruto/100, 2) . $c,
-        'minuli' => round($m->minuli/100, 2) . ' %',
-        'odbitak' => round($m->odbitak/100, 2) . $c,
-        'prirez' => round($m->prirez/100, 2) . ' %',
-        'prijevoz' => round($m->prijevoz/100, 2) . $c,
-        'prehrana' => round($m->prehrana/100, 2) . $c,
-        'stimulacija' => round($m->stimulacija/100, 2) . $c,
-        'nagrada' => round($m->nagrada/100, 2) . $c,
-        'regres' => round($m->regres/100, 2) . $c,
-        'bozicnica' => round($m->bozicnica/100, 2) . $c,
-        'prigodna' => round($m->prigodna/100, 2) . $c,
-        'kredit' => round($m->kredit/100, 2) . $c,
-        'sindikat' => round($m->sindikat/100, 2) . ' %',
-        'h01' => $m->h01 . '',
-        'v01' => round($m->v01/100, 2) . $c,
-        'h02' => $m->h02 . '',
-        'v02' => round($m->v02/100, 2) . $c,
-        'h03' => $m->h03 . '',
-        'v03' => round($m->v03/100, 2) . $c,
-        'h04' => $m->h04 . '',
-        'v04' => round($m->v04/100, 2) . $c,
-        'h05' => $m->h05 . '',
-        'v05' => round($m->v05/100, 2) . $c,
-        'h06' => $m->h06 . '',
-        'v06' => round($m->v06/100, 2) . $c,
-        'h07' => $m->h07 . '',
-        'v07' => round($m->v07/100, 2) . $c,
-        'h08' => $m->h08 . '',
-        'v08' => round($m->v08/100, 2) . $c,
-        'h09' => $m->h09 . '',
-        'v09' => round($m->v09/100, 2) . $c,
-        'h10' => $m->h10 . '',
-        'v10' => round($m->v10/100, 2) . $c,
-        'h11' => $m->h11 . '',
-        'v11' => round($m->v11/100, 2) . $c,
+        'bruto' => round((int)$m->bruto / 100, 2) . $c,
+        'minuli' => round((int)$m->minuli / 100, 2) . ' %',
+        'odbitak' => round((int)$m->odbitak / 100, 2) . $c,
+        'prirez' => round((int)$m->prirez / 100, 2) . ' %',
+        'prijevoz' => round((int)$m->prijevoz / 100, 2) . $c,
+        'prehrana' => round((int)$m->prehrana / 100, 2) . $c,
+        'stimulacija' => round((int)$m->stimulacija / 100, 2) . $c,
+        'nagrada' => round((int)$m->nagrada / 100, 2) . $c,
+        'regres' => round((int)$m->regres / 100, 2) . $c,
+        'bozicnica' => round((int)$m->bozicnica / 100, 2) . $c,
+        'prigodna' => round((int)$m->prigodna / 100, 2) . $c,
+        'kredit' => round((int)$m->kredit / 100, 2) . $c,
+        'sindikat' => round((int)$m->sindikat / 100, 2) . ' %',
+        'h01' => round((int)$m->h01 / 100, 2) . '',
+        'v01' => round((int)$m->v01 / 100, 2) . $c,
+        'h02' => round((int)$m->h02 / 100, 2) . '',
+        'v02' => round((int)$m->v02 / 100, 2) . $c,
+        'h03' => round((int)$m->h03 / 100, 2) . '',
+        'v03' => round((int)$m->v03 / 100, 2) . $c,
+        'h04' => round((int)$m->h04 / 100, 2) . '',
+        'v04' => round((int)$m->v04 / 100, 2) . $c,
+        'h05' => round((int)$m->h05 / 100, 2) . '',
+        'v05' => round((int)$m->v05 / 100, 2) . $c,
+        'h06' => round((int)$m->h06 / 100, 2) . '',
+        'v06' => round((int)$m->v06 / 100, 2) . $c,
+        'h07' => round((int)$m->h07 / 100, 2) . '',
+        'v07' => round((int)$m->v07 / 100, 2) . $c,
+        'h08' => round((int)$m->h08 / 100, 2) . '',
+        'v08' => round((int)$m->v08 / 100, 2) . $c,
+        'h09' => round((int)$m->h09 / 100, 2) . '',
+        'v09' => round((int)$m->v09 / 100, 2) . $c,
+        'h10' => round((int)$m->h10 / 100, 2) . '',
+        'v10' => round((int)$m->v10 / 100, 2) . $c,
+        'h11' => round((int)$m->h11 / 100, 2) . '',
+        'v11' => round((int)$m->v11 / 100, 2) . $c,
+        'h12' => round((int)$m->h12 / 100, 2) . '',
+        'v12' => round((int)$m->v12 / 100, 2) . $c,
+        'h13' => round((int)$m->h13 / 100, 2) . '',
+        'v13' => round((int)$m->v13 / 100, 2) . $c,
       ],
       'next' => $m->next()->slug(),
       'prev' => $m->prev()->slug(),
@@ -131,7 +135,44 @@ class MonthController extends Controller
    */
   public function update(UpdateMonthRequest $request, Month $month)
   {
-    //
+    $month = Month::findOrFail($request->id);
+    $month->bruto = (int)((float)$request->bruto * 100);
+    $month->minuli = (int)((float)$request->minuli * 100);
+    $month->odbitak = (int)((float)$request->odbitak * 100);
+    $month->prirez = (int)((float)$request->prirez * 100);
+    $month->prijevoz = (int)((float)$request->prijevoz * 100);
+    $month->prehrana = (int)((float)$request->prehrana * 100);
+    $month->stimulacija = (int)((float)$request->stimulacija * 100);
+    $month->nagrada = (int)((float)$request->nagrada * 100);
+    $month->regres = (int)((float)$request->regres * 100);
+    $month->bozicnica = (int)((float)$request->bozicnica * 100);
+    $month->prigodna = (int)((float)$request->prigodna * 100);
+    $month->kredit = (int)((float)$request->kredit * 100);
+    $month->sindikat = (int)((float)$request->sindikat * 100);
+    $month->h01 = (int)((float)$request->h01 * 100);
+    $month->v01 = (int)((float)$request->v01 * 100);
+    $month->h02 = (int)((float)$request->h02 * 100);
+    $month->v02 = (int)((float)$request->v02 * 100);
+    $month->h03 = (int)((float)$request->h03 * 100);
+    $month->v03 = (int)((float)$request->v03 * 100);
+    $month->h04 = (int)((float)$request->h04 * 100);
+    $month->v04 = (int)((float)$request->v04 * 100);
+    $month->h05 = (int)((float)$request->h05 * 100);
+    $month->v05 = (int)((float)$request->v05 * 100);
+    $month->h06 = (int)((float)$request->h06 * 100);
+    $month->v06 = (int)((float)$request->v06 * 100);
+    $month->h07 = (int)((float)$request->h07 * 100);
+    $month->v07 = (int)((float)$request->v07 * 100);
+    $month->h08 = (int)((float)$request->h08 * 100);
+    $month->v08 = (int)((float)$request->v08 * 100);
+    $month->h09 = (int)((float)$request->h09 * 100);
+    $month->v09 = (int)((float)$request->v09 * 100);
+    $month->h10 = (int)((float)$request->h10 * 100);
+    $month->v10 = (int)((float)$request->v10 * 100);
+    $month->h11 = (int)((float)$request->h11 * 100);
+    $month->v11 = (int)((float)$request->v11 * 100);
+    //dd($month);
+    $month->save();
   }
 
   /**

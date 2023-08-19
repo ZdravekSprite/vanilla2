@@ -66,6 +66,12 @@ return new class extends Migration
       //bolovanje
       $table->tinyInteger('h11')->nullable();
       $table->mediumInteger('v11')->nullable();
+      //blagdani,izbori
+      $table->tinyInteger('h12')->nullable();
+      $table->mediumInteger('v12')->nullable();
+      //plaćeni dopust
+      $table->tinyInteger('h13')->nullable();
+      $table->mediumInteger('v13')->nullable();
 
       $table->timestamps();
       $table->unique(['user_id', 'firm_id', 'month']);
