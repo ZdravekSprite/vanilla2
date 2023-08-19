@@ -40,6 +40,7 @@ Route::get('/dashboard', function () {
 Route::get('/euro/hl', [EuroController::class, 'hl'])->name('euro.hl');
 
 Route::middleware('auth')->group(function () {
+  Route::get('/user/stop', [UserController::class, 'stop'])->name('user.stop');
 
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -48,6 +49,22 @@ Route::middleware('auth')->group(function () {
   Route::get('/euros', [EuroController::class, 'index'])->name('euros');
 
   Route::get('/holidays', [HolidayController::class, 'index'])->name('holidays');
+
+  Route::get('/days', [DayController::class, 'index'])->name('days');
+  Route::post('/day', [DayController::class, 'store'])->name('day.store');
+  Route::patch('/day', [DayController::class, 'update'])->name('day.update');
+  Route::delete('/day', [DayController::class, 'destroy'])->name('day.destroy');
+
+  Route::get('/months', [MonthController::class, 'index'])->name('months');
+  Route::get('/month/{id}', [MonthController::class, 'show'])->name('month');
+  Route::post('/month', [MonthController::class, 'store'])->name('month.store');
+  Route::patch('/month', [MonthController::class, 'update'])->name('month.update');
+  Route::delete('/month', [MonthController::class, 'destroy'])->name('month.destroy');
+});
+
+Route::middleware('auth.admin')->group(function () {
+  Route::get('/user/{user}', [UserController::class, 'start'])->name('user.start');
+
   Route::post('/holiday', [HolidayController::class, 'store'])->name('holiday.store');
   Route::patch('/holiday', [HolidayController::class, 'update'])->name('holiday.update');
   Route::delete('/holiday', [HolidayController::class, 'destroy'])->name('holiday.destroy');
@@ -69,18 +86,6 @@ Route::middleware('auth')->group(function () {
   Route::post('/firm', [FirmController::class, 'store'])->name('firm.store');
   Route::patch('/firm', [FirmController::class, 'update'])->name('firm.update');
   Route::delete('/firm', [FirmController::class, 'destroy'])->name('firm.destroy');
-
-  Route::get('/days', [DayController::class, 'index'])->name('days');
-  Route::post('/day', [DayController::class, 'store'])->name('day.store');
-  Route::patch('/day', [DayController::class, 'update'])->name('day.update');
-  Route::delete('/day', [DayController::class, 'destroy'])->name('day.destroy');
-
-  Route::get('/months', [MonthController::class, 'index'])->name('months');
-  Route::get('/month/{id}', [MonthController::class, 'show'])->name('month');
-  Route::post('/month', [MonthController::class, 'store'])->name('month.store');
-  Route::patch('/month', [MonthController::class, 'update'])->name('month.update');
-  Route::delete('/month', [MonthController::class, 'destroy'])->name('month.destroy');
 });
-
 require __DIR__ . '/auth.php';
 require __DIR__ . '/artisan.php';

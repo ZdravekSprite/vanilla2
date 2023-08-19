@@ -9,8 +9,8 @@ import { Link, usePage } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
 const isAuth = usePage().props.auth;
-const hasRole = isAuth ? usePage().props.auth.user.roles : false;
-const isAdmin = hasRole ? usePage().props.auth.user.roles.filter(r => r.name == 'superadmin').length : false;
+const isAdmin = isAuth ? usePage().props.auth.is_admin : false;
+const isImpersonating = usePage().props.impersonate.id > 0;
 </script>
 
 <template>
@@ -33,6 +33,9 @@ const isAdmin = hasRole ? usePage().props.auth.user.roles.filter(r => r.name == 
                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                   Dashboard
                 </NavLink>
+                <NavLink v-if="isImpersonating" :href="route('user.stop')" :active="isImpersonating">
+                  Stop
+                </NavLink>
                 <NavLink v-if="isAdmin" :href="route('users')" :active="route().current('users')">
                   Users
                 </NavLink>
@@ -45,7 +48,7 @@ const isAdmin = hasRole ? usePage().props.auth.user.roles.filter(r => r.name == 
                 <NavLink :href="route('holidays')" :active="route().current('holidays')">
                   Holidays
                 </NavLink>
-                <NavLink :href="route('firms')" :active="route().current('firms')">
+                <NavLink v-if="isAdmin" :href="route('firms')" :active="route().current('firms')">
                   Firms
                 </NavLink>
                 <NavLink :href="route('days')" :active="route().current('days')">
@@ -114,10 +117,13 @@ const isAdmin = hasRole ? usePage().props.auth.user.roles.filter(r => r.name == 
             <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
               Dashboard
             </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('users')" :active="route().current('users')">
+            <ResponsiveNavLink v-if="isImpersonating" :href="route('user.stop')" :active="isImpersonating">
+              Stop
+            </ResponsiveNavLink>
+            <ResponsiveNavLink v-if="isAdmin" :href="route('users')" :active="route().current('users')">
               Users
             </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('roles')" :active="route().current('roles')">
+            <ResponsiveNavLink v-if="isAdmin" :href="route('roles')" :active="route().current('roles')">
               Roles
             </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('euros')" :active="route().current('euros')">
@@ -126,7 +132,7 @@ const isAdmin = hasRole ? usePage().props.auth.user.roles.filter(r => r.name == 
             <ResponsiveNavLink :href="route('holidays')" :active="route().current('holidays')">
               Holidays
             </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('firms')" :active="route().current('firms')">
+            <ResponsiveNavLink v-if="isAdmin" :href="route('firms')" :active="route().current('firms')">
               Firms
             </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('days')" :active="route().current('days')">

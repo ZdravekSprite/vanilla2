@@ -2,6 +2,7 @@
 
 ```bash
 php artisan make:model Role -a
+php artisan make:middleware AccessAdmin
 ```
 
 - database\migrations\2023_08_18_000001_create_roles_table.php
@@ -31,5 +32,8 @@ php artisan make:model Role -a
 ```
 
 - app\Http\Middleware\HandleInertiaRequests.php
+- app\Http\Middleware\AccessAdmin.php
+- routes\web.php
+- app\Http\Kernel.php
 - resources\js\types\index.d.ts
 - resources\js\Layouts\AuthenticatedLayout.vue

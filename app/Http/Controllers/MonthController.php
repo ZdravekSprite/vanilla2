@@ -19,9 +19,9 @@ class MonthController extends Controller
   {
     $selected = ['id', 'month','user_id','bruto'];
     //$all = Month::where('user_id',Auth::user()->id)->count();
-    //$months = Month::where('user_id',Auth::user()->id)->select($selected)->paginate(14);
+    $months = Month::where('user_id',Auth::user()->id)->select($selected)->paginate(14);
     $all = Month::all()->count();
-    $months = Month::select($selected)->paginate(14);
+    //$months = Month::select($selected)->paginate(14);
     foreach ($months as $key => $value) {
       $value['slug'] = $value->slug();
       $value['user'] = $value->user()->name;

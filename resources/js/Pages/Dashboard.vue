@@ -5,6 +5,7 @@ import { computed } from 'vue'
 import { Head, usePage } from '@inertiajs/vue3';
 
 const user = computed(() => usePage().props.auth.user)
+const isAdmin = usePage().props.auth.is_admin;
 </script>
 
 <template>
@@ -22,7 +23,7 @@ const user = computed(() => usePage().props.auth.user)
           <div class="p-6 text-gray-900 dark:text-gray-100">You're logged in as: {{ user.name }}!</div>
         </div>
 
-        <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+        <div v-if="isAdmin" class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
           <Artisan class="max-w-xl" />
         </div>
       </div>

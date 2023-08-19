@@ -10,6 +10,26 @@ use Inertia\Inertia;
 class UserController extends Controller
 {
   /**
+   * Impersonate
+   */
+  public function start(User $user)
+  {
+    //dd($user);
+    $originalId = auth()->user()->id;
+    session()->put('impersonate', $originalId);
+    auth()->loginUsingId($user->id);
+    //dd($user->id,session()->get('impersonate'),auth()->user());
+    return redirect()->route('dashboard');
+  }
+  public function stop()
+  {
+    $originalId = session()->get('impersonate');
+    auth()->loginUsingId($originalId);
+    session()->forget('impersonate');
+    return redirect(route('users'));
+  }
+
+  /**
    * Display a listing of the resource.
    */
   public function index()

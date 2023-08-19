@@ -6,6 +6,7 @@ import Pagination from '@/Components/Pagination.vue';
 import NewForm from '@/Components/NewForm.vue';
 import EditForm from '@/Components/EditForm.vue';
 import DeleteForm from '@/Components/DeleteForm.vue';
+import ImpersonateUser from '@/Components/ImpersonateUser.vue';
 
 const props = defineProps<{
   all: number;
@@ -52,7 +53,7 @@ const props = defineProps<{
                   <th>name</th>
                   <th>email</th>
                   <th>password</th>
-                  <th class="w-32">actions</th>
+                  <th class="w-48">actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -63,6 +64,7 @@ const props = defineProps<{
                   <td>
                     <EditForm class="float-left" :element="e" updateRoute="user.update"
                       :labels="[['name'], ['email'], ['password']]" />
+                    <ImpersonateUser class="float-left" :user="e" />
                     <DeleteForm class="float-right" :element="e" destroyRoute="user.destroy" />
                   </td>
                 </tr>
