@@ -8,3 +8,6 @@ php artisan make:controller Admin\\UserController -mUser
 - routes\web.php
 - resources\js\Pages\Admin\Users.vue
 - resources\js\Layouts\AuthenticatedLayout.vue
+- resources\js\Components\ImpersonateUser.vue
+- resources\js\types\index.d.ts
+- app\Http\Middleware\HandleInertiaRequests.php

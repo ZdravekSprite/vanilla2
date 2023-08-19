@@ -60,6 +60,9 @@ const closeModal = () => {
             <template v-if="['date', 'from', 'to', 'expiration'].includes(l[0])">
               <TextInput :id="l[0]" v-model="form[l[0]]" type="date" class="mt-1 block w-3/4" :placeholder="l[0]" />
             </template>
+            <template v-else-if="['state'].includes(l[0])">
+              <TextInput :id="l[0]" v-model="form[l[0]]" type="number" class="mt-1 block w-3/4" :placeholder="l[0]" />
+            </template>
             <template v-else-if="['_month'].includes(l[0])">
               <select id="month" name="month" v-model="form[l[0]]"
                 class="block mt-1 w-full rounded-md shadow-sm dark:bg-gray-900 dark:text-gray-300 border-gray-300 dark:border-gray-700 focus:border-indigo-300 dark:focus:border-indigo-600 focus:ring focus:ring-indigo-200 dark:focus:ring-indigo-600 focus:ring-opacity-50">

@@ -18,4 +18,8 @@ class Day extends Model
     'end',
     'firm_id',
   ];
+
+  protected $casts = [
+    'date' => 'datetime:Y-m-d',
+  ];
 }

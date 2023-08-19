@@ -21,7 +21,7 @@ const confirmingUpdate = ref(false);
 const frmObj = {};
 for (let i = 0; i < props.labels.length; i++) {
   if (props.labels[i].length == 1) {
-    frmObj[props.labels[i]] = props.element[props.labels[i]] ?? '';
+    frmObj[props.labels[i]] = props.element[props.labels[i]]+'';
   } else if (props.labels[i][1] == 'check') {
     if (props.labels[i][2]) {
       let checked = [];
@@ -80,6 +80,9 @@ const closeModal = () => {
           <template v-if="l.length == 1">
             <template v-if="['date', 'from', 'to', 'expiration'].includes(l[0])">
               <TextInput :id="l[0]" v-model="form[l[0]]" type="date" class="mt-1 block w-3/4" :placeholder="l[0]" />
+            </template>
+            <template v-else-if="['state'].includes(l[0])">
+              <TextInput :id="l[0]" v-model="form[l[0]]" type="number" class="mt-1 block w-3/4" :placeholder="l[0]" />
             </template>
             <template v-else-if="['_month'].includes(l[0])">
               <select id="month" name="month" v-model="form[l[0]]" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">

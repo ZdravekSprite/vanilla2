@@ -37,3 +37,6 @@ php artisan make:middleware AccessAdmin
 - app\Http\Kernel.php
 - resources\js\types\index.d.ts
 - resources\js\Layouts\AuthenticatedLayout.vue
+- resources\js\Pages\Admin\Users.vue
+- resources\js\Pages\Dashboard.vue
+- routes\artisan.php
