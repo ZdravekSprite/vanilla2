@@ -4,7 +4,7 @@ import Page from '@/Components/Page.vue';
 const props = defineProps<{
   all: number;
   days: {
-    data?: Array<{
+    data: Array<{
       id: number;
       date: Date;
       user: String;

@@ -125,7 +125,7 @@ class ExportImportController extends Controller
       $columns = ['name', 'email'];
     }
     if ($request->input('model') == 'month') {
-      $columns = ['month','user','bruto','prijevoz','prehrana','odbitak','prirez','minuli','prekovremeni','stari','nocni','bolovanje','nagrada','stimulacija','regres','bozicnica','prigodna','sindikat','kredit','firm'];
+      $columns = ['month','user','bruto','prijevoz','prehrana','odbitak','prirez','minuli','prekovremeni','stari','nocni','bolovanje','nagrada','stimulacija','regres','bozicnica','prigodna','sindikat','kredit','firm','h01','v01'];
     }
 
     $frstrow = true;
@@ -207,7 +207,41 @@ class ExportImportController extends Controller
               'firm_id' => $firm_id,
             ]);
           }
-          $month->bruto = $dataRow['bruto'] ?? 0;
+          $month->bruto = (int)$dataRow['bruto'] ?? 0;
+          $month->minuli = (int)$dataRow['minuli'] ?? 0;
+          $month->odbitak = (int)$dataRow['odbitak'] ?? 0;
+          $month->prirez = (int)$dataRow['prirez'] ?? 0;
+          $month->prijevoz = (int)$dataRow['prijevoz'] ?? 0;
+          $month->prehrana = (int)$dataRow['prehrana'] ?? 0;
+          $month->stimulacija = (int)$dataRow['stimulacija'] ?? 0;
+          $month->nagrada = (int)$dataRow['nagrada'] ?? 0;
+          $month->regres = (int)$dataRow['regres'] ?? 0;
+          $month->bozicnica = (int)$dataRow['bozicnica'] ?? 0;
+          $month->prigodna = (int)$dataRow['prigodna'] ?? 0;
+          $month->kredit = (int)$dataRow['kredit'] ?? 0;
+          $month->sindikat = (int)$dataRow['sindikat'] ?? 0;
+          $month->h01 = $dataRow['h01'] ?? 0;
+          $month->v01 = $dataRow['v01'] ?? 0;
+          $month->h02 = $dataRow['h02'] ?? 0;
+          $month->v02 = $dataRow['v02'] ?? 0;
+          $month->h03 = $dataRow['h03'] ?? 0;
+          $month->v03 = $dataRow['v03'] ?? 0;
+          $month->h04 = $dataRow['h04'] ?? 0;
+          $month->v04 = $dataRow['v04'] ?? 0;
+          $month->h05 = $dataRow['h05'] ?? 0;
+          $month->v05 = $dataRow['v05'] ?? 0;
+          $month->h06 = $dataRow['h06'] ?? 0;
+          $month->v06 = $dataRow['v06'] ?? 0;
+          $month->h07 = $dataRow['h07'] ?? 0;
+          $month->v07 = $dataRow['v07'] ?? 0;
+          $month->h08 = $dataRow['h08'] ?? 0;
+          $month->v08 = $dataRow['v08'] ?? 0;
+          $month->h09 = $dataRow['h09'] ?? 0;
+          $month->v09 = $dataRow['v09'] ?? 0;
+          $month->h10 = $dataRow['h10'] ?? 0;
+          $month->v10 = $dataRow['v10'] ?? 0;
+          $month->h11 = $dataRow['h11'] ?? 0;
+          $month->v11 = $dataRow['v11'] ?? 0;
           $month->save();
         }
       } else {

@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import DayList from './Partials/DayList.vue';
 import Payroll from './Partials/Payroll.vue';
+import EditForm from '@/Components/EditForm.vue';
 
 const props = defineProps<{
   month: Array<{
@@ -18,11 +19,49 @@ const props = defineProps<{
     end: String;
     holiday: String;
   }>;
+  data: {
+    bruto: string,
+    minuli: string,
+    odbitak: string,
+    prirez: string,
+    prijevoz: string,
+    prehrana: string,
+    stimulacija: string,
+    nagrada: string,
+    regres: string,
+    bozicnica: string,
+    prigodna: string,
+    kredit: string,
+    sindikat: string,
+    h01: string,
+    v01: string,
+    h02: string,
+    v02: string,
+    h03: string,
+    v03: string,
+    h04: string,
+    v04: string,
+    h05: string,
+    v05: string,
+    h06: string,
+    v06: string,
+    h07: string,
+    v07: string,
+    h08: string,
+    v08: string,
+    h09: string,
+    v09: string,
+    h10: string,
+    v10: string,
+    h11: string,
+    v11: string,
+  };
   next: String;
   prev: String;
   next_id: number;
   prev_id: number;
 }>();
+console.log(props);
 </script>
 
 <template>
@@ -32,6 +71,8 @@ const props = defineProps<{
     <template #header>
       <div class="hidden sm:-my-px sm:ml-10 sm:flex items-center">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pr-4">Month</h2>
+        <EditForm class="float-left" :element="data" updateRoute="month.update"
+          :labels="[['bruto'], ['minuli'], ['odbitak'], ['prirez'], ['prijevoz'], ['prehrana'], ['stimulacija'], ['nagrada'], ['regres'], ['bozicnica'], ['prigodna'], ['kredit'], ['sindikat'], ['h01'], ['v01'], ['h02'], ['v02'], ['h03'], ['v03'], ['h04'], ['v04'], ['h05'], ['v05'], ['h06'], ['v06'], ['h07'], ['v07'], ['h08'], ['v08'], ['h09'], ['v09'], ['h10'], ['v10'], ['h11'], ['v11']]" />
       </div>
     </template>
 
@@ -39,7 +80,7 @@ const props = defineProps<{
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-4 sm:p-8 text-gray-900 dark:text-gray-100">
-            <Payroll :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
+            <Payroll :month="data" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
           </div>
         </div>
         <div

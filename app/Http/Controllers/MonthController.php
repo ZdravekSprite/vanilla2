@@ -17,9 +17,9 @@ class MonthController extends Controller
    */
   public function index()
   {
-    $selected = ['id', 'month','user_id','bruto'];
+    $selected = ['id', 'month', 'user_id', 'bruto'];
     //$all = Month::where('user_id',Auth::user()->id)->count();
-    $months = Month::where('user_id',Auth::user()->id)->select($selected)->paginate(14);
+    $months = Month::where('user_id', Auth::user()->id)->select($selected)->paginate(14);
     $all = Month::all()->count();
     //$months = Month::select($selected)->paginate(14);
     foreach ($months as $key => $value) {
@@ -67,10 +67,50 @@ class MonthController extends Controller
   {
     //dd($month);
     $user_id = Auth::user()->id;
-    $m = Month::where('id',$month)->first();
+    $m = Month::where('id', $month)->first();
+    $c = $m->year() >2022 ? ' €' : ' kn';
     //dd($month,$m);
     return Inertia::render('Month', [
       'month' => $m->days(),
+      'data' => [
+        'id'=> $m->id,
+        'slug' => $m->slug(),
+        'bruto' => round($m->bruto/100, 2) . $c,
+        'minuli' => round($m->minuli/100, 2) . ' %',
+        'odbitak' => round($m->odbitak/100, 2) . $c,
+        'prirez' => round($m->prirez/100, 2) . ' %',
+        'prijevoz' => round($m->prijevoz/100, 2) . $c,
+        'prehrana' => round($m->prehrana/100, 2) . $c,
+        'stimulacija' => round($m->stimulacija/100, 2) . $c,
+        'nagrada' => round($m->nagrada/100, 2) . $c,
+        'regres' => round($m->regres/100, 2) . $c,
+        'bozicnica' => round($m->bozicnica/100, 2) . $c,
+        'prigodna' => round($m->prigodna/100, 2) . $c,
+        'kredit' => round($m->kredit/100, 2) . $c,
+        'sindikat' => round($m->sindikat/100, 2) . ' %',
+        'h01' => $m->h01 . '',
+        'v01' => round($m->v01/100, 2) . $c,
+        'h02' => $m->h02 . '',
+        'v02' => round($m->v02/100, 2) . $c,
+        'h03' => $m->h03 . '',
+        'v03' => round($m->v03/100, 2) . $c,
+        'h04' => $m->h04 . '',
+        'v04' => round($m->v04/100, 2) . $c,
+        'h05' => $m->h05 . '',
+        'v05' => round($m->v05/100, 2) . $c,
+        'h06' => $m->h06 . '',
+        'v06' => round($m->v06/100, 2) . $c,
+        'h07' => $m->h07 . '',
+        'v07' => round($m->v07/100, 2) . $c,
+        'h08' => $m->h08 . '',
+        'v08' => round($m->v08/100, 2) . $c,
+        'h09' => $m->h09 . '',
+        'v09' => round($m->v09/100, 2) . $c,
+        'h10' => $m->h10 . '',
+        'v10' => round($m->v10/100, 2) . $c,
+        'h11' => $m->h11 . '',
+        'v11' => round($m->v11/100, 2) . $c,
+      ],
       'next' => $m->next()->slug(),
       'prev' => $m->prev()->slug(),
       'next_id' => $m->next()->id,

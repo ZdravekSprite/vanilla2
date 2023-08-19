@@ -1,11 +1,19 @@
 <script setup lang="ts">
+import TableTr from '@/Components/TableTr.vue';
 import { Link } from '@inertiajs/vue3';
 
 const props = defineProps<{
-  next: String;
-  prev: String;
-  next_id: number;
-  prev_id: number;
+  month: {
+    bruto: string,
+    h01: string,
+    v01: string,
+    h02: string,
+    v02: string,
+  };
+  next: String,
+  prev: String,
+  next_id: number,
+  prev_id: number,
 }>();
 </script>
 
@@ -67,61 +75,17 @@ const props = defineProps<{
         <td class="border p-2" colspan="4"><b>III. RAZDOBLJE NA KOJE SE PLAĆA ODNOSI:</b> GODINA ___, MJESEC ___ DANI U
           MJESECU OD ___ DO ___</td>
       </tr>
-      <tr>
-        <td class="w-3/4 border p-2" colspan="2"><b>1. OPIS PLAĆE</b></td>
-        <td class="w-1/8 border p-2 text-center"><b>SATI</b></td>
-        <td class="w-1/8 border p-2 text-right"><b>IZNOS</b></td>
-      </tr>
-      <tr>
-        <td class="w-3/4 border p-2 pl-6" colspan="2">1.1. Za redoviti rad</td>
-        <td class="w-1/8 border p-2 text-center">___</td>
-        <td class="w-1/8 border p-2 text-right">___</td>
-      </tr>
-      <tr>
-        <td class="w-3/4 border p-2 pl-6" colspan="2">1.4 Za prekovremeni rad</td>
-        <td class="w-1/8 border p-2 text-center">___</td>
-        <td class="w-1/8 border p-2 text-right">___</td>
-      </tr>
-      <tr>
-        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7a Praznici. Blagdani, izbori</td>
-        <td class="w-1/8 border p-2 text-center">___</td>
-        <td class="w-1/8 border p-2 text-right">___</td>
-      </tr>
-      <tr>
-        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7b Godišnji odmor</td>
-        <td class="w-1/8 border p-2 text-center">___</td>
-        <td class="w-1/8 border p-2 text-right">___</td>
-      </tr>
-      <tr>
-        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7c Plaćeni dopust</td>
-        <td class="w-1/8 border p-2 text-center">___</td>
-        <td class="w-1/8 border p-2 text-right">___</td>
-      </tr>
-      <tr>
-        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7d Bolovanje do 42 dana</td>
-        <td class="w-1/8 border p-2 text-center">___</td>
-        <td class="w-1/8 border p-2 text-right">___</td>
-      </tr>
-      <tr>
-        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7e Dodatak za rad nedjeljom</td>
-        <td class="w-1/8 border p-2 text-center">___</td>
-        <td class="w-1/8 border p-2 text-right">___</td>
-      </tr>
-      <tr>
-        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7f Dodatak za rad na praznik</td>
-        <td class="w-1/8 border p-2 text-center">___</td>
-        <td class="w-1/8 border p-2 text-right">___</td>
-      </tr>
-      <tr>
-        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7g Dodatak za noćni rad</td>
-        <td class="w-1/8 border p-2 text-center">___</td>
-        <td class="w-1/8 border p-2 text-right">___</td>
-      </tr>
-      <tr>
-        <td class="w-3/4 border p-2 pl-6" colspan="2">1.7.P Nagrada za radne rezultate</td>
-        <td class="w-1/8 border p-2 text-center"></td>
-        <td class="w-1/8 border p-2 text-right">___</td>
-      </tr>
+      <TableTr td1="1. OPIS PLAĆE" td2="SATI" td3="IZNOS" :bold="true" :indent="false"/>
+      <TableTr v-if="month.h01" td1="1.1. Za redoviti rad" :td2="month.h01+''" :td3="month.v01+''"/>
+      <TableTr v-if="month.h02" td1="1.4 Za prekovremeni rad" :td2="month.h02+''" :td3="month.v02+''"/>
+      <TableTr td1="1.7a Praznici. Blagdani, izbori" td2="_" td3="_"/>
+      <TableTr td1="1.7b Godišnji odmor" td2="_" td3="_"/>
+      <TableTr td1="1.7c Plaćeni dopust" td2="_" td3="_"/>
+      <TableTr td1="1.7d Bolovanje do 42 dana" td2="_" td3="_"/>
+      <TableTr td1="1.7e Dodatak za rad nedjeljom" td2="_" td3="_"/>
+      <TableTr td1="1.7f Dodatak za rad na praznik" td2="_" td3="_"/>
+      <TableTr td1="1.7g Dodatak za noćni rad" td2="_" td3="_"/>
+      <TableTr td1="1.7.P Nagrada za radne rezultate" td3="_"/>
       <tr>
         <td class="w-3/4 border p-2" colspan="2">2. OSTALI OBLICI RADA TEMELJEM KOJIH OSTVARUJE PRAVO NA UVEĆANJE PLAĆE
           PREMA KOLEKTIVNOM UGOVORU, PRAVILNIKU O RADU ILI UGOVORU O RADU I NOVČANI IZNOS PO TOJ OSNOVI (SATI
