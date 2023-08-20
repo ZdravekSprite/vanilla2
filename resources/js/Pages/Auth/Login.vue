@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import Btn from '@/Components/Btn.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 defineProps<{
   canRegister?: boolean,

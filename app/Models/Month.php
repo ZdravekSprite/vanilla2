@@ -12,6 +12,11 @@ class Month extends Model
 {
   use HasFactory;
 
+  protected $hidden = [
+    'created_at',
+    'updated_at',
+  ];
+
   protected $fillable = [
     'month',
     'user_id',
@@ -24,6 +29,14 @@ class Month extends Model
   public function user()
   {
     return $this->belongsTo(User::class)->first();
+  }
+
+    /**
+   * Get the firm that owns the month.
+   */
+  public function firm()
+  {
+    return $this->belongsTo(Firm::class)->first();
   }
 
   /**

@@ -33,6 +33,8 @@ return new class extends Migration
       $table->mediumInteger('prigodna')->nullable();
       $table->tinyInteger('sindikat')->nullable();
       $table->mediumInteger('kredit')->nullable();
+      $table->tinyInteger('first')->nullable();
+      $table->tinyInteger('last')->nullable();
       //radni sati dan
       $table->tinyInteger('h01')->nullable();
       $table->mediumInteger('v01')->nullable();

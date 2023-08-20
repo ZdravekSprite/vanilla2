@@ -52,6 +52,17 @@ class ExportImportController extends Controller
       $fileName = 'users.csv';
     }
 
+    if ($request->input('model') == 'month') {
+      $months = Month::all();
+      foreach ($months as $key => $value) {
+        $value['user'] = $value->user()->name;
+        $value['firm'] = $value->firm()->name;
+      }
+      $arrayData = $months->toArray();
+      $fileName = 'months.csv';
+      //dd($arrayData);
+    }
+
     if (count($arrayData)) {
       $columns = array_keys($arrayData[0]);
       $file = fopen(public_path('temp/' . $fileName), 'w');
@@ -125,7 +136,7 @@ class ExportImportController extends Controller
       $columns = ['name', 'email'];
     }
     if ($request->input('model') == 'month') {
-      $columns = ['month','user','bruto','prijevoz','prehrana','odbitak','prirez','minuli','prekovremeni','stari','nocni','bolovanje','nagrada','stimulacija','regres','bozicnica','prigodna','sindikat','kredit','firm','h01','v01'];
+      $columns = ['month','bruto','minuli','odbitak','prirez','prijevoz','prehrana','prekovremeni','stari','nocni','bolovanje','stimulacija','nagrada','regres','bozicnica','prigodna','sindikat','kredit','first','last','h01','v01','h02','v02','h03','v03','h04','v04','h05','v05','h06','v06','h07','v07','h08','v08','h09','v09','h10','v10','h11','v11','h12','v12','h13','v13','user','firm'];
     }
 
     $frstrow = true;
@@ -196,7 +207,7 @@ class ExportImportController extends Controller
         }
 
         if ($request->input('model') == 'month') {
-          //month,user,bruto,prijevoz,prehrana,odbitak,prirez,minuli,prekovremeni,stari,nocni,bolovanje,nagrada,stimulacija,regres,bozicnica,prigodna,sindikat,kredit,firm
+          //month,bruto,minuli,odbitak,prirez,prijevoz,prehrana,prekovremeni,stari,nocni,bolovanje,stimulacija,nagrada,regres,bozicnica,prigodna,sindikat,kredit,first,last,h01,v01,h02,v02,h03,v03,h04,v04,h05,v05,h06,v06,h07,v07,h08,v08,h09,v09,h10,v10,h11,v11,h12,v12,h13,v13,user,firm
           $user_id = ExportImportController::getUserId($dataRow['user']);
           $firm_id = ExportImportController::getCompanyId($dataRow['firm']);
           $month = Month::where('month', $dataRow['month'])->where('user_id', $user_id)->where('firm_id', $firm_id)->first();
@@ -213,6 +224,9 @@ class ExportImportController extends Controller
           $month->prirez = (int)$dataRow['prirez'] ?? 0;
           $month->prijevoz = (int)$dataRow['prijevoz'] ?? 0;
           $month->prehrana = (int)$dataRow['prehrana'] ?? 0;
+          $month->prekovremeni = (int)$dataRow['prekovremeni'] ?? 0;
+          $month->stari = (int)$dataRow['stari'] ?? 0;
+          $month->nocni = (int)$dataRow['nocni'] ?? 0;
           $month->stimulacija = (int)$dataRow['stimulacija'] ?? 0;
           $month->nagrada = (int)$dataRow['nagrada'] ?? 0;
           $month->regres = (int)$dataRow['regres'] ?? 0;
@@ -220,6 +234,8 @@ class ExportImportController extends Controller
           $month->prigodna = (int)$dataRow['prigodna'] ?? 0;
           $month->kredit = (int)$dataRow['kredit'] ?? 0;
           $month->sindikat = (int)$dataRow['sindikat'] ?? 0;
+          $month->first = $dataRow['first'];
+          $month->last = $dataRow['last'];
           $month->h01 = $dataRow['h01'] ?? 0;
           $month->v01 = $dataRow['v01'] ?? 0;
           $month->h02 = $dataRow['h02'] ?? 0;
@@ -242,6 +258,10 @@ class ExportImportController extends Controller
           $month->v10 = $dataRow['v10'] ?? 0;
           $month->h11 = $dataRow['h11'] ?? 0;
           $month->v11 = $dataRow['v11'] ?? 0;
+          $month->h12 = $dataRow['h12'] ?? 0;
+          $month->v12 = $dataRow['v12'] ?? 0;
+          $month->h13 = $dataRow['h13'] ?? 0;
+          $month->v13 = $dataRow['v13'] ?? 0;
           $month->save();
         }
       } else {
