@@ -2,8 +2,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import FileForm from '@/Components/FileForm.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Pagination from '@/Components/Pagination.vue';
+import Btn from '@/Components/Btn.vue';
 
 const props = defineProps<{
   all: number;
@@ -144,7 +144,7 @@ const rndCalc = () => {
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-flex pr-4">EuroJackPot</h2>
       <FileForm fileName="euros.csv" link="import" model="euro" title="Import" class="p-1 inline-flex" />
       <FileForm fileName="euros.csv" link="export" model="euro" title="Export" class="p-1 inline-flex" />
-      <SecondaryButton @click="rndCalc"> Calc </SecondaryButton>
+      <Btn @click="rndCalc">Calc</Btn>
     </template>
 
     <div class="py-12 space-y-4">

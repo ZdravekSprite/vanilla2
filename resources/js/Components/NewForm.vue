@@ -1,13 +1,12 @@
 <script setup>
 import Checkbox from '@/Components/Checkbox.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputError from '@/Components/InputError.vue';
 import Modal from '@/Components/Modal.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import Btn from '@/Components/Btn.vue';
 
 const props = defineProps({
   storeRoute: String,
@@ -47,7 +46,7 @@ const closeModal = () => {
 
 <template>
   <div>
-    <SecondaryButton @click="confirmStore"> New </SecondaryButton>
+    <Btn secondary @click="confirmStore">New</Btn>
 
     <Modal :show="confirmingStore" @close="closeModal">
       <div class="p-6">
@@ -92,11 +91,9 @@ const closeModal = () => {
           <InputError :message="form.errors[l[0]]" class="mt-2" />
         </div>
         <div class="mt-6 flex justify-end">
-          <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
-          <PrimaryButton class="ml-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
-            @click="create">
-            Create
-          </PrimaryButton>
+          <Btn secondary @click="closeModal">Cancel</Btn>
+          <Btn primary class="ml-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+            @click="create">Create</Btn>
         </div>
       </div>
     </Modal>

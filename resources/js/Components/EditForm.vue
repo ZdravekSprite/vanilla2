@@ -5,10 +5,9 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Modal from '@/Components/Modal.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import Btn from '@/Components/Btn.vue';
 
 const props = defineProps({
   element: Object,
@@ -21,7 +20,7 @@ const confirmingUpdate = ref(false);
 const frmObj = {};
 for (let i = 0; i < props.labels.length; i++) {
   if (props.labels[i].length == 1) {
-    frmObj[props.labels[i]] = props.element[props.labels[i]]+'';
+    frmObj[props.labels[i]] = props.element[props.labels[i]] + '';
   } else if (props.labels[i][1] == 'check') {
     if (props.labels[i][2]) {
       let checked = [];
@@ -66,9 +65,9 @@ const closeModal = () => {
 
 <template>
   <div>
-    <SecondaryButton @click="confirmUpdate">
+    <Btn secondary @click="confirmUpdate">
       <IconPen class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
-    </SecondaryButton>
+    </Btn>
 
     <Modal :show="confirmingUpdate" @close="closeModal">
       <div class="p-6">
@@ -85,13 +84,17 @@ const closeModal = () => {
               <TextInput :id="l[0]" v-model="form[l[0]]" type="number" class="mt-1 block w-3/4" :placeholder="l[0]" />
             </template>
             <template v-else-if="['_month'].includes(l[0])">
-              <select id="month" name="month" v-model="form[l[0]]" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                <option v-for="m in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" :selected="l[0] === m" :key="m" :value="m">{{ m }}</option>
+              <select id="month" name="month" v-model="form[l[0]]"
+                class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option v-for="m in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" :selected="l[0] === m" :key="m" :value="m">{{
+                  m }}</option>
               </select>
             </template>
             <template v-else-if="['_year'].includes(l[0])">
-              <select id="year" name="year" v-model="form[l[0]]" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                <option v-for="y in [2019, 2020, 2021, 2023, 2024, 2025]" :selected="l[0] === y" :key="y" :value="y">{{ y }}</option>
+              <select id="year" name="year" v-model="form[l[0]]"
+                class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option v-for="y in [2019, 2020, 2021, 2023, 2024, 2025]" :selected="l[0] === y" :key="y" :value="y">{{ y
+                }}</option>
               </select>
             </template>
             <template v-else>
@@ -121,13 +124,10 @@ const closeModal = () => {
           <InputError :message="form.errors[l[0]]" class="mt-2" />
         </div>
         <div class="mt-6 flex justify-end">
-          <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
-          <PrimaryButton class="ml-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
-            @click="update">
-            Update
-          </PrimaryButton>
+          <Btn secondary @click="closeModal">Cancel</Btn>
+          <Btn primary class="ml-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+            @click="update">Update</Btn>
         </div>
       </div>
-    </Modal>
-  </div>
-</template>
+  </Modal>
+</div></template>

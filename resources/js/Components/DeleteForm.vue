@@ -1,10 +1,9 @@
 <script setup>
-import DangerButton from '@/Components/DangerButton.vue';
 import IconTrash from '@/Components/IconTrash.vue';
 import Modal from '@/Components/Modal.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import Btn from '@/Components/Btn.vue';
 
 const props = defineProps({
   element: Object,
@@ -37,9 +36,9 @@ const closeModal = () => {
 
 <template>
   <div>
-    <DangerButton @click="confirmDeletion">
+    <Btn danger @click="confirmDeletion">
       <IconTrash class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
-    </DangerButton>
+    </Btn>
 
     <Modal :show="confirmingDeletion" @close="closeModal">
       <div class="p-6">
@@ -47,12 +46,10 @@ const closeModal = () => {
           Are you sure you want to delete {{ props.element.name ?? props.element.id + '. element' }}?
         </h2>
         <div class="mt-6 flex justify-end">
-          <SecondaryButton @click="closeModal">Cancel</SecondaryButton>
+          <Btn secondary @click="closeModal">Cancel</Btn>
 
-          <DangerButton class="ml-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
-            @click="deleteElement">
-            Delete
-          </DangerButton>
+          <Btn danger class="ml-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+            @click="deleteElement">Delete</Btn>
         </div>
       </div>
     </Modal>

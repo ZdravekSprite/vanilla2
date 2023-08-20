@@ -4,6 +4,7 @@ import { Head } from '@inertiajs/vue3';
 import DayList from './Partials/DayList.vue';
 import Payroll from './Partials/Payroll.vue';
 import EditForm from '@/Components/EditForm.vue';
+import Btn from '@/Components/Btn.vue';
 
 const props = defineProps<{
   month: Array<{
@@ -77,6 +78,7 @@ console.log(props);
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pr-4">Month</h2>
         <EditForm class="float-left" :element="data" updateRoute="month.update"
           :labels="[['bruto'], ['minuli'], ['odbitak'], ['prirez'], ['prijevoz'], ['prehrana'], ['stimulacija'], ['nagrada'], ['regres'], ['bozicnica'], ['prigodna'], ['kredit'], ['sindikat'], ['h01'], ['v01'], ['h02'], ['v02'], ['h03'], ['v03'], ['h04'], ['v04'], ['h05'], ['v05'], ['h06'], ['v06'], ['h07'], ['v07'], ['h08'], ['v08'], ['h09'], ['v09'], ['h10'], ['v10'], ['h11'], ['v11'], ['h12'], ['v12'], ['h13'], ['v13']]" />
+          <Btn>Test</Btn>
       </div>
     </template>
 

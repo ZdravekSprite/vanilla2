@@ -3,9 +3,9 @@ import Checkbox from '@/Components/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import Btn from '@/Components/Btn.vue';
 
 defineProps<{
   canRegister?: boolean,
@@ -30,7 +30,6 @@ const submit = () => {
 
 <template>
   <GuestLayout>
-
     <Head title="Log in" />
 
     <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
@@ -40,19 +39,15 @@ const submit = () => {
     <form @submit.prevent="submit">
       <div>
         <InputLabel for="email" value="Email" />
-
         <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus
           autocomplete="username" />
-
         <InputError class="mt-2" :message="form.errors.email" />
       </div>
 
       <div class="mt-4">
         <InputLabel for="password" value="Password" />
-
         <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required
           autocomplete="current-password" />
-
         <InputError class="mt-2" :message="form.errors.password" />
       </div>
 
@@ -73,9 +68,7 @@ const submit = () => {
         Forgot your password?
         </Link>
 
-        <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-          Log in
-        </PrimaryButton>
+        <Btn primary class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Log in</Btn>
       </div>
     </form>
   </GuestLayout>
