@@ -68,7 +68,8 @@ const dateFormat = (d) => {
                   <td v-for="(l, j) in labels_show" :key="j">
                     <span v-if="l[0] == 'date'">{{ dateFormat(e['date']) }}</span>
                     <span v-else-if="l[0] == 'slug'"><Link :href="route('month', e.id)">{{ e['slug'] }}</Link></span>
-                    <span v-else-if="l[0] == 'bruto'">{{e['bruto'] / 100 + (e['_year'] > 2022 ? ' €' : ' kn')}}</span>
+                    <span v-else-if="['bruto','odbitak','prijevoz','prehrana'].includes(l[0])">{{e[l[0]] / 100 + (e['_year'] > 2022 ? ' €' : ' kn')}}</span>
+                    <span v-else-if="['minuli','prirez'].includes(l[0])">{{e[l[0]] / 100 + ' %'}}</span>
                     <span v-else>{{ e[l[0]] }}</span>
                   </td>
                   <td>

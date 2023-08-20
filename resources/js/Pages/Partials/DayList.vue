@@ -1,21 +1,23 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import EditForm from '@/Components/EditForm.vue';
+interface Day {
+  id: number;
+  date: Date;
+  _date: string;
+  user: string;
+  user_id: number;
+  firm: string;
+  firm_id: number;
+  state: number;
+  night: string;
+  start: string;
+  end: string;
+  holiday: string;
+}
 
 const props = defineProps<{
-  month: Array<{
-    id: number;
-    date: Date;
-    user: String;
-    user_id: number;
-    firm: String;
-    firm_id: number;
-    state: number;
-    night: String;
-    start: String;
-    end: String;
-    holiday: String;
-  }>;
+  month: Array<Day>;
   next: String;
   prev: String;
   next_id: number;

@@ -9,6 +9,11 @@ const props = defineProps<{
       month: number;
       _year: number;
       bruto: number;
+      minuli: string,
+      odbitak: string,
+      prirez: string,
+      prijevoz: string,
+      prehrana: string,
       slug: String;
       user: String;
     }>;
@@ -20,5 +25,5 @@ const props = defineProps<{
 
 <template>
   <Page :all="all" single="month" plural="months" :elements="months" :labels_all="[['_month'], ['_year']]"
-    :labels_show="[['slug'], ['user'], ['bruto']]" />
+    :labels_show="[['slug'], ['user'], ['bruto'], ['minuli'], ['odbitak'], ['prirez'], ['prijevoz'], ['prehrana']]" />
 </template>

@@ -17,7 +17,7 @@ class MonthController extends Controller
    */
   public function index()
   {
-    $selected = ['id', 'month', 'user_id', 'bruto'];
+    $selected = ['id', 'month', 'user_id', 'bruto', 'minuli', 'odbitak', 'prirez', 'prijevoz', 'prehrana'];
     //$all = Month::where('user_id',Auth::user()->id)->count();
     $months = Month::where('user_id', Auth::user()->id)->select($selected)->paginate(14);
     $all = Month::all()->count();

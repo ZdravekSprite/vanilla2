@@ -6,20 +6,23 @@ import Payroll from './Partials/Payroll.vue';
 import EditForm from '@/Components/EditForm.vue';
 import Btn from '@/Components/Btn.vue';
 
+interface Day {
+  id: number;
+  date: Date;
+  _date: string;
+  user: string;
+  user_id: number;
+  firm: string;
+  firm_id: number;
+  state: number;
+  night: string;
+  start: string;
+  end: string;
+  holiday: string;
+}
+
 const props = defineProps<{
-  month: Array<{
-    id: number;
-    date: Date;
-    user: String;
-    user_id: number;
-    firm: String;
-    firm_id: number;
-    state: number;
-    night: String;
-    start: String;
-    end: String;
-    holiday: String;
-  }>;
+  month: Array<Day>;
   data: {
     bruto: string,
     minuli: string,
