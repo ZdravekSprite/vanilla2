@@ -1,33 +1,34 @@
 <script setup lang="ts">
 import Page from '@/Components/Page.vue';
 
+interface Day {
+  id: number;
+  date: Date;
+  _date: string;
+  user: string;
+  user_id: number;
+  firm: string;
+  firm_id: number;
+  state: number;
+  night: string;
+  start: string;
+  end: string;
+}
+
+interface Label {
+  id: number;
+  name: string;
+}
+
 const props = defineProps<{
   all: number;
   days: {
-    data: Array<{
-      id: number;
-      date: Date;
-      user: String;
-      user_id: number;
-      firm: String;
-      firm_id: number;
-      state: number;
-      night: String;
-      start: String;
-      end: String;
-    }>;
+    data: Array<Day>;
     links: Array<object>
   };
-  firms: Array<{
-    id: number;
-    name: String;
-  }>;
-  users: Array<{
-    id: number;
-    name: String;
-  }>;
+  firms: Array<Label>;
+  users: Array<Label>;
 }>();
-console.log(props);
 </script>
 
 <template>

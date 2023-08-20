@@ -1,45 +1,37 @@
-<script setup lang="ts">
+<script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, usePage } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import FileForm from '@/Components/FileForm.vue';
 import NewForm from '@/Components/NewForm.vue';
 import EditForm from '@/Components/EditForm.vue';
 import DeleteForm from '@/Components/DeleteForm.vue';
 import Pagination from '@/Components/Pagination.vue';
 
-const props = defineProps<{
-  all: number,
-  single: string,
-  plural: string
+const props = defineProps ({
+  all: Number,
+  single: String,
+  plural: String,
   elements: {
-    data?: Array<{
-      id: number;
-      date: Date;
-    }>,
-    links: Array<object>
+    data: Array,
+    links: Array,
   },
-  labels_all: Array<Array<string | Array<{
-    id: number;
-    name: String;
-  }>>>,
-  labels_show: Array<Array<string | Array<{
-    id: number;
-    name: String;
-  }>>>,
-}>();
+  labels_all: Array,
+  labels_show: Array,
+});
 
 const isAuth = usePage().props.auth;
 const isAdmin = isAuth ? usePage().props.auth.is_admin : false;
 const title = props.plural ? props.plural.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : '';
 const t = props.plural ? props.plural.replace(/\b(\S)/g, (t) => { return t.toUpperCase() }) : '';
 
-const dateFormat = (date: Date) => {
-  let objectDate = new Date(date);
+const dateFormat = (d) => {
+  let objectDate = new Date(d);
   let day = objectDate.getDate();
   let month = objectDate.getMonth() + 1;
   let year = objectDate.getFullYear();
   return day + '. ' + month + '. ' + year + '.'
 }
+//console.log(props.elements.data,props.labels_show);
 </script>
 
 <template>
@@ -64,9 +56,7 @@ const dateFormat = (date: Date) => {
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900 dark:text-gray-100">
             <table v-if="elements" class="table-auto w-full">
-              <caption class="caption-top">
-                Days!
-              </caption>
+              <caption class="caption-top">Days!</caption>
               <thead class="text-lg font-medium text-gray-900 dark:text-gray-100">
                 <tr>
                   <th v-for="(l, i) in labels_show" :key="i">{{ l[0] }}</th>
@@ -74,11 +64,13 @@ const dateFormat = (date: Date) => {
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(e, i) in elements.data" :key="e.id">
-                  <th v-for="(l, j) in labels_show" :key="j">
-                    <span v-if="l[0] == 'date'">{{ dateFormat(e[l[0]]) }}</span>
+                <tr v-for="e in elements.data" :key="e.id">
+                  <td v-for="(l, j) in labels_show" :key="j">
+                    <span v-if="l[0] == 'date'">{{ dateFormat(e['date']) }}</span>
+                    <span v-else-if="l[0] == 'slug'"><Link :href="route('month', e.id)">{{ e['slug'] }}</Link></span>
+                    <span v-else-if="l[0] == 'bruto'">{{e['bruto'] / 100 + (e['_year'] > 2022 ? ' €' : ' kn')}}</span>
                     <span v-else>{{ e[l[0]] }}</span>
-                  </th>
+                  </td>
                   <td>
                     <EditForm class="float-left" :element="e" :updateRoute="single + '.update'" :labels="labels_all" />
                     <DeleteForm class="float-right" :element="e" :destroyRoute="single + '.destroy'" />

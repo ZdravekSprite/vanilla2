@@ -71,7 +71,7 @@ const closeModal = () => {
             <template v-else-if="['_year'].includes(l[0])">
               <select id="year" name="year" v-model="form[l[0]]"
                 class="block mt-1 w-full rounded-md shadow-sm dark:bg-gray-900 dark:text-gray-300 border-gray-300 dark:border-gray-700 focus:border-indigo-300 dark:focus:border-indigo-600 focus:ring focus:ring-indigo-200 dark:focus:ring-indigo-600 focus:ring-opacity-50">
-                <option v-for="y in [2019, 2020, 2021, 2023, 2024, 2025]" :key="y" :value="y">{{ y }}</option>
+                <option v-for="y in [2019, 2020, 2021, 2022, 2023, 2024, 2025]" :key="y" :value="y">{{ y }}</option>
               </select>
             </template>
             <template v-else>
