@@ -21,7 +21,7 @@ class DayController extends Controller
     $perPage = 10;
     $selected = ['id', 'date', 'user_id', 'state', 'night', 'start', 'end', 'firm_id'];
     //$all = Day::whereUserId($user_id)->count();
-    $days = Day::where('user_id',$user_id)->select($selected)->paginate(13);
+    $days = Day::where('user_id',$user_id)->select($selected)->paginate($perPage);
     $all = Day::all()->count();
     //$days = Day::select($selected)->paginate($perPage);
     //dd($days);

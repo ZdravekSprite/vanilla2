@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -34,12 +35,22 @@ class UserController extends Controller
    */
   public function index()
   {
+    $perPage = 10;
     $selected = ['id','name', 'email', 'password'];
     $all = User::all()->count();
-    $users = User::select($selected)->paginate(15);
+    $users = User::select($selected);
+    $users = $users->paginate($perPage);
+    foreach ($users as $key => $value) {
+      $value['roles'] = implode(", ", $value->roles()->get()->map(fn ($r) => $r->name)->toArray());
+    }
+    $roles = Role::all()->map(fn ($u) => [
+      'id' => $u->id,
+      'name' => $u->name,
+    ])->toArray();
     return Inertia::render('Admin/Users', [
       'all' => $all,
       'users' => $users,
+      'roles' => $roles,
     ]);
   }
 

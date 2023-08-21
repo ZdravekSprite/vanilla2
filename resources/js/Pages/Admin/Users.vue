@@ -15,11 +15,13 @@ const props = defineProps<{
       id: number;
       name: String;
       email: String;
-      password: String;
+      roles: Array<object>;
     }>;
     links: Array<object>
   };
+  roles: Array<object>;
 }>();
+console.log(props)
 </script>
 
 <template>
@@ -31,7 +33,7 @@ const props = defineProps<{
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pr-4">Users</h2>
         <FileForm fileName="users.csv" link="import" model="user" title="Import" class="p-1" />
         <FileForm fileName="users.csv" link="export" model="user" title="Export" class="p-1" />
-        <NewForm :storeRoute="'user.store'" :labels="[['name'], ['email'], ['password']]" class="p-1" />
+        <NewForm :storeRoute="'user.store'" :labels="[['name'], ['email']]" class="p-1" />
       </div>
     </template>
 
@@ -52,7 +54,7 @@ const props = defineProps<{
                 <tr>
                   <th>name</th>
                   <th>email</th>
-                  <th>password</th>
+                  <th>roles</th>
                   <th class="w-48">actions</th>
                 </tr>
               </thead>
@@ -60,10 +62,10 @@ const props = defineProps<{
                 <tr v-for="(e, i) in users.data" :key="e.id">
                   <td>{{ e['name'] }}</td>
                   <td>{{ e['email'] }}</td>
-                  <td>{{ e['password'] }}</td>
+                  <td>{{ e['roles'] }}</td>
                   <td>
                     <EditForm class="float-left" :element="e" updateRoute="user.update"
-                      :labels="[['name'], ['email'], ['password']]" />
+                      :labels="[['name'], ['email'], ['roles', 'check', e.roles]]" />
                     <ImpersonateUser class="float-left" :user="e" />
                     <DeleteForm class="float-right" :element="e" destroyRoute="user.destroy" />
                   </td>
