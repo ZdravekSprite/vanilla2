@@ -77,7 +77,7 @@ php artisan serve
 ```
 
 ```bash
-git add . && git commit -am "v0038"
+git add . && git commit -am "v0039"
 git push
 ```
 
@@ -86,4 +86,7 @@ git clone https://github.com/ZdravekSprite/vanilla2.git
 npm install
 composer update
 php artisan migrate
+php artisan migrate:rollback
+php artisan migrate --seed
+php artisan migrate:fresh --seed
 ```

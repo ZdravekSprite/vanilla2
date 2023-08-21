@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
       'password' => Hash::make(env('SUPER_ADMIN_PASS', 'password')),
     ]);
     $this->call(RoleSeeder::class);
+    $this->call(SettingsSeeder::class);
   }
 }
