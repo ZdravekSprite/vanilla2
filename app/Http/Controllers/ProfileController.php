@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Settings;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,10 +19,14 @@ class ProfileController extends Controller
    */
   public function edit(Request $request): Response
   {
+    $settings = Settings::where('user_id',$request->user()->id)->first();
+    //dd($request->user(),$settings);
     return Inertia::render('Profile/Edit', [
       'roles' => $request->user()->roles,
       'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
       'status' => session('status'),
+      'BINANCE_API_KEY' => $settings->BINANCE_API_KEY,
+      'BINANCE_API_SECRET' => $settings->BINANCE_API_SECRET,
     ]);
   }
 

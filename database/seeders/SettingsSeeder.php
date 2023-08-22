@@ -25,8 +25,8 @@ class SettingsSeeder extends Seeder
     $super_admin_settings = Settings::create([
       'user_id' => $super_admin->id,
     ]);
-    $super_admin_settings->BINANCE_API_KEY = env('BINANCE_API_KEY', '');
-    $super_admin_settings->BINANCE_API_SECRET = env('BINANCE_API_SECRET', '');
-    $super_admin->save();
+    $super_admin_settings->BINANCE_API_KEY = env('BINANCE_API_KEY', 'key');
+    $super_admin_settings->BINANCE_API_SECRET = env('BINANCE_API_SECRET', 'secret');
+    $super_admin_settings->save();
   }
 }

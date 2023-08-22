@@ -14,6 +14,8 @@ defineProps<{
   }>,
   mustVerifyEmail?: boolean;
   status?: string;
+  BINANCE_API_KEY?: string;
+  BINANCE_API_SECRET?: string;
 }>();
 </script>
 
@@ -32,7 +34,7 @@ defineProps<{
         </div>
 
         <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-          <UpdateSettingsForm class="max-w-xl" />
+          <UpdateSettingsForm :api_key="BINANCE_API_KEY" :api_secret="BINANCE_API_SECRET" class="max-w-xl" />
         </div>
 
         <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
