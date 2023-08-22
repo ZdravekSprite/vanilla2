@@ -14,7 +14,6 @@ const form = useForm({
   key: props.api_key ?? '',
   secret: props.api_secret ?? '',
 });
-console.log(props.api_key,form);
 </script>
 
 <template>

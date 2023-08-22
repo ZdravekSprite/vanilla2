@@ -10,9 +10,12 @@ use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\MonthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
+use App\Models\Settings;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+use App\Utils\BinanceHelpers;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +38,13 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/dashboard', function () {
-  return Inertia::render('Dashboard');
+  $settings = Settings::where('user_id',Auth::user()->id)->first();
+  if (!$settings || $settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return Inertia::render('Dashboard', ['hasBinance' => false,]);
+  $test = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/capital/config/getall');
+  return Inertia::render('Dashboard', [
+    'hasBinance' => true,
+    'test' => $test,
+  ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/euro/hl', [EuroController::class, 'hl'])->name('euro.hl');

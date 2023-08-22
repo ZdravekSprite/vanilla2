@@ -3,6 +3,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Artisan from './Partials/Artisan.vue';
 import { computed } from 'vue'
 import { Head, usePage } from '@inertiajs/vue3';
+import Binance from './Partials/Binance.vue';
+
+const props = defineProps<{
+  hasBinance: boolean;
+  test: string;
+}>();
 
 const user = computed(() => usePage().props.auth.user)
 const isAdmin = usePage().props.auth.is_admin;
@@ -21,6 +27,10 @@ const isAdmin = usePage().props.auth.is_admin;
 
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900 dark:text-gray-100">You're logged in as: {{ user.name }}!</div>
+        </div>
+
+        <div v-if="hasBinance" class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+          <Binance :test="test"/>
         </div>
 
         <div v-if="isAdmin" class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
