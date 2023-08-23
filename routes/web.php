@@ -38,12 +38,8 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/dashboard', function () {
-  $settings = Settings::where('user_id',Auth::user()->id)->first();
-  if (!$settings || $settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return Inertia::render('Dashboard', ['hasBinance' => false,]);
-  $test = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/capital/config/getall');
   return Inertia::render('Dashboard', [
-    'hasBinance' => true,
-    'test' => $test,
+    'binance' => (new BinanceHelpers)->getBinanceData(),
   ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

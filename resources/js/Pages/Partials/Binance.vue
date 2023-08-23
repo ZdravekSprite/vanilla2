@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
-  test: string;
+  binance: Array<Object>;
 }>();
 </script>
 
@@ -14,7 +14,7 @@ const props = defineProps<{
       <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
         <div class="max-w-xl">
           <p class="flex justify-between text-gray-900 dark:text-gray-100">
-            {{ test }}
+            {{ binance }}
           </p>
         </div>
       </div>

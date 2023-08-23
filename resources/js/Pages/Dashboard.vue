@@ -6,8 +6,7 @@ import { Head, usePage } from '@inertiajs/vue3';
 import Binance from './Partials/Binance.vue';
 
 const props = defineProps<{
-  hasBinance: boolean;
-  test: string;
+  binance?: Array<Object>;
 }>();
 
 const user = computed(() => usePage().props.auth.user)
@@ -29,8 +28,8 @@ const isAdmin = usePage().props.auth.is_admin;
           <div class="p-6 text-gray-900 dark:text-gray-100">You're logged in as: {{ user.name }}!</div>
         </div>
 
-        <div v-if="hasBinance" class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-          <Binance :test="test"/>
+        <div v-if="binance" class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+          <Binance :binance="binance"/>
         </div>
 
         <div v-if="isAdmin" class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
