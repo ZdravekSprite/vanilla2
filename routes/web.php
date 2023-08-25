@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ExportImportController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\CoinController;
 use App\Http\Controllers\DayController;
 use App\Http\Controllers\EuroController;
 use App\Http\Controllers\FirmController;
@@ -68,6 +69,8 @@ Route::middleware('auth')->group(function () {
   Route::post('/month', [MonthController::class, 'store'])->name('month.store');
   Route::patch('/month', [MonthController::class, 'update'])->name('month.update');
   Route::delete('/month', [MonthController::class, 'destroy'])->name('month.destroy');
+
+  Route::get('/coins', [CoinController::class, 'index'])->name('coins');
 });
 
 Route::middleware('auth.admin')->group(function () {

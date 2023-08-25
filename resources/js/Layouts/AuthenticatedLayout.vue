@@ -57,6 +57,9 @@ const isImpersonating = usePage().props.impersonate.id > 0;
                 <NavLink :href="route('months')" :active="route().current('months')">
                   Months
                 </NavLink>
+                <NavLink :href="route('coins')" :active="route().current('coins')">
+                  Coins
+                </NavLink>
               </div>
             </div>
 
@@ -140,6 +143,9 @@ const isImpersonating = usePage().props.impersonate.id > 0;
             </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('months')" :active="route().current('months')">
               Months
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('coins')" :active="route().current('coins')">
+              Coins
             </ResponsiveNavLink>
           </div>
 
