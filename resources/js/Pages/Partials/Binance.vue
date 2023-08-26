@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
-  binance: Array<Object>;
+  binance: number | Array<Object>;
 }>();
 </script>
 

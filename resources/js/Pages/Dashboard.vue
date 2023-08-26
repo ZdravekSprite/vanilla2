@@ -6,7 +6,7 @@ import { Head, usePage } from '@inertiajs/vue3';
 import Binance from './Partials/Binance.vue';
 
 const props = defineProps<{
-  binance?: Array<Object>;
+  binance?: number | Array<Object>;
 }>();
 
 const user = computed(() => usePage().props.auth.user)

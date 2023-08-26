@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\DayController;
 use App\Http\Controllers\EuroController;
+use App\Http\Controllers\EarnController;
 use App\Http\Controllers\FirmController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\MonthController;
@@ -71,6 +72,8 @@ Route::middleware('auth')->group(function () {
   Route::delete('/month', [MonthController::class, 'destroy'])->name('month.destroy');
 
   Route::get('/coins', [CoinController::class, 'index'])->name('coins');
+
+  Route::get('/earns', [EarnController::class, 'index'])->name('earns');
 });
 
 Route::middleware('auth.admin')->group(function () {
