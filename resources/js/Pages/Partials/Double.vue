@@ -60,10 +60,10 @@ const closeModal = () => {
           Double
         </h2>
         <div class="grid grid-cols-6 gap-3">
-          <Box v-for="(e, i) in array" :key="i" :header="e[0]" :value="e[1]" />
+          <Box v-for="(e, i) in array" :key="i" :header="e[0]" :value="e[1]" :limit=1 />
         </div>
         <div class="grid grid-cols-5 gap-4">
-          <Box v-for="(e, j) in barray" :key="j" :header="e[0]" :value="e[1]" />
+          <Box v-for="(e, j) in barray" :key="j" :header="e[0]" :value="e[1]" :limit=1 />
         </div>
         <div class="mt-6 flex justify-end">
           <Btn secondary @click="closeModal">Cancel</Btn>

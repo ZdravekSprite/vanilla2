@@ -6,6 +6,7 @@ import Pagination from '@/Components/Pagination.vue';
 import Btn from '@/Components/Btn.vue';
 import Single from './Partials/Single.vue';
 import Double from './Partials/Double.vue';
+import Triple from './Partials/Triple.vue';
 
 const props = defineProps<{
   all: number;
@@ -149,6 +150,7 @@ const rndCalc = () => {
       <Btn @click="rndCalc">Calc</Btn>
       <Single class="p-1 inline-flex" :euros="alleuros"/>
       <Double class="p-1 inline-flex" :euros="alleuros"/>
+      <Triple class="p-1 inline-flex" :euros="alleuros"/>
     </template>
 
     <div class="py-12 space-y-4">

@@ -36,7 +36,7 @@ const confirmSingle = () => {
       }
     })
   });
-  console.log(array, barray);
+  //console.log(array, barray);
   confirmingSingle.value = true;
 };
 
