@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Modal from '@/Components/Modal.vue';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import Btn from '@/Components/Btn.vue';
 const props = defineProps({
   euros: Array<{
@@ -19,11 +19,9 @@ const range = (n: number) => Array(Math.ceil(n)).fill(0);
 let array = range(50);
 let barray = range(12);
 
-//const user = computed(() => '');
+const confirmingSingle = ref(false);
 
-const confirmingJedinice = ref(false);
-
-const confirmJedinice = () => {
+const confirmSingle = () => {
   if (props.euros) props.euros.forEach(el => {
     array.forEach((c,no) => {
       if ([el.no1, el.no2, el.no3, el.no4, el.no5].includes(no+1)) {
@@ -37,24 +35,24 @@ const confirmJedinice = () => {
     })
   });
   console.log(array, barray);
-  confirmingJedinice.value = true;
+  confirmingSingle.value = true;
 };
 
 const closeModal = () => {
-  confirmingJedinice.value = false;
+  confirmingSingle.value = false;
 };
 </script>
 
 <template>
   <div>
-    <Btn secondary @click="confirmJedinice">
-      Jedinice
+    <Btn secondary @click="confirmSingle">
+      Single
     </Btn>
 
-    <Modal :show="confirmingJedinice" @close="closeModal">
+    <Modal :show="confirmingSingle" @close="closeModal">
       <div class="p-6">
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-          Jedinice
+          Single
         </h2>
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
         <div v-for="(e, i) in array" :key="i">

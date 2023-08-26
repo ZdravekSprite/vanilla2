@@ -4,7 +4,8 @@ import { Head } from '@inertiajs/vue3';
 import FileForm from '@/Components/FileForm.vue';
 import Pagination from '@/Components/Pagination.vue';
 import Btn from '@/Components/Btn.vue';
-import Jedinice from './Partials/Jedinice.vue';
+import Single from './Partials/Single.vue';
+import Double from './Partials/Double.vue';
 
 const props = defineProps<{
   all: number;
@@ -146,7 +147,8 @@ const rndCalc = () => {
       <FileForm fileName="euros.csv" link="import" model="euro" title="Import" class="p-1 inline-flex" />
       <FileForm fileName="euros.csv" link="export" model="euro" title="Export" class="p-1 inline-flex" />
       <Btn @click="rndCalc">Calc</Btn>
-      <Jedinice class="p-1 inline-flex" :euros="alleuros"/>
+      <Single class="p-1 inline-flex" :euros="alleuros"/>
+      <Double class="p-1 inline-flex" :euros="alleuros"/>
     </template>
 
     <div class="py-12 space-y-4">
