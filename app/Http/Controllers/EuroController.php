@@ -18,7 +18,7 @@ class EuroController extends Controller
     $selected = ['time', 'no1', 'no2', 'no3', 'no4', 'no5', 'bn1', 'bn2'];
     $alleuros = Euro::select($selected)->get()->toArray();
     $all = Euro::all()->count();
-    $euros = Euro::select($selected)->paginate(15);
+    $euros = Euro::select($selected)->orderBy('time', 'DESC')->paginate(15);
     return Inertia::render('Euros', [
       'all' => $all,
       'euros' => $euros,
