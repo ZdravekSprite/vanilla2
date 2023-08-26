@@ -2,6 +2,8 @@
 import Modal from '@/Components/Modal.vue';
 import { ref } from 'vue';
 import Btn from '@/Components/Btn.vue';
+import Box from '@/Components/Box.vue';
+
 const props = defineProps({
   euros: Array
 });
@@ -57,16 +59,12 @@ const closeModal = () => {
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
           Double
         </h2>
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-        <div v-for="(e, i) in array" :key="i">
-          {{ i + 1 }} {{ e }}
+        <div class="grid grid-cols-6 gap-3">
+          <Box v-for="(e, i) in array" :key="i" :header="e[0]" :value="e[1]" />
         </div>
-        </p>
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-        <div v-for="(e, i) in barray" :key="i">
-          {{ i + 1 }} {{ e }}
+        <div class="grid grid-cols-5 gap-4">
+          <Box v-for="(e, j) in barray" :key="j" :header="e[0]" :value="e[1]" />
         </div>
-        </p>
         <div class="mt-6 flex justify-end">
           <Btn secondary @click="closeModal">Cancel</Btn>
         </div>
