@@ -6,6 +6,7 @@ import NewForm from '@/Components/NewForm.vue';
 import EditForm from '@/Components/EditForm.vue';
 import DeleteForm from '@/Components/DeleteForm.vue';
 import Pagination from '@/Components/Pagination.vue';
+import PageTable from './PageTable.vue';
 
 const props = defineProps ({
   all: Number,
@@ -21,16 +22,8 @@ const props = defineProps ({
 
 const isAuth = usePage().props.auth;
 const isAdmin = isAuth ? usePage().props.auth.is_admin : false;
-const title = props.plural ? props.plural.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : '';
 const t = props.plural ? props.plural.replace(/\b(\S)/g, (t) => { return t.toUpperCase() }) : '';
 
-const dateFormat = (d) => {
-  let objectDate = new Date(d);
-  let day = objectDate.getDate();
-  let month = objectDate.getMonth() + 1;
-  let year = objectDate.getFullYear();
-  return day + '. ' + month + '. ' + year + '.'
-}
 //console.log(props.elements.data,props.labels_show);
 </script>
 
@@ -55,37 +48,7 @@ const dateFormat = (d) => {
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900 dark:text-gray-100">
-            <table v-if="elements" class="table-auto w-full">
-              <caption class="caption-top">Days!</caption>
-              <thead class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                <tr>
-                  <th v-for="(l, i) in labels_show" :key="i">{{ l[0] }}</th>
-                  <th class="w-32">actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="e in elements.data" :key="e.id">
-                  <td v-for="(l, j) in labels_show" :key="j">
-                    <span v-if="l[0] == 'date'">{{ dateFormat(e['date']) }}</span>
-                    <span v-else-if="l[0] == 'slug'"><Link :href="route('month', e.id)">{{ e['slug'] }}</Link></span>
-                    <span v-else-if="['bruto','odbitak','prijevoz','prehrana'].includes(l[0])">{{e[l[0]] / 100 + (e['_year'] > 2022 ? ' €' : ' kn')}}</span>
-                    <span v-else-if="['minuli','prirez'].includes(l[0])">{{e[l[0]] / 100 + ' %'}}</span>
-                    <span v-else>{{ e[l[0]] }}</span>
-                  </td>
-                  <td>
-                    <EditForm class="float-left" :element="e" :updateRoute="single + '.update'" :labels="labels_all" />
-                    <DeleteForm class="float-right" :element="e" :destroyRoute="single + '.destroy'" />
-                  </td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th colspan="8">
-                    <Pagination v-if="elements" :links="elements.links" />
-                  </th>
-                </tr>
-              </tfoot>
-            </table>
+            <PageTable :all="all" :single="single" :plural="plural" :elements="elements" :labels_all="labels_all" :labels_show="labels_show" />
           </div>
         </div>
       </div>

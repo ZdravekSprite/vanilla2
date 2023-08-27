@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import Page from '@/Components/Page.vue';
+import PageTable from '@/Components/PageTable.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head, usePage } from '@inertiajs/vue3';
+import FileForm from '@/Components/FileForm.vue';
+import NewForm from '@/Components/NewForm.vue';
 
-interface Earn {
+interface EarnLP {
   id: number;
-  earn: string;
   user_id: number;
   positionId: number;
   productId: string;
@@ -29,6 +32,23 @@ interface Earn {
   apy: string;
 }
 
+interface EarnLL {
+  id: number;
+  earn: string;
+  user_id: number;
+  projectId: string;
+  asset: string;
+  rewardAsset: string;
+  duration: number;
+  renewable: boolean;
+  isSoldOut: boolean;
+  apr: string;
+  status: string;
+  subscriptionStartTime: number;
+  totalPersonalQuota: string;
+  minimum: string;
+}
+
 interface Label {
   id: number;
   name: string;
@@ -36,14 +56,42 @@ interface Label {
 
 const props = defineProps<{
   all: number;
-  earns: {
-    data: Array<Earn>;
+  earn_l_p_s: {
+    data: Array<EarnLP>;
+    links: Array<object>
+  };
+  earn_l_l_s: {
+    data: Array<EarnLL>;
     links: Array<object>
   };
 }>();
 </script>
 
 <template>
-  <Page :all="all" single="earn" plural="earns" :elements="earns" :labels_all="[['earn'], ['asset'], ['amount']]"
-    :labels_show="[['earn'], ['asset'], ['amount']]" />
+  <Head title="Earns" />
+
+  <AuthenticatedLayout>
+    <template #header>
+      <div class="hidden sm:-my-px sm:ml-10 sm:flex items-center">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pr-4">Earns</h2>
+      </div>
+    </template>
+    <div class="py-12 space-y-4">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+          <div class="p-6 text-gray-900 dark:text-gray-100">All: {{ all }}</div>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+          <div class="p-6 text-gray-900 dark:text-gray-100 space-y-4">
+            <PageTable :all="all" single="earn" plural="earns" :elements="earn_l_p_s"
+              :labels_all="[['asset'], ['amount']]" :labels_show="[['asset'], ['amount']]" />
+            <PageTable :all="all" single="earn" plural="earns" :elements="earn_l_l_s"
+              :labels_all="[['projectId'], ['apr']]" :labels_show="[['projectId'], ['apr']]" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </AuthenticatedLayout>
 </template>

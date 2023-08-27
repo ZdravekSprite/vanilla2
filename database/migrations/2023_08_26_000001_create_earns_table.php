@@ -11,9 +11,8 @@ return new class extends Migration
    */
   public function up(): void
   {
-    Schema::create('earns', function (Blueprint $table) {
+    Schema::create('earn_l_p_s', function (Blueprint $table) {
       $table->id();
-      $table->string('earn');
       $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
       $table->integer('positionId');
       $table->string('productId');
@@ -39,6 +38,39 @@ return new class extends Migration
       $table->string('apy');
       $table->timestamps();
     });
+    Schema::create('earn_l_l_s', function (Blueprint $table) {
+      $table->id();
+      $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+      $table->string('projectId');
+      $table->string('asset');
+      $table->string('rewardAsset');
+      $table->integer('duration');
+      $table->boolean('renewable');
+      $table->boolean('isSoldOut');
+      $table->string('apr');
+      $table->string('status');
+      $table->integer('subscriptionStartTime');
+      $table->string('totalPersonalQuota');
+      $table->string('minimum');
+      $table->timestamps();
+    });
+    Schema::create('earn_f_p_s', function (Blueprint $table) {
+      $table->id();
+      $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+      $table->string('productId');
+      $table->string('totalAmount');
+      $table->string('tierAnnualPercentageRate');
+      $table->string('latestAnnualPercentageRate');
+      $table->string('asset');
+      $table->boolean('canRedeem');
+      $table->string('collateralAmount');
+      $table->string('yesterdayRealTimeRewards');
+      $table->string('cumulativeBonusRewards');
+      $table->string('cumulativeRealTimeRewards');
+      $table->string('cumulativeTotalRewards');
+      $table->boolean('autoSubscribe');
+      $table->timestamps();
+    });
   }
 
   /**
@@ -46,6 +78,8 @@ return new class extends Migration
    */
   public function down(): void
   {
-    Schema::dropIfExists('earns');
+    Schema::dropIfExists('earn_l_p_s');
+    Schema::dropIfExists('earn_l_l_s');
+    Schema::dropIfExists('earn_f_p_s');
   }
 };
