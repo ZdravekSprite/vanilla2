@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import PageTable from '@/Components/PageTable.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, usePage } from '@inertiajs/vue3';
-import FileForm from '@/Components/FileForm.vue';
-import NewForm from '@/Components/NewForm.vue';
+import { Head } from '@inertiajs/vue3';
 
+
+interface EarnFP {
+}
+interface EarnFL {
+}
 interface EarnLP {
   id: number;
   user_id: number;
@@ -34,7 +37,6 @@ interface EarnLP {
 
 interface EarnLL {
   id: number;
-  earn: string;
   user_id: number;
   projectId: string;
   asset: string;
@@ -56,6 +58,14 @@ interface Label {
 
 const props = defineProps<{
   all: number;
+  earn_f_p_s: {
+    data: Array<EarnFP>;
+    links: Array<object>
+  };
+  earn_f_l_s: {
+    data: Array<EarnFL>;
+    links: Array<object>
+  };
   earn_l_p_s: {
     data: Array<EarnLP>;
     links: Array<object>
@@ -88,7 +98,13 @@ const props = defineProps<{
             <PageTable :all="all" single="earn" plural="earns" :elements="earn_l_p_s"
               :labels_all="[['asset'], ['amount']]" :labels_show="[['asset'], ['amount']]" />
             <PageTable :all="all" single="earn" plural="earns" :elements="earn_l_l_s"
-              :labels_all="[['projectId'], ['apr']]" :labels_show="[['projectId'], ['apr']]" />
+              :labels_all="[['projectId'], ['apr']]"
+              :labels_show="[['projectId'], ['apr']]" />
+            <PageTable :all="all" single="earn" plural="earns" :elements="earn_f_p_s"
+              :labels_all="[['asset'], ['amount']]" :labels_show="[['asset'], ['totalAmount']]" />
+            <PageTable :all="all" single="earn" plural="earns" :elements="earn_f_l_s"
+              :labels_all="[['asset'], ['latestAnnualPercentageRate']]"
+              :labels_show="[['asset'], ['latestAnnualPercentageRate']]" />
           </div>
         </div>
       </div>

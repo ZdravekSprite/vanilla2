@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEarnRequest;
 use App\Http\Requests\UpdateEarnRequest;
+use App\Models\EarnFL;
+use App\Models\EarnFP;
 use App\Models\EarnLL;
 use App\Models\EarnLP;
 use Inertia\Inertia;
@@ -16,12 +18,16 @@ class EarnController extends Controller
   public function index()
   {
     $all = EarnLP::all()->count();
+    $earn_f_p_s = EarnFP::select(['asset', 'totalAmount'])->paginate(5);
+    $earn_f_l_s = EarnFL::select(['asset', 'latestAnnualPercentageRate'])->paginate(5);
     $earn_l_p_s = EarnLP::select(['asset', 'amount'])->paginate(5);
     $earn_l_l_s = EarnLL::select(['projectId', 'apr'])->paginate(5);
     return Inertia::render('Earns', [
       'all' => $all,
       'earn_l_p_s' => $earn_l_p_s,
       'earn_l_l_s' => $earn_l_l_s,
+      'earn_f_p_s' => $earn_f_p_s,
+      'earn_f_l_s' => $earn_f_l_s,
     ]);
   }
 

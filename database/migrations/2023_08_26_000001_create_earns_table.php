@@ -71,6 +71,21 @@ return new class extends Migration
       $table->boolean('autoSubscribe');
       $table->timestamps();
     });
+    Schema::create('earn_f_l_s', function (Blueprint $table) {
+      $table->id();
+      $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+      $table->string('asset');
+      $table->string('latestAnnualPercentageRate');
+      $table->boolean('canPurchase');
+      $table->boolean('canRedeem');
+      $table->boolean('isSoldOut');
+      $table->boolean('hot');
+      $table->string('minPurchaseAmount');
+      $table->string('productId');
+      $table->integer('subscriptionStartTime');
+      $table->string('status');
+      $table->timestamps();
+    });
   }
 
   /**
@@ -81,5 +96,6 @@ return new class extends Migration
     Schema::dropIfExists('earn_l_p_s');
     Schema::dropIfExists('earn_l_l_s');
     Schema::dropIfExists('earn_f_p_s');
+    Schema::dropIfExists('earn_f_l_s');
   }
 };
