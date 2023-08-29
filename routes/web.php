@@ -74,6 +74,7 @@ Route::middleware('auth')->group(function () {
   Route::get('/coins', [CoinController::class, 'index'])->name('coins');
 
   Route::get('/earns', [EarnController::class, 'index'])->name('earns');
+  Route::post('/earn', [EarnController::class, 'update'])->name('earn.update');
 });
 
 Route::middleware('auth.admin')->group(function () {
