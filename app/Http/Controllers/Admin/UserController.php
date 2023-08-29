@@ -42,6 +42,7 @@ class UserController extends Controller
     $users = $users->paginate($perPage);
     foreach ($users as $key => $value) {
       $value['roles'] = implode(", ", $value->roles()->get()->map(fn ($r) => $r->name)->toArray());
+      $value['isSuper'] = $value->hasAnyRole('superadmin');
     }
     $roles = Role::all()->map(fn ($u) => [
       'id' => $u->id,

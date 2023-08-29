@@ -7,6 +7,7 @@ import NewForm from '@/Components/NewForm.vue';
 import EditForm from '@/Components/EditForm.vue';
 import DeleteForm from '@/Components/DeleteForm.vue';
 import ImpersonateUser from '@/Components/ImpersonateUser.vue';
+import Icon from '@/Components/Icon.vue';
 
 const props = defineProps<{
   all: number;
@@ -16,6 +17,7 @@ const props = defineProps<{
       name: String;
       email: String;
       roles: Array<object>;
+      isSuper: boolean;
     }>;
     links: Array<object>
   };
@@ -52,6 +54,7 @@ console.log(props)
               </caption>
               <thead class="text-lg font-medium text-gray-900 dark:text-gray-100">
                 <tr>
+                  <th></th>
                   <th>name</th>
                   <th>email</th>
                   <th>roles</th>
@@ -60,6 +63,10 @@ console.log(props)
               </thead>
               <tbody>
                 <tr v-for="(e, i) in users.data" :key="e.id">
+                  <td width="32">
+                    <Icon v-if="e.isSuper" icon="ga_attorney" />
+                    <Icon v-else icon="i_person" />
+                  </td>
                   <td>{{ e['name'] }}</td>
                   <td>{{ e['email'] }}</td>
                   <td>{{ e['roles'] }}</td>
