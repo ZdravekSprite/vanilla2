@@ -16,7 +16,7 @@ class BinanceHelpers
 {
   public function getBinanceData()
   {
-    return (new BinanceHelpers)->getSimpleEarnLockedPosition();
+    //return (new BinanceHelpers)->getSimpleEarnLockedPosition();
     //return (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/simple-earn/locked/position');
     //{ "total": 1, "rows": [ { "positionId": 205444680, "productId": "Bnb*120", "asset": "BNB", "amount": "0.4", "purchaseTime": 1688847427000, "duration": 120, "accrualDays": 48, "rewardAsset": "BNB", "rewardAmt": "0.00126004", "nextPay": "0.00002301", "nextPayDate": 1693094400000, "payPeriod": 1, "redeemAmountEarly": "0.39873996", "rewardsEndDate": 1699228800000, "deliverDate": 1699351200000, "redeemPeriod": 1, "canRedeemEarly": true, "autoSubscribe": false, "type": "NORMAL", "status": "HOLDING", "canReStake": true, "reStakeInfo": { "reStakeRate": "0.05", "reStakeAmount": "0.000063", "reStakeDuration": 90, "reStakeApr": "0.021", "estRewards": "0", "reStakeRewardsEndDate": 1699228800000, "reStakeDeliverDate": 1699351200000 }, "apy": "0.021" } ] 
     //return (new BinanceHelpers)->getSimpleEarnLockedList();
