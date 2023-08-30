@@ -4,9 +4,29 @@ import Artisan from './Partials/Artisan.vue';
 import { computed } from 'vue'
 import { Head, usePage } from '@inertiajs/vue3';
 import Binance from './Partials/Binance.vue';
-
+interface Coin {
+  id: number;
+  coin: string;
+  depositAllEnable: boolean;
+  withdrawAllEnable: boolean;
+  name: string;
+  free: number;
+  locked: number;
+  freeze: number;
+  withdrawing: number;
+  ipoing: number;
+  ipoable: number;
+  storage: number;
+  isLegalMoney: boolean;
+  trading: boolean;
+  all: number;
+  price: number;
+  lending: number;
+  earn: number;
+}
 const props = defineProps<{
-  binance?: number | Array<Object> | Object;
+  binance?: Array<Coin>;
+  sum?: number;
 }>();
 
 const user = computed(() => usePage().props.auth.user)
@@ -28,8 +48,8 @@ const isAdmin = usePage().props.auth.is_admin;
           <div class="p-6 text-gray-900 dark:text-gray-100">You're logged in as: {{ user.name }}!</div>
         </div>
 
-        <div v-if="binance" class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-          <Binance :binance="binance"/>
+        <div v-if="binance && sum" class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+          <Binance :binance="binance" :sum="sum"/>
         </div>
 
         <div v-if="isAdmin" class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">

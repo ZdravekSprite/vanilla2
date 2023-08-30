@@ -42,7 +42,7 @@ return new class extends Migration
       $table->id();
       $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
       $table->string('projectId');
-      $table->string('asset');
+      $table->foreignId('coin_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
       $table->string('rewardAsset');
       $table->integer('duration');
       $table->boolean('renewable');
@@ -61,7 +61,7 @@ return new class extends Migration
       $table->string('totalAmount');
       $table->string('tierAnnualPercentageRate');
       $table->string('latestAnnualPercentageRate');
-      $table->string('asset');
+      $table->foreignId('coin_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
       $table->boolean('canRedeem');
       $table->string('collateralAmount');
       $table->string('yesterdayRealTimeRewards');
@@ -74,7 +74,7 @@ return new class extends Migration
     Schema::create('earn_f_l_s', function (Blueprint $table) {
       $table->id();
       $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-      $table->string('asset');
+      $table->foreignId('coin_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
       $table->string('latestAnnualPercentageRate');
       $table->boolean('canPurchase');
       $table->boolean('canRedeem');

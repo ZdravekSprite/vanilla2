@@ -40,8 +40,13 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/dashboard', function () {
+  $binance = (new BinanceHelpers)->getBinanceData();
+  $sum = $binance->reduce(function ($sum, $value) {
+    return $sum + ($value['all'] * $value['price']);
+  });
   return Inertia::render('Dashboard', [
-    'binance' => (new BinanceHelpers)->getBinanceData(),
+    'binance' => $binance->toArray(),
+    'sum' => $sum,
   ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

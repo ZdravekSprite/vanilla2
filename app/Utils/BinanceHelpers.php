@@ -14,24 +14,104 @@ use Illuminate\Support\Facades\Http;
 
 class BinanceHelpers
 {
+  public function getSettings()
+  {
+    $settings = Settings::where('user_id', Auth::user()->id)->first();
+    if (!$settings) {
+      $settings = new Settings();
+      $settings->user_id = Auth::user()->id;
+      $settings->BINANCE_API_KEY = '';
+      $settings->BINANCE_API_SECRET = '';
+      $settings->save();
+    }
+    return $settings;
+  }
+
   public function getBinanceData()
   {
-    //return (new BinanceHelpers)->getCapitalConfigGetall();
-    return true;
+    $getL = (new BinanceHelpers)->getSimpleEarnLockedPosition()->map(fn ($asset) => [
+      'asset' => $asset->asset,
+      'amount' => $asset->amount,
+    ]);
+    $getF = (new BinanceHelpers)->getSimpleEarnFlexiblePosition()->map(fn ($asset) => [
+      'asset' => $asset->asset,
+      'amount' => $asset->totalAmount,
+    ]);
+    $lendingAccount = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/lending/union/account');
+    $positionAmountVos = $lendingAccount->positionAmountVos;
+    $allCoins = (new BinanceHelpers)->getCapitalConfigGetall();
+    $filtered = $allCoins->map(function ($coin) use ($positionAmountVos, $getL, $getF) {
+      $lending = collect($positionAmountVos)->filter(function ($value, $key) use ($coin) {
+        return $value->asset == $coin->coin;
+      })->reduce(function ($sum, $value) {
+        return $sum * 1 + $value->amount;
+      }) ?? 0;
+      $earnL = collect($getL)->filter(function ($value, $key) use ($coin) {
+        return $value['asset'] == $coin->coin;
+      })->reduce(function ($sum, $value) {
+        return $sum * 1 + $value['amount'];
+      }) ?? 0;
+      $earnF = collect($getF)->filter(function ($value, $key) use ($coin) {
+        return $value['asset'] == $coin->coin;
+      })->reduce(function ($sum, $value) {
+        return $sum * 1 + $value['amount'];
+      }) ?? 0;
+      $all = $earnL + $lending + $coin->free + $coin->locked + $coin->freeze + $coin->withdrawing + $coin->ipoing + $coin->ipoable + $coin->storage;
+      return [
+        'coin' => $coin->coin,
+        'depositAllEnable' => $coin->depositAllEnable,
+        'withdrawAllEnable' => $coin->withdrawAllEnable,
+        'name' => $coin->name,
+        'free' => $coin->free * 1,
+        'locked' => $coin->locked * 1,
+        'freeze' => $coin->freeze * 1,
+        'withdrawing' => $coin->withdrawing * 1,
+        'ipoing' => $coin->ipoing * 1,
+        'ipoable' => $coin->ipoable * 1,
+        'storage' => $coin->storage * 1,
+        'lending' => $lending,
+        'earn' => $earnL,
+        'all' => $all,
+        'isLegalMoney' => $coin->isLegalMoney,
+        'trading' => $coin->trading,
+      ];
+    })->filter(function ($value, $key) {
+      return $value['all'] > 0;
+    })->map(function ($coin) {
+      $price = 0;
+      if ($coin['coin'] == 'EUR') $price = 1;
+      if (!$price) {
+        $params = '?symbol=' . $coin['coin'] . 'EUR';
+        $ticker = (new BinanceHelpers)->get('https://api.binance.com/api/v3/ticker/price' . $params);
+        $price = isset($ticker->price) ? $ticker->price * 1 : 0;
+      }
+      if (!$price) {
+        $params = '?symbol=EUR' . $coin['coin'];
+        $ticker = (new BinanceHelpers)->get('https://api.binance.com/api/v3/ticker/price' . $params);
+        $price = isset($ticker->price) ? 1 / $ticker->price : 0;
+      }
+      if (!$price) {
+        $BUSD = (new BinanceHelpers)->get('https://api.binance.com/api/v3/ticker/price?symbol=EURBUSD')->price;
+        $params = '?symbol=' . $coin['coin'] . 'BUSD';
+        $ticker = (new BinanceHelpers)->get('https://api.binance.com/api/v3/ticker/price' . $params);
+        $price = isset($ticker->price) ? $ticker->price / $BUSD : 0;
+      }
+      if (!$price) {
+        $params = '?symbol=BUSD' . $coin['coin'];
+        $ticker = (new BinanceHelpers)->get('https://api.binance.com/api/v3/ticker/price' . $params);
+        $price = isset($ticker->price) ? $BUSD / $ticker->price : 0;
+      }
+      return  [
+        ...$coin,
+        'price' => $price,
+      ];
+    });
+    return $filtered;
   }
 
   public function getCapitalConfigGetall()
   {
-    $settings = Settings::where('user_id', Auth::user()->id)->first();
-    if (!$settings) {
-      $user = Auth::user();
-      $settings = new Settings();
-      $settings->user_id = $user->id;
-      $settings->api_key = '';
-      $settings->api_secret = '';
-      $settings->save();
-      return null;
-    }
+    $settings = (new BinanceHelpers)->getSettings();
     if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
 
     $coins_count = Coin::all()->count();
@@ -62,22 +142,13 @@ class BinanceHelpers
         $coin->save();
       };
     }
-    $coins = Coin::all()->count();
+    $coins = Coin::all();
     return $coins;
   }
 
   public function getSimpleEarnLockedPosition()
   {
-    $settings = Settings::where('user_id', Auth::user()->id)->first();
-    if (!$settings) {
-      $user = Auth::user();
-      $settings = new Settings();
-      $settings->user_id = $user->id;
-      $settings->api_key = '';
-      $settings->api_secret = '';
-      $settings->save();
-      return null;
-    }
+    $settings = (new BinanceHelpers)->getSettings();
     if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
 
     $earns_count = EarnLP::all()->count();
@@ -117,22 +188,13 @@ class BinanceHelpers
         $earn->save();
       }
     }
-    $earns = EarnLP::all()->count();
+    $earns = EarnLP::all();
     return $earns;
   }
 
   public function getSimpleEarnLockedList()
   {
-    $settings = Settings::where('user_id', Auth::user()->id)->first();
-    if (!$settings) {
-      $user = Auth::user();
-      $settings = new Settings();
-      $settings->user_id = $user->id;
-      $settings->api_key = '';
-      $settings->api_secret = '';
-      $settings->save();
-      return null;
-    }
+    $settings = (new BinanceHelpers)->getSettings();
     if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
 
     $earns_count = EarnLL::all()->count();
@@ -161,22 +223,13 @@ class BinanceHelpers
         $earn->save();
       }
     }
-    $earns = EarnLL::all()->count();
+    $earns = EarnLL::all();
     return $earns;
   }
 
   public function getSimpleEarnFlexiblePosition()
   {
-    $settings = Settings::where('user_id', Auth::user()->id)->first();
-    if (!$settings) {
-      $user = Auth::user();
-      $settings = new Settings();
-      $settings->user_id = $user->id;
-      $settings->api_key = '';
-      $settings->api_secret = '';
-      $settings->save();
-      return null;
-    }
+    $settings = (new BinanceHelpers)->getSettings();
     if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
 
     $earns_count = EarnFP::all()->count();
@@ -206,22 +259,13 @@ class BinanceHelpers
         $earn->save();
       }
     }
-    $earns = EarnFP::all()->count();
+    $earns = EarnFP::all();
     return $earns;
   }
 
   public function getSimpleEarnFlexibleList()
   {
-    $settings = Settings::where('user_id', Auth::user()->id)->first();
-    if (!$settings) {
-      $user = Auth::user();
-      $settings = new Settings();
-      $settings->user_id = $user->id;
-      $settings->api_key = '';
-      $settings->api_secret = '';
-      $settings->save();
-      return null;
-    }
+    $settings = (new BinanceHelpers)->getSettings();
     if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
 
     $earns_count = EarnFL::all()->count();
@@ -249,21 +293,13 @@ class BinanceHelpers
         $earn->save();
       }
     }
-    $earns = EarnFL::all()->count();
+    $earns = EarnFL::all();
     return $earns;
   }
 
   public function getHttp($url, $array = null)
   {
-    $user = Auth::user();
-    $settings = Settings::whereUserId($user->id)->first();
-    if (!$settings) {
-      $settings = new Settings();
-      $settings->user_id = $user->id;
-      $settings->BINANCE_API_KEY = '';
-      $settings->BINANCE_API_SECRET = '';
-      $settings->save();
-    }
+    $settings = (new BinanceHelpers)->getSettings();
     if ($settings->BINANCE_API_KEY == '' && $settings->BINANCE_API_SECRET == '') return '';
 
     $apiKey = $settings->BINANCE_API_KEY;
