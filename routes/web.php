@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
   Route::delete('/month', [MonthController::class, 'destroy'])->name('month.destroy');
 
   Route::get('/coins', [CoinController::class, 'index'])->name('coins');
+  Route::post('/coin', [CoinController::class, 'update'])->name('coin.update');
 
   Route::get('/earns', [EarnController::class, 'index'])->name('earns');
   Route::post('/earn', [EarnController::class, 'update'])->name('earn.update');

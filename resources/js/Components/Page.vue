@@ -1,11 +1,8 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link, usePage } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 import FileForm from '@/Components/FileForm.vue';
 import NewForm from '@/Components/NewForm.vue';
-import EditForm from '@/Components/EditForm.vue';
-import DeleteForm from '@/Components/DeleteForm.vue';
-import Pagination from '@/Components/Pagination.vue';
 import PageTable from './PageTable.vue';
 
 const props = defineProps ({

@@ -56,7 +56,7 @@ const btnType = computed(() => {
 
 <template>
   <button :type="btnType"
-    class="inline-flex items-center mx-2 px-4 py-2 border rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
+    class="inline-flex items-center m-1 px-3 py-2 border rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
     :class="[btnIntent, size]">
     <slot />
   </button>

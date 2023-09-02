@@ -22,7 +22,8 @@ interface Coin {
   all: number;
   price: number;
   lending: number;
-  earn: number;
+  earnF: number;
+  earnL: number;
 }
 const props = defineProps<{
   binance?: Array<Coin>;

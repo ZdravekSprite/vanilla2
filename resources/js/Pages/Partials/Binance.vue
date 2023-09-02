@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Btn from '@/Components/Btn.vue';
 import { useForm } from '@inertiajs/vue3';
+
 interface Coin {
   id: number;
   coin: string;
@@ -19,7 +20,8 @@ interface Coin {
   all: number;
   price: number;
   lending: number;
-  earn: number;
+  earnF: number;
+  earnL: number;
 }
 const props = defineProps<{
   binance: Array<Coin>;
@@ -73,12 +75,25 @@ const updateSEFL = () => {
     onFinish: () => { formSEFL.reset(); formSEFL.clearErrors(); },
   });
 };
+
+const formGetAll = useForm({
+  getAll: 'all',
+});
+
+const getAll = () => {
+  formGetAll.post(route('coin.update'), {
+    preserveScroll: true,
+    onError: () => console.log('error'),
+    onFinish: () => { formSEFL.reset(); formSEFL.clearErrors(); },
+  });
+};
 </script>
 
 <template>
   <section>
     <header>
       <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Binance</h2>
+      <Btn @click="getAll">update Coins</Btn>
       <Btn @click="updateSELP">update SELP</Btn>
       <Btn @click="updateSELL">update SELL</Btn>
       <Btn @click="updateSEFP">update SEFP</Btn>
@@ -101,7 +116,8 @@ const updateSEFL = () => {
               <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Ipoable</th>
               <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Storage</th>
               <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Lending</th>
-              <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Earn</th>
+              <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">EarnF</th>
+              <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">EarnL</th>
             </tr>
           </thead>
           <tbody>
@@ -117,7 +133,8 @@ const updateSEFL = () => {
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.ipoable }}</td>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.storage }}</td>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.lending }}</td>
-              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.earn }}</td>
+              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.earnF }}</td>
+              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.earnL }}</td>
             </tr>
             <tr>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">Sum</td>

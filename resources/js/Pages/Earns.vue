@@ -3,8 +3,23 @@ import PageTable from '@/Components/PageTable.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import Btn from '@/Components/Btn.vue';
 
 interface EarnFP {
+  id: number;
+  user_id: number;
+  productId: string;
+  totalAmount: string;
+  tierAnnualPercentageRate: string;
+  latestAnnualPercentageRate: string;
+  coin_id: number;
+  canRedeem: boolean;
+  collateralAmount: string;
+  yesterdayRealTimeRewards: string;
+  cumulativeBonusRewards: string;
+  cumulativeRealTimeRewards: string;
+  cumulativeTotalRewards: string;
+  autoSubscribe: boolean;
 }
 interface EarnFL {
 }
@@ -79,6 +94,19 @@ const showSELL = ref(false);
 const showSEFP = ref(true);
 const showSEFL = ref(false);
 
+const clickShowSELP = () => {
+  showSELP.value = !showSELP.value;
+};
+const clickShowSELL = () => {
+  showSELL.value = !showSELL.value;
+};
+const clickShowSEFP = () => {
+  showSEFP.value = !showSEFP.value;
+};
+const clickShowSEFL = () => {
+  showSEFL.value = !showSEFL.value;
+};
+
 </script>
 
 <template>
@@ -94,6 +122,10 @@ const showSEFL = ref(false);
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900 dark:text-gray-100">All: {{ all }}</div>
+          <Btn @click="clickShowSELP">{{ !showSELP ? 'show' : 'hide' }} SELP</Btn>
+          <Btn @click="clickShowSELL">{{ !showSELL ? 'show' : 'hide' }} SELL</Btn>
+          <Btn @click="clickShowSEFP">{{ !showSEFP ? 'show' : 'hide' }} SEFP</Btn>
+          <Btn @click="clickShowSEFL">{{ !showSEFL ? 'show' : 'hide' }} SEFL</Btn>
         </div>
       </div>
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -105,7 +137,7 @@ const showSEFL = ref(false);
               :labels_all="[['projectId'], ['apr']]"
               :labels_show="[['projectId'], ['apr']]" />
             <PageTable v-if="showSEFP" :all="all" single="earn" plural="earns" :elements="earn_f_p_s"
-              :labels_all="[['asset'], ['amount']]" :labels_show="[['asset'], ['totalAmount']]" />
+              :labels_all="[['asset'], ['amount']]" :labels_show="[['asset'], ['totalAmount'],['latestAnnualPercentageRate']]" />
             <PageTable v-if="showSEFL" :all="all" single="earn" plural="earns" :elements="earn_f_l_s"
               :labels_all="[['asset'], ['latestAnnualPercentageRate']]"
               :labels_show="[['asset'], ['latestAnnualPercentageRate']]" />

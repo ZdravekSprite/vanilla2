@@ -1,8 +1,5 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link, usePage } from '@inertiajs/vue3';
-import FileForm from '@/Components/FileForm.vue';
-import NewForm from '@/Components/NewForm.vue';
+import { Link } from '@inertiajs/vue3';
 import EditForm from '@/Components/EditForm.vue';
 import DeleteForm from '@/Components/DeleteForm.vue';
 import Pagination from '@/Components/Pagination.vue';
@@ -37,7 +34,7 @@ const dateFormat = (d) => {
     <thead class="text-lg font-medium text-gray-900 dark:text-gray-100">
       <tr>
         <th v-for="(l, i) in labels_show" :key="i">{{ l[0] }}</th>
-        <th class="w-36">actions</th>
+        <th class="w-32">actions</th>
       </tr>
     </thead>
     <tbody>

@@ -6,6 +6,7 @@ use App\Models\Coin;
 use App\Http\Requests\StoreCoinRequest;
 use App\Http\Requests\UpdateCoinRequest;
 use Inertia\Inertia;
+use App\Utils\BinanceHelpers;
 
 class CoinController extends Controller
 {
@@ -60,7 +61,15 @@ class CoinController extends Controller
    */
   public function update(UpdateCoinRequest $request, Coin $coin)
   {
-    //
+    switch ($request->getAll) {
+      case 'all':
+        return (new BinanceHelpers)->getCapitalConfigGetall(true);
+        break;
+
+      default:
+        # code...
+        break;
+    }
   }
 
   /**

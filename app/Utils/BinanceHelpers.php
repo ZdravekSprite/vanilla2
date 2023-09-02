@@ -70,7 +70,8 @@ class BinanceHelpers
         'ipoable' => $coin->ipoable * 1,
         'storage' => $coin->storage * 1,
         'lending' => $lending,
-        'earn' => $earnL,
+        'earnL' => $earnL,
+        'earnF' => $earnF,
         'all' => $all,
         'isLegalMoney' => $coin->isLegalMoney,
         'trading' => $coin->trading,
@@ -119,7 +120,6 @@ class BinanceHelpers
       $coins_last_update = Coin::orderBy('updated_at', 'DESC')->first()->updated_at;
       $diff = $coins_last_update->diff(new DateTime());
     }
-    //dd($coins_last_update,$diff);
     if ($force || !$coins_count  || ($diff && $diff->d > 1)) {
       $capitalConfigGetall = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/capital/config/getall');
       //dd($capitalConfigGetall);

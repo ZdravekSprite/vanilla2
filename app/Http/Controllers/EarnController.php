@@ -19,12 +19,18 @@ class EarnController extends Controller
   public function index()
   {
     $all = EarnLP::all()->count() + EarnFP::all()->count();
-    $earn_f_p_s = EarnFP::select(['asset', 'totalAmount'])->paginate(15);
+    $earn_f_p_s = EarnFP::select(['asset', 'totalAmount','latestAnnualPercentageRate'])->paginate(15);
     $earn_f_l_s = EarnFL::select(['asset', 'latestAnnualPercentageRate'])->paginate(5);
     $earn_l_p_s = EarnLP::select(['productId','asset', 'amount','accrualDays','apy'])->paginate(15);
     $earn_l_l_s = EarnLL::select(['projectId', 'apr'])->paginate(5);
     foreach ($earn_l_p_s as $key => $value) {
       $value['apy'] = ($value['apy']*100).' %';
+    }
+    foreach ($earn_f_p_s as $key => $value) {
+      $value['latestAnnualPercentageRate'] = ($value['latestAnnualPercentageRate']*100).' %';
+    }
+    foreach ($earn_f_l_s as $key => $value) {
+      $value['latestAnnualPercentageRate'] = ($value['latestAnnualPercentageRate']*100).' %';
     }
     return Inertia::render('Earns', [
       'all' => $all,
