@@ -36,7 +36,9 @@ const confirmSingle = () => {
       }
     })
   });
+  let count = array.filter((x,y) => x > 60).length
   //console.log(array, barray);
+  console.log(count)
   confirmingSingle.value = true;
 };
 

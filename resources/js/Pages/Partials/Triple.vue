@@ -34,6 +34,12 @@ const confirmTriple = () => {
     })
   });
   //console.log(array);
+  let count0 = array.filter((x, y) => x[1] == 0).length
+  let count1 = array.filter((x, y) => x[1] == 1).length
+  let count2 = array.filter((x, y) => x[1] == 2).length
+  let count3 = array.filter((x, y) => x[1] == 3).length
+  let count4 = array.filter((x, y) => x[1] > 3).length
+  console.log(array, count0, count1, count2, count3, count4)
   confirmingTriple.value = true;
 };
 

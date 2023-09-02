@@ -40,6 +40,9 @@ const confirmDouble = () => {
     })
   });
   //console.log(array, barray);
+  let count0 = array.filter((x,y) => x[1] <= 10).length
+  let count1 = array.filter((x,y) => x[1] > 10).length
+  console.log(count0,count1)
   confirmingDouble.value = true;
 };
 
