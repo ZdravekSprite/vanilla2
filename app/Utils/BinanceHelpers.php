@@ -146,6 +146,14 @@ class BinanceHelpers
     return $coins;
   }
 
+  public function getCoin($asset)
+  {
+    $coin = Coin::whereCoin($asset)->first();
+    if (!$coin) (new BinanceHelpers)->getCapitalConfigGetall(true);
+    $coin = Coin::whereCoin($asset)->first();
+    return $coin;
+  }
+
   public function getSimpleEarnLockedPosition($force = false)
   {
     $settings = (new BinanceHelpers)->getSettings();
@@ -166,6 +174,7 @@ class BinanceHelpers
         $earn->user_id = Auth::user()->id;
         $earn->productId = $value->productId;
         $earn->asset = $value->asset;
+        //$earn->coin_id = (new BinanceHelpers)->getCoin($value->asset)->id;
         $earn->amount = $value->amount;
         $earn->purchaseTime = $value->purchaseTime;
         $earn->duration = $value->duration;
@@ -211,6 +220,7 @@ class BinanceHelpers
         $earn->projectId = $value->projectId;
         $earn->user_id = Auth::user()->id;
         $earn->asset = $value->detail->asset;
+        //$earn->coin_id = (new BinanceHelpers)->getCoin($value->detail->asset)->id;
         $earn->rewardAsset = $value->detail->rewardAsset ?? '';
         $earn->duration = $value->detail->duration;
         $earn->renewable = $value->detail->renewable;
@@ -249,6 +259,7 @@ class BinanceHelpers
         $earn->tierAnnualPercentageRate = isset($value->tierAnnualPercentageRate) ? json_encode($value->tierAnnualPercentageRate) : '';
         $earn->latestAnnualPercentageRate = $value->latestAnnualPercentageRate;
         $earn->asset = $value->asset;
+        //$earn->coin_id = (new BinanceHelpers)->getCoin($value->asset)->id;
         $earn->canRedeem = $value->canRedeem;
         $earn->collateralAmount = $value->collateralAmount;
         $earn->yesterdayRealTimeRewards = $value->yesterdayRealTimeRewards;
@@ -282,6 +293,7 @@ class BinanceHelpers
         $earn->productId = $value->productId;
         $earn->user_id = Auth::user()->id;
         $earn->asset = $value->asset;
+        //$earn->coin_id = (new BinanceHelpers)->getCoin($value->asset)->id;
         $earn->latestAnnualPercentageRate = $value->latestAnnualPercentageRate;
         $earn->canPurchase = $value->canPurchase;
         $earn->canRedeem = $value->canRedeem;

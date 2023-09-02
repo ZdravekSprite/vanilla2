@@ -23,9 +23,8 @@ interface Coin {
   earnF: number;
   earnL: number;
 }
-const props = defineProps<{
-  binance: Array<Coin>;
-  sum: number;
+defineProps<{
+  binance: [Array<Coin>, number];
 }>();
 
 const formSELP = useForm({
@@ -121,7 +120,7 @@ const getAll = () => {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(coin, i) in binance" :key="coin.id">
+            <tr v-for="(coin, i) in binance[0]" :key="coin.id">
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.name }}</td>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.all + ' ' + coin.coin }}</td>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.all * coin.price }} € </td>
@@ -138,8 +137,8 @@ const getAll = () => {
             </tr>
             <tr>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">Sum</td>
-              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ sum }} €</td>
-              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ sum * 7.5345 }} kn</td>
+              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ binance[1] }} €</td>
+              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ binance[1] * 7.5345 }} kn</td>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400"></td>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400"></td>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400"></td>

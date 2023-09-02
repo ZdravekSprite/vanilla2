@@ -44,8 +44,10 @@ Route::get('/dashboard', function () {
   $sum = $binance->reduce(function ($sum, $value) {
     return $sum + ($value['all'] * $value['price']);
   });
+  $arr = $binance->toArray();
+  //dd($binance,$sum,$arr);
   return Inertia::render('Dashboard', [
-    'binance' => $binance->toArray(),
+    'binance' => [$binance,$sum],
     'sum' => $sum,
   ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
