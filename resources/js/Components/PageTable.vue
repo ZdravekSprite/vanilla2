@@ -37,7 +37,7 @@ const dateFormat = (d) => {
     <thead class="text-lg font-medium text-gray-900 dark:text-gray-100">
       <tr>
         <th v-for="(l, i) in labels_show" :key="i">{{ l[0] }}</th>
-        <th class="w-32">actions</th>
+        <th class="w-36">actions</th>
       </tr>
     </thead>
     <tbody>

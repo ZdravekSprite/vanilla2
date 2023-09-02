@@ -2,7 +2,7 @@
 import PageTable from '@/Components/PageTable.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-
+import { ref } from 'vue';
 
 interface EarnFP {
 }
@@ -34,7 +34,6 @@ interface EarnLP {
   canReStake: boolean;
   apy: string;
 }
-
 interface EarnLL {
   id: number;
   user_id: number;
@@ -50,7 +49,6 @@ interface EarnLL {
   totalPersonalQuota: string;
   minimum: string;
 }
-
 interface Label {
   id: number;
   name: string;
@@ -75,6 +73,12 @@ const props = defineProps<{
     links: Array<object>
   };
 }>();
+
+const showSELP = ref(true);
+const showSELL = ref(false);
+const showSEFP = ref(true);
+const showSEFL = ref(false);
+
 </script>
 
 <template>
@@ -95,14 +99,14 @@ const props = defineProps<{
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900 dark:text-gray-100 space-y-4">
-            <PageTable :all="all" single="earn" plural="earns" :elements="earn_l_p_s"
-              :labels_all="[['asset'], ['amount']]" :labels_show="[['asset'], ['amount']]" />
-            <PageTable :all="all" single="earn" plural="earns" :elements="earn_l_l_s"
+            <PageTable v-if="showSELP" :all="all" single="earn" plural="earns" :elements="earn_l_p_s"
+              :labels_all="[['productId'],['asset'], ['amount']]" :labels_show="[['productId'],['asset'], ['amount'],['accrualDays'],['apy']]" />
+            <PageTable v-if="showSELL" :all="all" single="earn" plural="earns" :elements="earn_l_l_s"
               :labels_all="[['projectId'], ['apr']]"
               :labels_show="[['projectId'], ['apr']]" />
-            <PageTable :all="all" single="earn" plural="earns" :elements="earn_f_p_s"
+            <PageTable v-if="showSEFP" :all="all" single="earn" plural="earns" :elements="earn_f_p_s"
               :labels_all="[['asset'], ['amount']]" :labels_show="[['asset'], ['totalAmount']]" />
-            <PageTable :all="all" single="earn" plural="earns" :elements="earn_f_l_s"
+            <PageTable v-if="showSEFL" :all="all" single="earn" plural="earns" :elements="earn_f_l_s"
               :labels_all="[['asset'], ['latestAnnualPercentageRate']]"
               :labels_show="[['asset'], ['latestAnnualPercentageRate']]" />
           </div>

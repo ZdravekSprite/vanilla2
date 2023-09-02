@@ -109,7 +109,7 @@ class BinanceHelpers
     return $filtered;
   }
 
-  public function getCapitalConfigGetall()
+  public function getCapitalConfigGetall($force = false)
   {
     $settings = (new BinanceHelpers)->getSettings();
     if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
@@ -120,7 +120,7 @@ class BinanceHelpers
       $diff = $coins_last_update->diff(new DateTime());
     }
     //dd($coins_last_update,$diff);
-    if (!$coins_count  || ($diff && $diff->d > 1)) {
+    if ($force || !$coins_count  || ($diff && $diff->d > 1)) {
       $capitalConfigGetall = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/capital/config/getall');
       //dd($capitalConfigGetall);
       foreach ($capitalConfigGetall as $key => $value) {
@@ -146,7 +146,7 @@ class BinanceHelpers
     return $coins;
   }
 
-  public function getSimpleEarnLockedPosition()
+  public function getSimpleEarnLockedPosition($force = false)
   {
     $settings = (new BinanceHelpers)->getSettings();
     if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
@@ -156,7 +156,7 @@ class BinanceHelpers
       $earns_last_update = EarnLP::orderBy('updated_at', 'DESC')->first()->updated_at;
       $diff = $earns_last_update->diff(new DateTime());
     }
-    if (!$earns_count  || ($diff && $diff->d > 1)) {
+    if ($force || !$earns_count || ($diff && $diff->d > 1)) {
       $simpleEarnLockedPosition = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/simple-earn/locked/position');
       //dd($simpleEarnLockedPosition);
       foreach ($simpleEarnLockedPosition->rows as $key => $value) {
@@ -192,7 +192,7 @@ class BinanceHelpers
     return $earns;
   }
 
-  public function getSimpleEarnLockedList()
+  public function getSimpleEarnLockedList($force = false)
   {
     $settings = (new BinanceHelpers)->getSettings();
     if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
@@ -202,7 +202,7 @@ class BinanceHelpers
       $earns_last_update = EarnLL::orderBy('updated_at', 'DESC')->first()->updated_at;
       $diff = $earns_last_update->diff(new DateTime());
     }
-    if (!$earns_count  || ($diff && $diff->d > -1)) {
+    if ($force || !$earns_count || ($diff && $diff->d > -1)) {
       $simpleEarnLockedList = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/simple-earn/locked/list', ['current' => 3, 'size' => 100]);
       //dd($simpleEarnLockedList);
       foreach ($simpleEarnLockedList->rows as $key => $value) {
@@ -227,7 +227,7 @@ class BinanceHelpers
     return $earns;
   }
 
-  public function getSimpleEarnFlexiblePosition()
+  public function getSimpleEarnFlexiblePosition($force = false)
   {
     $settings = (new BinanceHelpers)->getSettings();
     if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
@@ -237,7 +237,7 @@ class BinanceHelpers
       $earns_last_update = EarnFP::orderBy('updated_at', 'DESC')->first()->updated_at;
       $diff = $earns_last_update->diff(new DateTime());
     }
-    if (!$earns_count  || ($diff && $diff->d > 1)) {
+    if ($force || !$earns_count || ($diff && $diff->d > 1)) {
       $simpleEarnFlexiblePosition = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/simple-earn/flexible/position');
       //dd($simpleEarnFlexiblePosition);
       foreach ($simpleEarnFlexiblePosition->rows as $key => $value) {
@@ -263,7 +263,7 @@ class BinanceHelpers
     return $earns;
   }
 
-  public function getSimpleEarnFlexibleList()
+  public function getSimpleEarnFlexibleList($force = false)
   {
     $settings = (new BinanceHelpers)->getSettings();
     if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
@@ -273,7 +273,7 @@ class BinanceHelpers
       $earns_last_update = EarnFL::orderBy('updated_at', 'DESC')->first()->updated_at;
       $diff = $earns_last_update->diff(new DateTime());
     }
-    if (!$earns_count  || ($diff && $diff->d > 1)) {
+    if ($force || !$earns_count || ($diff && $diff->d > 1)) {
       $simpleEarnFlexibleList = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/simple-earn/flexible/list', ['current' => 4, 'size' => 100]);
       //dd($simpleEarnFlexibleList);
       foreach ($simpleEarnFlexibleList->rows as $key => $value) {
