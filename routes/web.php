@@ -44,11 +44,14 @@ Route::get('/dashboard', function () {
   $sum = $binance->reduce(function ($sum, $value) {
     return $sum + ($value['all'] * $value['price']);
   });
-  $arr = $binance->toArray();
-  //dd($binance,$sum,$arr);
+  $free = $binance->reduce(function ($free, $value) {
+    return $free + $value['free'];
+  });
+  $locked = $binance->reduce(function ($locked, $value) {
+    return $locked + $value['locked'];
+  });
   return Inertia::render('Dashboard', [
-    'binance' => [$binance,$sum],
-    'sum' => $sum,
+    'binance' => [$binance, $sum, [$free > 0, $locked > 0]],
   ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

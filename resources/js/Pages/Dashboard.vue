@@ -27,7 +27,7 @@ interface Coin {
   earnL: number;
 }
 const props = defineProps<{
-  binance?: [Array<Coin>, number];
+  binance?: [Array<Coin>, number, Array<boolean>];
 }>();
 
 const user = computed(() => usePage().props.auth.user)
@@ -50,7 +50,7 @@ const isAdmin = usePage().props.auth.is_admin;
         </div>
 
         <div v-if="binance" class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-          <Binance :binance="binance"/>
+          <Binance :binance="binance" />
         </div>
 
         <div v-if="isAdmin" class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">

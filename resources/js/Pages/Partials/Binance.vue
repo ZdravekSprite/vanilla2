@@ -24,7 +24,7 @@ interface Coin {
   earnL: number;
 }
 defineProps<{
-  binance: [Array<Coin>, number];
+  binance: [Array<Coin>, number, Array<boolean>];
 }>();
 
 const formSELP = useForm({
@@ -107,13 +107,13 @@ const getAll = () => {
               <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Name</th>
               <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">All</th>
               <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Price</th>
-              <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Free</th>
-              <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Locked</th>
-              <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Freeze</th>
-              <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Withdrawing</th>
-              <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Ipoing</th>
-              <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Ipoable</th>
-              <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Storage</th>
+              <th v-if="binance[2][0]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">Free</th>
+              <th v-if="binance[2][1]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">Locked</th>
+              <th v-if="binance[2][2]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">Freeze</th>
+              <th v-if="binance[2][3]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">Withdrawing</th>
+              <th v-if="binance[2][4]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">Ipoing</th>
+              <th v-if="binance[2][5]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">Ipoable</th>
+              <th v-if="binance[2][6]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">Storage</th>
               <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">Lending</th>
               <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">EarnF</th>
               <th class="mt-1 text-sm text-gray-600 dark:text-gray-400">EarnL</th>
@@ -124,13 +124,13 @@ const getAll = () => {
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.name }}</td>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.all + ' ' + coin.coin }}</td>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.all * coin.price }} € </td>
-              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.free }}</td>
-              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.locked }}</td>
-              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.freeze }}</td>
-              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.withdrawing }}</td>
-              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.ipoing }}</td>
-              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.ipoable }}</td>
-              <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.storage }}</td>
+              <td v-if="binance[2][0]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.free }}</td>
+              <td v-if="binance[2][1]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.locked }}</td>
+              <td v-if="binance[2][2]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.freeze }}</td>
+              <td v-if="binance[2][3]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.withdrawing }}</td>
+              <td v-if="binance[2][4]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.ipoing }}</td>
+              <td v-if="binance[2][5]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.ipoable }}</td>
+              <td v-if="binance[2][6]" class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.storage }}</td>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.lending }}</td>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.earnF }}</td>
               <td class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coin.earnL }}</td>
