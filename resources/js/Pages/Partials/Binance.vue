@@ -86,6 +86,18 @@ const getAll = () => {
     onFinish: () => { formSEFL.reset(); formSEFL.clearErrors(); },
   });
 };
+
+const formSymbols = useForm({
+  getAll: 'all',
+});
+
+const symbols = () => {
+  formSymbols.post(route('symbol.update'), {
+    preserveScroll: true,
+    onError: () => console.log('error'),
+    onFinish: () => { formSEFL.reset(); formSEFL.clearErrors(); },
+  });
+};
 </script>
 
 <template>
@@ -97,6 +109,7 @@ const getAll = () => {
       <Btn @click="updateSELL">update SELL</Btn>
       <Btn @click="updateSEFP">update SEFP</Btn>
       <Btn @click="updateSEFL">update SEFL</Btn>
+      <Btn @click="symbols">update Symbols</Btn>
     </header>
 
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">

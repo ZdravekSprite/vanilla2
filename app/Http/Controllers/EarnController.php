@@ -19,18 +19,25 @@ class EarnController extends Controller
   public function index()
   {
     $all = EarnLP::all()->count() + EarnFP::all()->count();
-    $earn_f_p_s = EarnFP::select(['asset', 'totalAmount','latestAnnualPercentageRate'])->paginate(15);
-    $earn_f_l_s = EarnFL::select(['asset', 'latestAnnualPercentageRate'])->paginate(5);
-    $earn_l_p_s = EarnLP::select(['productId','asset', 'amount','accrualDays','apy'])->paginate(15);
-    $earn_l_l_s = EarnLL::select(['projectId', 'apr'])->paginate(5);
-    foreach ($earn_l_p_s as $key => $value) {
-      $value['apy'] = ($value['apy']*100).' %';
-    }
+    $earn_f_p_s = EarnFP::select(['asset_id', 'totalAmount','latestAnnualPercentageRate'])->paginate(15);
+    $earn_f_l_s = EarnFL::select(['asset_id', 'latestAnnualPercentageRate'])->paginate(5);
+    $earn_l_p_s = EarnLP::select(['productId','asset_id', 'amount','accrualDays','apy'])->paginate(15);
+    $earn_l_l_s = EarnLL::select(['projectId','asset_id', 'apr'])->paginate(5);
     foreach ($earn_f_p_s as $key => $value) {
       $value['latestAnnualPercentageRate'] = ($value['latestAnnualPercentageRate']*100).' %';
+      $value['asset'] = (new BinanceHelpers)->getCoin($value['asset_id']);
     }
     foreach ($earn_f_l_s as $key => $value) {
       $value['latestAnnualPercentageRate'] = ($value['latestAnnualPercentageRate']*100).' %';
+      $value['asset'] = (new BinanceHelpers)->getCoin($value['asset_id']);
+    }
+    foreach ($earn_l_p_s as $key => $value) {
+      $value['apy'] = ($value['apy']*100).' %';
+      $value['asset'] = (new BinanceHelpers)->getCoin($value['asset_id']);
+    }
+    foreach ($earn_l_l_s as $key => $value) {
+      $value['apr'] = ($value['apr']*100).' %';
+      $value['asset'] = (new BinanceHelpers)->getCoin($value['asset_id']);
     }
     return Inertia::render('Earns', [
       'all' => $all,

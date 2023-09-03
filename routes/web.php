@@ -12,11 +12,10 @@ use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\MonthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
-use App\Models\Settings;
+use App\Http\Controllers\SymbolController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Auth;
 use App\Utils\BinanceHelpers;
 
 /*
@@ -50,8 +49,9 @@ Route::get('/dashboard', function () {
   $locked = $binance->reduce(function ($locked, $value) {
     return $locked + $value['locked'];
   });
+  $symbols = (new BinanceHelpers)->exchangeInfo();
   return Inertia::render('Dashboard', [
-    'binance' => [$binance, $sum, [$free > 0, $locked > 0]],
+    'binance' => [$binance, $sum, [$free > 0, $locked > 0], $symbols],
   ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -86,6 +86,9 @@ Route::middleware('auth')->group(function () {
 
   Route::get('/earns', [EarnController::class, 'index'])->name('earns');
   Route::post('/earn', [EarnController::class, 'update'])->name('earn.update');
+
+  Route::get('/symbols', [SymbolController::class, 'index'])->name('symbols');
+  Route::post('/symbol', [SymbolController::class, 'update'])->name('symbol.update');
 });
 
 Route::middleware('auth.admin')->group(function () {

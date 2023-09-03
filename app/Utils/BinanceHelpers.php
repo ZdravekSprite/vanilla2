@@ -8,6 +8,7 @@ use App\Models\EarnFP;
 use App\Models\EarnLL;
 use App\Models\EarnLP;
 use App\Models\Settings;
+use App\Models\Symbol;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -30,16 +31,17 @@ class BinanceHelpers
   public function getBinanceData()
   {
     $getL = (new BinanceHelpers)->getSimpleEarnLockedPosition()->map(fn ($asset) => [
-      'asset' => $asset->asset,
+      'asset_id' => $asset->asset_id,
       'amount' => $asset->amount,
     ]);
     $getF = (new BinanceHelpers)->getSimpleEarnFlexiblePosition()->map(fn ($asset) => [
-      'asset' => $asset->asset,
+      'asset_id' => $asset->asset_id,
       'amount' => $asset->totalAmount,
     ]);
     $lendingAccount = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/lending/union/account');
     $positionAmountVos = $lendingAccount->positionAmountVos;
     $allCoins = (new BinanceHelpers)->getCapitalConfigGetall();
+    $BUSD = (new BinanceHelpers)->get('https://api.binance.com/api/v3/ticker/price?symbol=EURBUSD')->price;
     $filtered = $allCoins->map(function ($coin) use ($positionAmountVos, $getL, $getF) {
       $lending = collect($positionAmountVos)->filter(function ($value, $key) use ($coin) {
         return $value->asset == $coin->coin;
@@ -47,12 +49,12 @@ class BinanceHelpers
         return $sum * 1 + $value->amount;
       }) ?? 0;
       $earnL = collect($getL)->filter(function ($value, $key) use ($coin) {
-        return $value['asset'] == $coin->coin;
+        return $value['asset_id'] == $coin->id;
       })->reduce(function ($sum, $value) {
         return $sum * 1 + $value['amount'];
       }) ?? 0;
       $earnF = collect($getF)->filter(function ($value, $key) use ($coin) {
-        return $value['asset'] == $coin->coin;
+        return $value['asset_id'] == $coin->id;
       })->reduce(function ($sum, $value) {
         return $sum * 1 + $value['amount'];
       }) ?? 0;
@@ -78,7 +80,7 @@ class BinanceHelpers
       ];
     })->filter(function ($value, $key) {
       return $value['all'] > 0;
-    })->map(function ($coin) {
+    })->map(function ($coin) use ($BUSD) {
       $price = 0;
       if ($coin['coin'] == 'EUR') $price = 1;
       if (!$price) {
@@ -92,7 +94,6 @@ class BinanceHelpers
         $price = isset($ticker->price) ? 1 / $ticker->price : 0;
       }
       if (!$price) {
-        $BUSD = (new BinanceHelpers)->get('https://api.binance.com/api/v3/ticker/price?symbol=EURBUSD')->price;
         $params = '?symbol=' . $coin['coin'] . 'BUSD';
         $ticker = (new BinanceHelpers)->get('https://api.binance.com/api/v3/ticker/price' . $params);
         $price = isset($ticker->price) ? $ticker->price / $BUSD : 0;
@@ -173,8 +174,7 @@ class BinanceHelpers
         $earn->positionId = $value->positionId;
         $earn->user_id = Auth::user()->id;
         $earn->productId = $value->productId;
-        $earn->asset = $value->asset;
-        //$earn->coin_id = (new BinanceHelpers)->getCoin($value->asset)->id;
+        $earn->asset_id = (new BinanceHelpers)->getCoin($value->asset)->id;
         $earn->amount = $value->amount;
         $earn->purchaseTime = $value->purchaseTime;
         $earn->duration = $value->duration;
@@ -219,8 +219,7 @@ class BinanceHelpers
         if (!$earn) $earn = new EarnLL();
         $earn->projectId = $value->projectId;
         $earn->user_id = Auth::user()->id;
-        $earn->asset = $value->detail->asset;
-        //$earn->coin_id = (new BinanceHelpers)->getCoin($value->detail->asset)->id;
+        $earn->asset_id = (new BinanceHelpers)->getCoin($value->detail->asset)->id;
         $earn->rewardAsset = $value->detail->rewardAsset ?? '';
         $earn->duration = $value->detail->duration;
         $earn->renewable = $value->detail->renewable;
@@ -258,8 +257,7 @@ class BinanceHelpers
         $earn->totalAmount = $value->totalAmount;
         $earn->tierAnnualPercentageRate = isset($value->tierAnnualPercentageRate) ? json_encode($value->tierAnnualPercentageRate) : '';
         $earn->latestAnnualPercentageRate = $value->latestAnnualPercentageRate;
-        $earn->asset = $value->asset;
-        //$earn->coin_id = (new BinanceHelpers)->getCoin($value->asset)->id;
+        $earn->asset_id = (new BinanceHelpers)->getCoin($value->asset)->id;
         $earn->canRedeem = $value->canRedeem;
         $earn->collateralAmount = $value->collateralAmount;
         $earn->yesterdayRealTimeRewards = $value->yesterdayRealTimeRewards;
@@ -292,8 +290,7 @@ class BinanceHelpers
         if (!$earn) $earn = new EarnFL();
         $earn->productId = $value->productId;
         $earn->user_id = Auth::user()->id;
-        $earn->asset = $value->asset;
-        //$earn->coin_id = (new BinanceHelpers)->getCoin($value->asset)->id;
+        $earn->asset_id = (new BinanceHelpers)->getCoin($value->asset)->id;
         $earn->latestAnnualPercentageRate = $value->latestAnnualPercentageRate;
         $earn->canPurchase = $value->canPurchase;
         $earn->canRedeem = $value->canRedeem;
@@ -307,6 +304,42 @@ class BinanceHelpers
     }
     $earns = EarnFL::all();
     return $earns;
+  }
+
+  public function exchangeInfo($force = false)
+  {
+    set_time_limit(0);
+    $settings = (new BinanceHelpers)->getSettings();
+    if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
+
+    $symbols_count = Symbol::all()->count();
+    if ($symbols_count > 0) {
+      $symbols_last_update = Symbol::orderBy('updated_at', 'DESC')->first()->updated_at;
+      $diff = $symbols_last_update->diff(new DateTime());
+    }
+    if ($force || !$symbols_count  || ($diff && $diff->d > 1)) {
+      $exchangeInfo = (new BinanceHelpers)->get('https://api.binance.com/api/v3/exchangeInfo');
+      //dd($exchangeInfo->symbols);
+      foreach ($exchangeInfo->symbols as $key => $value) {
+        $symbol = Symbol::where('symbol', $value->symbol)->first();
+        if (!$symbol) $symbol = new Symbol();
+        $symbol->symbol = $value->symbol;//string
+        $symbol->status = $value->status;//string
+        $baseAsset = (new BinanceHelpers)->getCoin($value->baseAsset);
+        if (!$baseAsset) continue;
+        $symbol->baseAsset_id = $baseAsset->id;
+        $symbol->baseAssetPrecision = $value->baseAssetPrecision;//8
+        $quoteAsset = (new BinanceHelpers)->getCoin($value->quoteAsset);
+        if (!$quoteAsset) continue;
+        $symbol->quoteAsset_id = $quoteAsset->id;
+        $symbol->quotePrecision = $value->quotePrecision;//8
+        $symbol->baseCommissionPrecision = $value->baseCommissionPrecision;//8
+        $symbol->quoteCommissionPrecision = $value->quoteCommissionPrecision;//8
+        $symbol->save();
+      }
+    }
+    $symbols = Symbol::all();
+    return $symbols;
   }
 
   public function getHttp($url, $array = null)
