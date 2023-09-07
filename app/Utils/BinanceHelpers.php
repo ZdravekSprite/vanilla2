@@ -113,15 +113,7 @@ class BinanceHelpers
 
   public function getCapitalConfigGetall($force = false)
   {
-    $settings = (new BinanceHelpers)->getSettings();
-    if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
-
-    $coins_count = Coin::all()->count();
-    if ($coins_count > 0) {
-      $coins_last_update = Coin::orderBy('updated_at', 'DESC')->first()->updated_at;
-      $diff = $coins_last_update->diff(new DateTime());
-    }
-    if ($force || !$coins_count  || ($diff && $diff->d > 1)) {
+    if ((new BinanceHelpers)->toUpdate(Coin::all(), $force, 11, 12)) {
       $capitalConfigGetall = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/capital/config/getall');
       //dd($capitalConfigGetall);
       foreach ($capitalConfigGetall as $key => $value) {
@@ -147,25 +139,9 @@ class BinanceHelpers
     return $coins;
   }
 
-  public function getCoin($asset)
-  {
-    $coin = Coin::whereCoin($asset)->first();
-    if (!$coin) (new BinanceHelpers)->getCapitalConfigGetall(true);
-    $coin = Coin::whereCoin($asset)->first();
-    return $coin;
-  }
-
   public function getSimpleEarnLockedPosition($force = false)
   {
-    $settings = (new BinanceHelpers)->getSettings();
-    if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
-
-    $earns_count = EarnLP::all()->count();
-    if ($earns_count > 0) {
-      $earns_last_update = EarnLP::orderBy('updated_at', 'DESC')->first()->updated_at;
-      $diff = $earns_last_update->diff(new DateTime());
-    }
-    if ($force || !$earns_count || ($diff && $diff->d > 1)) {
+    if ((new BinanceHelpers)->toUpdate(EarnLP::all(), $force, 9, 10)) {
       $simpleEarnLockedPosition = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/simple-earn/locked/position');
       //dd($simpleEarnLockedPosition);
       foreach ($simpleEarnLockedPosition->rows as $key => $value) {
@@ -203,15 +179,7 @@ class BinanceHelpers
 
   public function getSimpleEarnLockedList($force = false)
   {
-    $settings = (new BinanceHelpers)->getSettings();
-    if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
-
-    $earns_count = EarnLL::all()->count();
-    if ($earns_count > 0) {
-      $earns_last_update = EarnLL::orderBy('updated_at', 'DESC')->first()->updated_at;
-      $diff = $earns_last_update->diff(new DateTime());
-    }
-    if ($force || !$earns_count || ($diff && $diff->d > -1)) {
+    if ((new BinanceHelpers)->toUpdate(EarnLL::all(), $force, 7, 8)) {
       $simpleEarnLockedList = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/simple-earn/locked/list', ['current' => 3, 'size' => 100]);
       //dd($simpleEarnLockedList);
       foreach ($simpleEarnLockedList->rows as $key => $value) {
@@ -238,15 +206,7 @@ class BinanceHelpers
 
   public function getSimpleEarnFlexiblePosition($force = false)
   {
-    $settings = (new BinanceHelpers)->getSettings();
-    if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
-
-    $earns_count = EarnFP::all()->count();
-    if ($earns_count > 0) {
-      $earns_last_update = EarnFP::orderBy('updated_at', 'DESC')->first()->updated_at;
-      $diff = $earns_last_update->diff(new DateTime());
-    }
-    if ($force || !$earns_count || ($diff && $diff->d > 1)) {
+    if ((new BinanceHelpers)->toUpdate(EarnFP::all(), $force, 5, 6)) {
       $simpleEarnFlexiblePosition = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/simple-earn/flexible/position');
       //dd($simpleEarnFlexiblePosition);
       foreach ($simpleEarnFlexiblePosition->rows as $key => $value) {
@@ -274,15 +234,7 @@ class BinanceHelpers
 
   public function getSimpleEarnFlexibleList($force = false)
   {
-    $settings = (new BinanceHelpers)->getSettings();
-    if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
-
-    $earns_count = EarnFL::all()->count();
-    if ($earns_count > 0) {
-      $earns_last_update = EarnFL::orderBy('updated_at', 'DESC')->first()->updated_at;
-      $diff = $earns_last_update->diff(new DateTime());
-    }
-    if ($force || !$earns_count || ($diff && $diff->d > 1)) {
+    if ((new BinanceHelpers)->toUpdate(EarnFL::all(), $force, 3, 4)) {
       $simpleEarnFlexibleList = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/simple-earn/flexible/list', ['current' => 4, 'size' => 100]);
       //dd($simpleEarnFlexibleList);
       foreach ($simpleEarnFlexibleList->rows as $key => $value) {
@@ -309,37 +261,59 @@ class BinanceHelpers
   public function exchangeInfo($force = false)
   {
     set_time_limit(0);
-    $settings = (new BinanceHelpers)->getSettings();
-    if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
 
-    $symbols_count = Symbol::all()->count();
-    if ($symbols_count > 0) {
-      $symbols_last_update = Symbol::orderBy('updated_at', 'DESC')->first()->updated_at;
-      $diff = $symbols_last_update->diff(new DateTime());
-    }
-    if ($force || !$symbols_count  || ($diff && $diff->d > 1)) {
+    if ((new BinanceHelpers)->toUpdate(Symbol::all(), $force, 1, 2)) {
       $exchangeInfo = (new BinanceHelpers)->get('https://api.binance.com/api/v3/exchangeInfo');
       //dd($exchangeInfo->symbols);
       foreach ($exchangeInfo->symbols as $key => $value) {
         $symbol = Symbol::where('symbol', $value->symbol)->first();
         if (!$symbol) $symbol = new Symbol();
-        $symbol->symbol = $value->symbol;//string
-        $symbol->status = $value->status;//string
+        $symbol->symbol = $value->symbol; //string
+        $symbol->status = $value->status; //string
         $baseAsset = (new BinanceHelpers)->getCoin($value->baseAsset);
         if (!$baseAsset) continue;
         $symbol->baseAsset_id = $baseAsset->id;
-        $symbol->baseAssetPrecision = $value->baseAssetPrecision;//8
+        $symbol->baseAssetPrecision = $value->baseAssetPrecision; //8
         $quoteAsset = (new BinanceHelpers)->getCoin($value->quoteAsset);
         if (!$quoteAsset) continue;
         $symbol->quoteAsset_id = $quoteAsset->id;
-        $symbol->quotePrecision = $value->quotePrecision;//8
-        $symbol->baseCommissionPrecision = $value->baseCommissionPrecision;//8
-        $symbol->quoteCommissionPrecision = $value->quoteCommissionPrecision;//8
+        $symbol->quotePrecision = $value->quotePrecision; //8
+        $symbol->baseCommissionPrecision = $value->baseCommissionPrecision; //8
+        $symbol->quoteCommissionPrecision = $value->quoteCommissionPrecision; //8
         $symbol->save();
       }
     }
     $symbols = Symbol::all();
     return $symbols;
+  }
+
+  public function getCoin($asset)
+  {
+    $coin = Coin::whereCoin($asset)->first();
+    if (!$coin) (new BinanceHelpers)->getCapitalConfigGetall(true);
+    $coin = Coin::whereCoin($asset)->first();
+    return $coin;
+  }
+
+  public function toUpdate($models, $force = false, $from = 0, $to = 24)
+  {
+    $settings = (new BinanceHelpers)->getSettings();
+    if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return false;
+
+    //dd($models);
+    $count = $models->count();
+    if ($count == 0) return true;
+
+    if ($force) return true;
+
+    $now = new DateTime();
+    $last_update = $models->sortByDesc('updated_at')->first()->updated_at;
+    $diff = $last_update->diff($now);
+    $hours = $now->format('H');
+
+    if (($diff && $diff->d > 1) && $hours > $from && $hours < $to) return true;
+
+    return false;
   }
 
   public function getHttp($url, $array = null)
