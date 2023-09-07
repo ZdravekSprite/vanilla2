@@ -15,21 +15,11 @@ use Illuminate\Support\Facades\Http;
 
 class BinanceHelpers
 {
-  public function getSettings()
-  {
-    $settings = Settings::where('user_id', Auth::user()->id)->first();
-    if (!$settings) {
-      $settings = new Settings();
-      $settings->user_id = Auth::user()->id;
-      $settings->BINANCE_API_KEY = '';
-      $settings->BINANCE_API_SECRET = '';
-      $settings->save();
-    }
-    return $settings;
-  }
-
   public function getBinanceData()
   {
+    $settings = (new BinanceHelpers)->getSettings();
+    if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return null;
+
     $getL = (new BinanceHelpers)->getSimpleEarnLockedPosition()->map(fn ($asset) => [
       'asset_id' => $asset->asset_id,
       'amount' => $asset->amount,
@@ -285,6 +275,19 @@ class BinanceHelpers
     }
     $symbols = Symbol::all();
     return $symbols;
+  }
+
+  public function getSettings()
+  {
+    $settings = Settings::where('user_id', Auth::user()->id)->first();
+    if (!$settings) {
+      $settings = new Settings();
+      $settings->user_id = Auth::user()->id;
+      $settings->BINANCE_API_KEY = '';
+      $settings->BINANCE_API_SECRET = '';
+      $settings->save();
+    }
+    return $settings;
   }
 
   public function getCoin($asset)

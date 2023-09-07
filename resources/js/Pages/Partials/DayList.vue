@@ -84,7 +84,7 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
   let barWidth = (endm - startm) / 1440 * 100 + '%';
   return barWidth
 }
-//console.log(props.month);
+console.log(props.month);
 </script>
 
 <template>
@@ -129,9 +129,14 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
             style="min-height: 18px;">
             <div v-if="e['night'] != '00:00'" class="absolute rounded-l-md min-h-full" :class="bgColorBar(e['state'])"
               :style="{ width: barWidth('00:00', e['night']) }"></div>
-            <div v-if="e['state'] == 1" class="absolute min-h-full" :class="bgColorBar(e['state'])"
-              :style="{ 'margin-left': barWidth('00:00', e['start']), width: barWidth(e['start'], e['end']) }">
-            </div>
+            <template v-if="e['state'] == 1">
+              <div v-if="e['end'] != '00:00'" class="absolute min-h-full" :class="bgColorBar(e['state'])"
+                :style="{ 'margin-left': barWidth('00:00', e['start']), width: barWidth(e['start'], e['end']) }">
+              </div>
+              <div v-else class="absolute rounded-r-md min-h-full" :class="bgColorBar(e['state'])"
+                :style="{ 'margin-left': barWidth('00:00', e['start']), width: barWidth(e['start'], '24:00') }">
+              </div>
+            </template>
             <template v-else>
             </template>
           </div>

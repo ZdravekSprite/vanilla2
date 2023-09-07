@@ -40,6 +40,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
   $binance = (new BinanceHelpers)->getBinanceData();
+  if (!$binance) return Inertia::render('Dashboard');
   $sum = $binance->reduce(function ($sum, $value) {
     return $sum + ($value['all'] * $value['price']);
   });
