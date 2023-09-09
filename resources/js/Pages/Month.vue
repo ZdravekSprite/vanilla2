@@ -71,7 +71,6 @@ const props = defineProps<{
   next_id: number;
   prev_id: number;
 }>();
-console.log(props);
 </script>
 
 <template>

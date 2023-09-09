@@ -76,7 +76,7 @@ class ExportImportController extends Controller
         $value['user'] = $value->user()->name;
         $value['firm'] = $value->firm()->name;
       }
-      $arrayData = $months->toArray();
+      $arrayData = $months->setHidden(['id','user_id','firm_id','created_at','updated_at'])->toArray();
       $fileName = 'months.csv';
       //dd($arrayData);
     }
@@ -219,6 +219,23 @@ class ExportImportController extends Controller
           if (!Firm::where('name', $name)->first()) {
             Firm::insert([
               'name' => $name,
+              'address' => $dataRow['address'],
+              'oib' => $dataRow['oib'],
+              'iban' => $dataRow['iban'],
+              'bank' => $dataRow['bank'],
+              't01' => $dataRow['t01'],
+              't02' => $dataRow['t02'],
+              't03' => $dataRow['t03'],
+              't04' => $dataRow['t04'],
+              't05' => $dataRow['t05'],
+              't06' => $dataRow['t06'],
+              't07' => $dataRow['t07'],
+              't08' => $dataRow['t08'],
+              't09' => $dataRow['t09'],
+              't10' => $dataRow['t10'],
+              't11' => $dataRow['t11'],
+              't12' => $dataRow['t12'],
+              't13' => $dataRow['t13'],
             ]);
           }
         }

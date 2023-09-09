@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import EditForm from '@/Components/EditForm.vue';
+import DayForm from './DayForm.vue';
 interface Day {
   id: number;
   date: Date;
@@ -84,7 +84,6 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
   let barWidth = (endm - startm) / 1440 * 100 + '%';
   return barWidth
 }
-//console.log(props.month);
 </script>
 
 <template>
@@ -142,7 +141,7 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
           </div>
         </td>
         <td>
-          <EditForm class="float-left" :element="e" updateRoute="day.update" :labels="[['date']]" />
+          <DayForm class="float-left" :day="e" updateRoute="day.update" :labels="[['date'],['state']]" />
         </td>
       </tr>
     </tbody>
