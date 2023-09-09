@@ -15,7 +15,7 @@ class FirmController extends Controller
    */
   public function index()
   {
-    $selected = ['id', 'name'];
+    $selected = ['id', 'name', 'address', 'oib', 'iban', 'bank'];
     $all = Firm::all()->count();
     $firms = Firm::select($selected)->paginate(15);
     return Inertia::render('Firms', [
@@ -39,6 +39,10 @@ class FirmController extends Controller
   {
     Firm::factory()->create([
       'name' => $request->name,
+      'address' => $request->address ?? '',
+      'oib' => $request->oib ?? '',
+      'iban' => $request->iban ?? '',
+      'bank' => $request->bank ?? '',
     ]);
   }
 
@@ -65,6 +69,10 @@ class FirmController extends Controller
   {
     $firm = Firm::findOrFail($request->id);
     $firm->name = $request->name;
+    $firm->address = $request->address ?? '';
+    $firm->oib = $request->oib ?? '';
+    $firm->iban = $request->iban ?? '';
+    $firm->bank = $request->bank ?? '';
     $firm->save();
   }
 

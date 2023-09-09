@@ -21,7 +21,7 @@ class DayController extends Controller
     $perPage = 10;
     $selected = ['id', 'date', 'user_id', 'state', 'night', 'start', 'end', 'firm_id'];
     //$all = Day::whereUserId($user_id)->count();
-    $days = Day::where('user_id',$user_id)->select($selected)->paginate($perPage);
+    $days = Day::where('user_id', $user_id)->select($selected)->paginate($perPage);
     $all = Day::all()->count();
     //$days = Day::select($selected)->paginate($perPage);
     //dd($days);
@@ -57,7 +57,15 @@ class DayController extends Controller
    */
   public function store(StoreDayRequest $request)
   {
-    //
+    Day::factory()->create([
+      'date' => $request->date,
+      'user_id' => Auth::user()->id,
+      'firm_id' => $request->firm,
+      'state' => $request->state,
+      'night' => $request->night,
+      'start' => $request->start,
+      'end' => $request->end,
+    ]);
   }
 
   /**
@@ -81,7 +89,13 @@ class DayController extends Controller
    */
   public function update(UpdateDayRequest $request, Day $day)
   {
-    //
+    $day = Day::where('user_id', Auth::user()->id)->where('date', date("Y-m-d H:i:s", strtotime($request->date)))->where('firm_id', $request->firm)->first();
+    if (!$day) dd($request);
+    $day->state = $request->state;
+    $day->night = $request->night;
+    $day->start = $request->start;
+    $day->end = $request->end;
+    $day->save();
   }
 
   /**

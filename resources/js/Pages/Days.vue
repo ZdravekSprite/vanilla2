@@ -34,5 +34,5 @@ const props = defineProps<{
 <template>
   <Page :all="all" single="day" plural="days" :elements="days"
     :labels_all="[['date'], ['firm', props.firms], ['state'], ['night'], ['start'], ['end']]"
-    :labels_show="[['date'], ['user', props.users], ['firm', props.firms], ['state']]" />
+    :labels_show="[['date'], ['user'], ['firm', props.firms], ['state']]" />
 </template>

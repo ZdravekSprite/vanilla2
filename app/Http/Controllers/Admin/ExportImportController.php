@@ -87,7 +87,7 @@ class ExportImportController extends Controller
         $value['user'] = $value->user()->name;
         $value['firm'] = $value->firm()->name;
       }
-      $arrayData = $days->toArray();
+      $arrayData = $days->setHidden(['id','user_id','firm_id','created_at','updated_at'])->toArray();
       $fileName = 'days.csv';
     }
 
@@ -155,7 +155,7 @@ class ExportImportController extends Controller
       $columns = ['date', 'name'];
     }
     if ($request->input('model') == 'day') {
-      $columns = ['date', 'user', 'state', 'night', 'start', 'end', 'firm'];
+      $columns = ['date', 'state', 'night', 'start', 'end', 'user', 'firm'];
     }
     if ($request->input('model') == 'firm') {
       $columns = ['name', 'address', 'oib', 'iban', 'bank', 't01', 't02', 't03', 't04', 't05', 't06', 't07', 't08', 't09', 't10', 't11', 't12', 't13'];

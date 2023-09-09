@@ -13,8 +13,6 @@ class Day extends Model
     'id',
     'created_at',
     'updated_at',
-    'user_id',
-    'firm_id',
   ];
 
   protected $fillable = [
