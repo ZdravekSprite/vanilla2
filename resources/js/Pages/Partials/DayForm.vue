@@ -19,6 +19,8 @@ const confirmingUpdate = ref(false);
 const form = useForm({
   id: props.day.id,
   date: props.day.date,
+  user_id: props.day.user_id,
+  firm_id: props.day.firm_id,
   state: props.day.state ?? 0,
   start: props.day.start ?? '08:00',
   end: props.day.end ?? '16:00',
@@ -56,7 +58,7 @@ const closeModal = () => {
           Edit {{ props.day.date ?? props.day.id + '. element' }}?
         </h2>
         <div>
-          <InputLabel for="satate" value="Vrsta dana" />
+          <InputLabel for="state" value="Vrsta dana" />
           <select id="state" name="state" v-model="form.state"
             class="block mt-1 w-w-3/4 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
             <option v-for="x, y in ['Nisam radio/la', 'Radio/la normalno', 'Godišnji', 'Plaćeni dopust', 'Bolovanje']"

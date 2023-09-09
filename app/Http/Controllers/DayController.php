@@ -101,7 +101,7 @@ class DayController extends Controller
    */
   public function update(UpdateDayRequest $request, Day $day)
   {
-    $day = Day::where('user_id', Auth::user()->id)->where('date', date("Y-m-d H:i:s", strtotime($request->date)))->where('firm_id', $request->firm)->first();
+    $day = Day::where('user_id', $request->user_id)->where('date', date("Y-m-d H:i:s", strtotime($request->date)))->where('firm_id', $request->firm_id)->first();
     if (!$day) dd($request);
     $day->state = $request->state;
     $day->night = $request->night;
