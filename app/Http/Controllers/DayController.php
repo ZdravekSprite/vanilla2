@@ -25,14 +25,26 @@ class DayController extends Controller
     $all = Day::all()->count();
     //$days = Day::select($selected)->paginate($perPage);
     //dd($days);
+    $states = [];
+    foreach (['Nisam radio/la', 'Radio/la normalno', 'Godišnji', 'Plaćeni dopust', 'Bolovanje'] as $key => $value) {
+      $states[] = (object) [
+        'id' => $key,
+        'name' => $value
+      ];
+    }
+
+    //'Nisam radio', 'Radio normalno', 'Godišnji', 'Plaćeni dopust', 'Bolovanje';
     foreach ($days as $key => $value) {
       $value['_date'] = $value['date'];
       $value['firm'] = Firm::where('id', $value['firm_id'])->first()->name;
       $value['user'] = User::where('id', $value['user_id'])->first()->name;
+      $value['state_id'] = $value['state'];
+      $value['state'] = $states[$value['state_id']]->name;
     }
     return Inertia::render('Days', [
       'all' => $all,
       'days' => $days,
+      'states' => $states,
       'firms' => Firm::all()->map(fn ($f) => [
         'id' => $f->id,
         'name' => $f->name,

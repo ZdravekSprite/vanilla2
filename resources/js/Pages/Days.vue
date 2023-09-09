@@ -26,6 +26,7 @@ const props = defineProps<{
     data: Array<Day>;
     links: Array<object>
   };
+  states: Array<Label>;
   firms: Array<Label>;
   users: Array<Label>;
 }>();
@@ -33,6 +34,6 @@ const props = defineProps<{
 
 <template>
   <Page :all="all" single="day" plural="days" :elements="days"
-    :labels_all="[['date'], ['firm', props.firms], ['state'], ['night'], ['start'], ['end']]"
-    :labels_show="[['date'], ['user'], ['firm', props.firms], ['state']]" />
+    :labels_all="[['date'], ['firm', props.firms], ['state', props.states], ['night'], ['start'], ['end']]"
+    :labels_show="[['date'], ['user'], ['firm'], ['state']]" />
 </template>
