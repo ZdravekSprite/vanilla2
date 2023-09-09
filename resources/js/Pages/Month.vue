@@ -5,6 +5,7 @@ import DayList from './Partials/DayList.vue';
 import Payroll from './Partials/Payroll.vue';
 import EditForm from '@/Components/EditForm.vue';
 import Btn from '@/Components/Btn.vue';
+import { ref } from 'vue';
 
 interface Day {
   id: number;
@@ -71,6 +72,16 @@ const props = defineProps<{
   next_id: number;
   prev_id: number;
 }>();
+
+const showPayroll = ref(false);
+const clickShowPayroll = () => {
+  showPayroll.value = !showPayroll.value;
+};
+
+const showDayList = ref(false);
+const clickShowDayList = () => {
+  showDayList.value = !showDayList.value;
+};
 </script>
 
 <template>
@@ -82,18 +93,19 @@ const props = defineProps<{
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pr-4">Month</h2>
         <EditForm class="float-left" :element="data" updateRoute="month.update"
           :labels="[['bruto'], ['minuli'], ['odbitak'], ['prirez'], ['prijevoz'], ['prehrana'], ['stimulacija'], ['nagrada'], ['regres'], ['bozicnica'], ['prigodna'], ['kredit'], ['sindikat'], ['first'], ['last'], ['h01'], ['v01'], ['h02'], ['v02'], ['h03'], ['v03'], ['h04'], ['v04'], ['h05'], ['v05'], ['h06'], ['v06'], ['h07'], ['v07'], ['h08'], ['v08'], ['h09'], ['v09'], ['h10'], ['v10'], ['h11'], ['v11'], ['h12'], ['v12'], ['h13'], ['v13']]" />
-        <Btn>Test</Btn>
+        <Btn @click="clickShowPayroll">{{ !showPayroll ? 'show' : 'hide' }} Payroll</Btn>
+        <Btn @click="clickShowDayList">{{ !showDayList ? 'show' : 'hide' }} DayList</Btn>
       </div>
     </template>
 
     <div class="py-12 space-y-4">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div v-if="showPayroll" class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-4 sm:p-8 text-gray-900 dark:text-gray-100">
             <Payroll :month="data" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
           </div>
         </div>
-        <div
+        <div v-if="showDayList"
           class="bg-indigo-500 bg-indigo-400 bg-red-500 bg-green-500 bg-yellow-500 bg-yellow-400 bg-red-400 bg-indigo-100 bg-red-100 bg-green-100 bg-yellow-100 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900 dark:text-gray-100">
             <DayList v-if="month" :month="month" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
