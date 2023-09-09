@@ -4,6 +4,8 @@ import { Link } from '@inertiajs/vue3';
 
 const props = defineProps<{
   month: {
+    first: string,
+    last: string,
     bruto: string,
     h01: string,
     v01: string,
@@ -84,7 +86,7 @@ const props = defineProps<{
           <ul>
             <li><b>II. PODACI O RADNIKU/RADNICI</b></li>
             <li>
-              1. Ime i prezime: ___
+              1. Ime i prezime: {{ $page.props.auth.user.name }}
             </li>
             <li>2. Adresa: ____</li>
             <li>3. Osobni identifikacijski broj: ____</li>
@@ -94,20 +96,21 @@ const props = defineProps<{
         </td>
       </tr>
       <tr>
-        <td class="border p-2" colspan="4"><b>III. RAZDOBLJE NA KOJE SE PLAĆA ODNOSI:</b> GODINA ___, MJESEC ___ DANI U
-          MJESECU OD ___ DO ___</td>
+        <td class="border p-2" colspan="4"><b>III. RAZDOBLJE NA KOJE SE PLAĆA ODNOSI:</b> GODINA {{ new
+          Date(month.first).getFullYear() }}, MJESEC {{ new Date(month.first).getMonth() + 1 }} DANI U MJESECU OD {{ new
+    Date(month.first).getDate() }} DO {{ new Date(month.last).getDate() }}</td>
       </tr>
-      <TableTr td1="1. OPIS PLAĆE" td2="SATI" td3="IZNOS" :bold="true" :indent="false"/>
-      <TableTr v-if="month.h01 != '0'" td1="1.1. Za redoviti rad" :td2="month.h01+''" :td3="month.v01+''"/>
-      <TableTr v-if="month.h09 != '0'" td1="1.4 Za prekovremeni rad" :td2="month.h09+''" :td3="month.v09+''"/>
-      <TableTr v-if="month.h12 != '0'" td1="1.7a Praznici. Blagdani, izbori" :td2="month.h12+''" :td3="month.v12+''"/>
-      <TableTr v-if="month.h10 != '0'" td1="1.7b Godišnji odmor" :td2="month.h10+''" :td3="month.v10+''"/>
-      <TableTr v-if="month.h13 != '0'" td1="1.7c Plaćeni dopust" :td2="month.h13+''" :td3="month.v13+''"/>
-      <TableTr v-if="month.h11 != '0'" td1="1.7d Bolovanje do 42 dana" :td2="month.h11+''" :td3="month.v11+''"/>
-      <TableTr v-if="month.h03 != '0'" td1="1.7e Dodatak za rad nedjeljom" :td2="month.h03+''" :td3="month.v03+''"/>
-      <TableTr v-if="month.h05 != '0'" td1="1.7f Dodatak za rad na praznik" :td2="month.h05+''" :td3="month.v05+''"/>
-      <TableTr v-if="month.h02 != '0'" td1="1.7g Dodatak za noćni rad" :td2="month.h02+''" :td3="month.v02+''"/>
-      <TableTr td1="1.7.P Nagrada za radne rezultate" td3="_"/>
+      <TableTr td1="1. OPIS PLAĆE" td2="SATI" td3="IZNOS" :bold="true" :indent="false" />
+      <TableTr v-if="month.h01 != '0'" td1="1.1. Za redoviti rad" :td2="month.h01 + ''" :td3="month.v01 + ''" />
+      <TableTr v-if="month.h09 != '0'" td1="1.4 Za prekovremeni rad" :td2="month.h09 + ''" :td3="month.v09 + ''" />
+      <TableTr v-if="month.h12 != '0'" td1="1.7a Praznici. Blagdani, izbori" :td2="month.h12 + ''" :td3="month.v12 + ''" />
+      <TableTr v-if="month.h10 != '0'" td1="1.7b Godišnji odmor" :td2="month.h10 + ''" :td3="month.v10 + ''" />
+      <TableTr v-if="month.h13 != '0'" td1="1.7c Plaćeni dopust" :td2="month.h13 + ''" :td3="month.v13 + ''" />
+      <TableTr v-if="month.h11 != '0'" td1="1.7d Bolovanje do 42 dana" :td2="month.h11 + ''" :td3="month.v11 + ''" />
+      <TableTr v-if="month.h03 != '0'" td1="1.7e Dodatak za rad nedjeljom" :td2="month.h03 + ''" :td3="month.v03 + ''" />
+      <TableTr v-if="month.h05 != '0'" td1="1.7f Dodatak za rad na praznik" :td2="month.h05 + ''" :td3="month.v05 + ''" />
+      <TableTr v-if="month.h02 != '0'" td1="1.7g Dodatak za noćni rad" :td2="month.h02 + ''" :td3="month.v02 + ''" />
+      <TableTr td1="1.7.P Nagrada za radne rezultate" td3="_" />
       <tr>
         <td class="w-3/4 border p-2" colspan="2">2. OSTALI OBLICI RADA TEMELJEM KOJIH OSTVARUJE PRAVO NA UVEĆANJE PLAĆE
           PREMA KOLEKTIVNOM UGOVORU, PRAVILNIKU O RADU ILI UGOVORU O RADU I NOVČANI IZNOS PO TOJ OSNOVI (SATI
@@ -234,6 +237,6 @@ const props = defineProps<{
         <td class="w-3/4 border p-2 pl-6" colspan="2">Kredit</td>
         <td class="w-1/8 border p-2 text-center"></td>
         <td class="w-1/8 border p-2 text-right">___</td>
-    </tr>
-  </tbody>
+      </tr>
+    </tbody>
 </table></template>

@@ -16,7 +16,7 @@ class ExportImportController extends Controller
   public function export(Request $request)
   {
     if ($request->input('model') == 'euro') {
-      $arrayData = Euro::all()->map(fn ($e) => [
+      $arrayData = Euro::orderBy('time', 'ASC')->get()->map(fn ($e) => [
         'time' => $e->time,
         'no1' => $e->no1,
         'no2' => $e->no2,
@@ -30,16 +30,34 @@ class ExportImportController extends Controller
     }
 
     if ($request->input('model') == 'holiday') {
-      $arrayData = Holiday::all()->map(fn ($e) => [
-        'date' => $e->date,
+      $arrayData = Holiday::orderBy('date', 'ASC')->get()->map(fn ($e) => [
+        'date' => $e->date->format('Y-m-d'),
         'name' => $e->name,
       ]);
       $fileName = 'holidays.csv';
+      //dd($arrayData,$fileName);
     }
 
     if ($request->input('model') == 'firm') {
       $arrayData = Firm::all()->map(fn ($e) => [
         'name' => $e->name,
+        'address' => $e->address,
+        'oib' => $e->oib,
+        'iban' => $e->iban,
+        'bank' => $e->bank,
+        't01' => $e->t01,
+        't02' => $e->t02,
+        't03' => $e->t03,
+        't04' => $e->t04,
+        't05' => $e->t05,
+        't06' => $e->t06,
+        't07' => $e->t07,
+        't08' => $e->t08,
+        't09' => $e->t09,
+        't10' => $e->t10,
+        't11' => $e->t11,
+        't12' => $e->t12,
+        't13' => $e->t13,
       ]);
       $fileName = 'firms.csv';
     }
@@ -61,6 +79,16 @@ class ExportImportController extends Controller
       $arrayData = $months->toArray();
       $fileName = 'months.csv';
       //dd($arrayData);
+    }
+
+    if ($request->input('model') == 'day') {
+      $days = Day::all();
+      foreach ($days as $key => $value) {
+        $value['user'] = $value->user()->name;
+        $value['firm'] = $value->firm()->name;
+      }
+      $arrayData = $days->toArray();
+      $fileName = 'days.csv';
     }
 
     if (count($arrayData)) {
@@ -130,13 +158,13 @@ class ExportImportController extends Controller
       $columns = ['date', 'user', 'state', 'night', 'start', 'end', 'firm'];
     }
     if ($request->input('model') == 'firm') {
-      $columns = ['name'];
+      $columns = ['name', 'address', 'oib', 'iban', 'bank', 't01', 't02', 't03', 't04', 't05', 't06', 't07', 't08', 't09', 't10', 't11', 't12', 't13'];
     }
     if ($request->input('model') == 'user') {
       $columns = ['name', 'email'];
     }
     if ($request->input('model') == 'month') {
-      $columns = ['month','bruto','minuli','odbitak','prirez','prijevoz','prehrana','prekovremeni','stari','nocni','bolovanje','stimulacija','nagrada','regres','bozicnica','prigodna','sindikat','kredit','first','last','h01','v01','h02','v02','h03','v03','h04','v04','h05','v05','h06','v06','h07','v07','h08','v08','h09','v09','h10','v10','h11','v11','h12','v12','h13','v13','user','firm'];
+      $columns = ['month', 'bruto', 'minuli', 'odbitak', 'prirez', 'prijevoz', 'prehrana', 'prekovremeni', 'stari', 'nocni', 'bolovanje', 'stimulacija', 'nagrada', 'regres', 'bozicnica', 'prigodna', 'sindikat', 'kredit', 'first', 'last', 'h01', 'v01', 'h02', 'v02', 'h03', 'v03', 'h04', 'v04', 'h05', 'v05', 'h06', 'v06', 'h07', 'v07', 'h08', 'v08', 'h09', 'v09', 'h10', 'v10', 'h11', 'v11', 'h12', 'v12', 'h13', 'v13', 'user', 'firm'];
     }
 
     $frstrow = true;

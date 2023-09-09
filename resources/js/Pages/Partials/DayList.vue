@@ -84,7 +84,7 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
   let barWidth = (endm - startm) / 1440 * 100 + '%';
   return barWidth
 }
-console.log(props.month);
+//console.log(props.month);
 </script>
 
 <template>

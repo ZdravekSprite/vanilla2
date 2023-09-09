@@ -15,6 +15,8 @@ class Month extends Model
   protected $hidden = [
     'created_at',
     'updated_at',
+    'user_id',
+    'firm_id',
   ];
 
   protected $fillable = [
@@ -90,8 +92,9 @@ class Month extends Model
   {
     $firstDate = '01.' . $this->slug();
     $from = CarbonImmutable::createFromFormat('d.m.Y', $firstDate)->firstOfMonth();
-    $firstFrom = $this->user->settings->zaposlen > $from ? Carbon::parse($this->user->settings->zaposlen) : $from;
-    return $firstFrom;
+    /*$firstFrom = $this->user->settings->zaposlen > $from ? Carbon::parse($this->user->settings->zaposlen) : $from;
+    return $firstFrom;*/
+    return $from->format('Y-m-d');
   }
 
   /**
@@ -101,7 +104,7 @@ class Month extends Model
   {
     $firstDate = '01.' . $this->slug();
     $to = Carbon::createFromFormat('d.m.Y', $firstDate)->endOfMonth();
-    return $to;
+    return $to->format('Y-m-d');
   }
 
   public function days()
