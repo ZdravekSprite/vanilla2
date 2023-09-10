@@ -23,7 +23,7 @@ interface Day {
 }
 
 const props = defineProps<{
-  month: Array<Day>;
+  days: Array<Day>;
   data: {
     bruto: string,
     minuli: string,
@@ -90,7 +90,9 @@ const clickShowDayList = () => {
   <AuthenticatedLayout>
     <template #header>
       <div class="hidden sm:-my-px sm:ml-10 sm:flex items-center">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pr-4">Month</h2>
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pr-4">Month
+          {{ new Date(props.data.first).getMonth() + 1 }}
+          {{ new Date(props.data.first).getFullYear() }}</h2>
         <EditForm class="float-left" :element="data" updateRoute="month.update"
           :labels="[['bruto'], ['minuli'], ['odbitak'], ['prirez'], ['prijevoz'], ['prehrana'], ['stimulacija'], ['nagrada'], ['regres'], ['bozicnica'], ['prigodna'], ['kredit'], ['sindikat'], ['first'], ['last'], ['h01'], ['v01'], ['h02'], ['v02'], ['h03'], ['v03'], ['h04'], ['v04'], ['h05'], ['v05'], ['h06'], ['v06'], ['h07'], ['v07'], ['h08'], ['v08'], ['h09'], ['v09'], ['h10'], ['v10'], ['h11'], ['v11'], ['h12'], ['v12'], ['h13'], ['v13']]" />
         <Btn @click="clickShowPayroll">{{ !showPayroll ? 'show' : 'hide' }} Payroll</Btn>
@@ -108,7 +110,7 @@ const clickShowDayList = () => {
         <div v-if="showDayList"
           class="bg-indigo-500 bg-indigo-400 bg-red-500 bg-green-500 bg-yellow-500 bg-yellow-400 bg-red-400 bg-indigo-100 bg-red-100 bg-green-100 bg-yellow-100 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900 dark:text-gray-100">
-            <DayList v-if="month" :month="month" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
+            <DayList v-if="days" :days="days" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
           </div>
         </div>
       </div>

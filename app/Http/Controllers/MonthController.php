@@ -65,13 +65,10 @@ class MonthController extends Controller
   //public function show(Month $month)
   public function show(Int $month)
   {
-    //dd($month);
-    $user_id = Auth::user()->id;
     $m = Month::where('id', $month)->first();
     $c = $m->year() > 2022 ? ' €' : ' kn';
-    //dd($month,$m);
     return Inertia::render('Month', [
-      'month' => $m->days(),
+      'days' => $m->days(),
       'data' => [
         'id' => $m->id,
         'slug' => $m->slug(),

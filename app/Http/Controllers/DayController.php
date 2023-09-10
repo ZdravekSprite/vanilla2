@@ -9,6 +9,7 @@ use App\Models\Firm;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class DayController extends Controller
 {
@@ -101,30 +102,73 @@ class DayController extends Controller
    */
   public function update(UpdateDayRequest $request, Day $day)
   {
-    $user_id = $request->user_id ?? Auth::user()->id;
+    $date = date("Y-m-d", strtotime($request->date));
+    $user_id = isset($request->user_id) ? $request->user_id : $request->user ?? Auth::user()->id;
     $firm_id = isset($request->firm_id) ? $request->firm_id : $request->firm;
+    if (!$firm_id) dd($request, $firm_id);
 
-    $day = Day::where('user_id', $user_id)->where('date', date("Y-m-d", strtotime($request->date)))->where('firm_id', $firm_id)->first();
-    /*OrNew(
-      ['date' => date('Y-m-d', strtotime($request->date))],
-      ['user_id' => $user_id],
-      ['firm_id' => $firm_id]
-    );*/
-    if (!$day) dd('no day',$request);
-    if (!$firm_id) dd($request,$firm_id);
-    //dd($day,$firm_id);
-    $day->state = $request->state;
+    $day = Day::where('user_id', $user_id)->where('date', $date)->where('firm_id', $firm_id)->firstOrNew(
+      [
+        'date' => $date,
+        'user_id' => $user_id,
+        'firm_id' => $firm_id
+      ]
+    );
+    if (!$day) dd('no day', $request);
+
+    $day->state = $request->state ?? 0;
     $day->night = $request->night ?? $day->night ?? '00:00';
-    $day->start = $request->start;
-    $day->end = $request->end;
+    $next_date = $day->date->addDays(1)->format('Y-m-d');
+    $next_day = Day::where('user_id', $user_id)->where('firm_id', $firm_id)->where('date', $next_date)->firstOrNew(
+      [
+        'date' => $next_date,
+        'user_id' => $user_id,
+        'firm_id' => $firm_id
+      ],
+    );
+    if ($request->state == 1) {
+      $day->start = $request->start;
+      $day->end = $request->end;
+      if ($day->start > $day->end) {
+        $next_day->night = $day->end->format('H:i');
+        $day->end = "24:00";
+        $next_day->save();
+      } else {
+        if ($next_day->night) {
+          $next_day->night = "00:00";
+          $next_day->save();
+        }
+      }
+    } else {
+      if ($next_day->night) {
+        $next_day->night = "00:00";
+        $next_day->save();
+      }
+    }
     $day->save();
   }
 
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(Day $day)
+  public function destroy(Request $request, Day $day)
   {
-    //
+    $day = Day::whereId($request->id)->first();
+    $next_day = Day::where('user_id', $day->user_id)->where('firm_id', $day->firm_id)->where('date', $day->date->addDays(1)->format('Y-m-d'))->first();
+
+    //dd($day,$next_day);
+    if ($next_day) {
+      $next_day->night = "00:00";
+      $next_day->save();
+    }
+
+    if ($day->night->format('H:i') == "00:00") {
+      $day->delete();
+    } else {
+      $day->state = 0;
+      $day->start = "00:00";
+      $day->end = "00:00";
+      $day->save();
+    }
   }
 }

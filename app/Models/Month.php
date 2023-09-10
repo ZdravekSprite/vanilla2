@@ -72,7 +72,7 @@ class Month extends Model
    */
   public function next()
   {
-    $next = Month::orderBy('month', 'asc')->where('user_id', '=', $this->user_id)->where('month', '>', $this->month)->first();
+    $next = Month::orderBy('month', 'asc')->where('user_id', $this->user_id)->where('month', '>', $this->month)->first();
     return $next ?? $this;
   }
 
@@ -81,7 +81,7 @@ class Month extends Model
    */
   public function prev()
   {
-    $prev = Month::orderBy('month', 'desc')->where('user_id', '=', $this->user_id)->where('month', '<', $this->month)->first();
+    $prev = Month::orderBy('month', 'desc')->where('user_id', $this->user_id)->where('month', '<', $this->month)->first();
     return $prev ?? $this;
   }
 
@@ -113,21 +113,25 @@ class Month extends Model
     $from = CarbonImmutable::createFromFormat('d.m.Y', $firstDate)->firstOfMonth();
     $to = Carbon::createFromFormat('d.m.Y', $firstDate)->endOfMonth();
     //dd($firstDate,$from,$to);
-    $daysColection = Day::whereBetween('date', [$from, $to])->where('user_id', '=', $this->user_id)->get();
+    $daysColection = Day::whereBetween('date', [$from, $to])->where('user_id', $this->user_id)->get();
     $holidaysColection = Holiday::whereBetween('date', [$from, $to])->get();
     $datesArray = array();
     for ($i = 0; $i < $from->daysInMonth; $i++) {
-      if ($daysColection->where('date', '=', $from->addDays($i))->first() != null) {
-        $temp_date = $daysColection->where('date', '=', $from->addDays($i))->first();
+      if ($daysColection->where('date', $from->addDays($i))->first() != null) {
+        $temp_date = $daysColection->where('date', $from->addDays($i))->first();
       } else {
         $temp_date = new Day;
         $temp_date->date = $from->addDays($i);
+        $temp_date->user_id = $this->user_id;
+        $temp_date->user = $this->user()->name;
+        $temp_date->firm_id = $this->firm_id;
+        $temp_date->firm = $this->firm()->name;
         //dd($temp_date);
       }
       //$temp_date = $from->addDays($i);
-      if ($holidaysColection->where('date', '=', $from->addDays($i))->first() != null) {
+      if ($holidaysColection->where('date', $from->addDays($i))->first() != null) {
         //dd($holidaysColection->where('date', '=', $from->addDays($i))->first());
-        $temp_date->holiday = $holidaysColection->where('date', '=', $from->addDays($i))->first()->name;
+        $temp_date->holiday = $holidaysColection->where('date', $from->addDays($i))->first()->name;
       }
       $datesArray[] = $temp_date;
     }

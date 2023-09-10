@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import DayForm from './DayForm.vue';
+import DeleteForm from '@/Components/DeleteForm.vue';
 interface Day {
   id: number;
   date: Date;
@@ -17,14 +18,13 @@ interface Day {
 }
 
 const props = defineProps<{
-  month: Array<Day>;
+  days: Array<Day>;
   next: String;
   prev: String;
   next_id: number;
   prev_id: number;
 }>();
 
-console.log(props)
 const dateFormat = (date: Date) => {
   let objectDate = new Date(date);
   let day = objectDate.getDate();
@@ -88,7 +88,7 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
 </script>
 
 <template>
-  <table v-if="month" class="table-auto w-full">
+  <table v-if="days" class="table-auto w-full">
     <caption class="caption-top">
       <div class="flex justify-between">
         <div>
@@ -122,7 +122,7 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(e, i) in month" :key="e.id">
+      <tr v-for="(e, i) in days" :key="e.id">
         <td :class="{ 'text-red-400': e['holiday'] }">{{ dateFormat(e['date']) }}</td>
         <td>
           <div :title="dateFormat(e['date'])" class="w-full rounded-md relative" :class="bgColor(e['state'], e['date'])"
@@ -142,7 +142,8 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
           </div>
         </td>
         <td>
-          <DayForm class="float-left" :day="e" updateRoute="day.update" :labels="[['date'],['state']]" />
+          <DayForm class="float-left" :day="e" />
+          <DeleteForm v-if="e['start'] && e['start'] != '00:00'" class="float-right" :element="e" destroyRoute="day.destroy" />
         </td>
       </tr>
     </tbody>

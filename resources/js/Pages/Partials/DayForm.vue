@@ -10,8 +10,6 @@ import Btn from '@/Components/Btn.vue';
 
 const props = defineProps({
   day: Object,
-  updateRoute: String,
-  labels: Array,
 });
 
 const confirmingUpdate = ref(false);
@@ -19,8 +17,8 @@ const confirmingUpdate = ref(false);
 const form = useForm({
   id: props.day.id,
   date: props.day.date,
-  user_id: props.day.user_id,
-  firm_id: props.day.firm_id,
+  user: props.day.user_id,
+  firm: props.day.firm_id,
   state: props.day.state ?? 0,
   start: props.day.start ?? '08:00',
   end: props.day.end ?? '16:00',
@@ -31,7 +29,7 @@ const confirmUpdate = () => {
 };
 
 const update = () => {
-  form.patch(route(props.updateRoute, props.day.id), {
+  form.patch(route('day.update', props.day.id), {
     preserveScroll: true,
     onSuccess: () => closeModal(),
     onError: () => console.log('error'),
@@ -55,7 +53,7 @@ const closeModal = () => {
     <Modal :show="confirmingUpdate" @close="closeModal">
       <div class="p-6 space-y-4">
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-          Edit {{ props.day.date ?? props.day.id + '. element' }}?
+          Edit {{ props.day.date ?? props.day.id + '. element' }} for {{ props.day.user }} in  {{ props.day.firm }}?
         </h2>
         <div>
           <InputLabel for="state" value="Vrsta dana" />
