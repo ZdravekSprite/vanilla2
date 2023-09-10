@@ -17,8 +17,8 @@ const props = defineProps({
 
 const classes = computed(() =>
   props.bold
-    ? 'border p-2 font-bold' + (props.indent ? ' pl-6' : '')
-    : 'border p-2' + (props.indent ? ' pl-6' : '')
+    ? 'border p-2 font-extrabold' + (props.indent ? ' pl-6' : '')
+    : 'border p-2 font-thin' + (props.indent ? ' pl-6' : '')
 );
 </script>
 

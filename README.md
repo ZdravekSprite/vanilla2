@@ -77,7 +77,7 @@ php artisan serve
 ```
 
 ```bash
-git add . && git commit -am "v0071"
+git add . && git commit -am "v0072"
 git push
 ```
 

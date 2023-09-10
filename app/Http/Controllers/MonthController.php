@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Type\Decimal;
 
 class MonthController extends Controller
 {
@@ -71,52 +72,54 @@ class MonthController extends Controller
     foreach ($days as $key => $value) {
       $value['next_night'] = $value->nextNight();
     }
+    //dd($m);
     return Inertia::render('Month', [
       'days' => $days,
       'data' => [
         'id' => $m->id,
         'slug' => $m->slug(),
-        'bruto' => round((int)$m->bruto / 100, 2) . $c,
-        'minuli' => round((int)$m->minuli / 100, 2) . ' %',
-        'odbitak' => round((int)$m->odbitak / 100, 2) . $c,
-        'prirez' => round((int)$m->prirez / 100, 2) . ' %',
-        'prijevoz' => round((int)$m->prijevoz / 100, 2) . $c,
-        'prehrana' => round((int)$m->prehrana / 100, 2) . $c,
-        'stimulacija' => round((int)$m->stimulacija / 100, 2) . $c,
-        'nagrada' => round((int)$m->nagrada / 100, 2) . $c,
-        'regres' => round((int)$m->regres / 100, 2) . $c,
-        'bozicnica' => round((int)$m->bozicnica / 100, 2) . $c,
-        'prigodna' => round((int)$m->prigodna / 100, 2) . $c,
-        'kredit' => round((int)$m->kredit / 100, 2) . $c,
-        'sindikat' => round((int)$m->sindikat / 100, 2) . ' %',
+        'valuta' => $c,
+        'bruto' => round((int)$m->bruto / 100, 2),
+        'minuli' => round((int)$m->minuli / 100, 2),
+        'odbitak' => round((int)$m->odbitak / 100, 2),
+        'prirez' => round((int)$m->prirez / 100, 2),
+        'prijevoz' => round((int)$m->prijevoz / 100, 2),
+        'prehrana' => round((int)$m->prehrana / 100, 2),
+        'stimulacija' => round((int)$m->stimulacija / 100, 2),
+        'nagrada' => round((int)$m->nagrada / 100, 2),
+        'regres' => round((int)$m->regres / 100, 2),
+        'bozicnica' => round((int)$m->bozicnica / 100, 2),
+        'prigodna' => round((int)$m->prigodna / 100, 2),
+        'kredit' => round((int)$m->kredit / 100, 2),
+        'sindikat' => round((int)$m->sindikat / 100, 2),
         'first' => $m->first != "null" && $m->first != '' ? $m->first : $m->from(),
         'last' => $m->last != "null" && $m->last != '' ? $m->last : $m->to(),
-        'h01' => round((float)$m->h01 / 100, 2) . '',
-        'v01' => round((float)$m->v01 / 100, 2) . $c,
-        'h02' => round((float)$m->h02 / 100, 2) . '',
-        'v02' => round((float)$m->v02 / 100, 2) . $c,
-        'h03' => round((float)$m->h03 / 100, 2) . '',
-        'v03' => round((float)$m->v03 / 100, 2) . $c,
-        'h04' => round((float)$m->h04 / 100, 2) . '',
-        'v04' => round((float)$m->v04 / 100, 2) . $c,
-        'h05' => round((float)$m->h05 / 100, 2) . '',
-        'v05' => round((float)$m->v05 / 100, 2) . $c,
-        'h06' => round((float)$m->h06 / 100, 2) . '',
-        'v06' => round((float)$m->v06 / 100, 2) . $c,
-        'h07' => round((float)$m->h07 / 100, 2) . '',
-        'v07' => round((float)$m->v07 / 100, 2) . $c,
-        'h08' => round((float)$m->h08 / 100, 2) . '',
-        'v08' => round((float)$m->v08 / 100, 2) . $c,
-        'h09' => round((float)$m->h09 / 100, 2) . '',
-        'v09' => round((float)$m->v09 / 100, 2) . $c,
-        'h10' => round((float)$m->h10 / 100, 2) . '',
-        'v10' => round((float)$m->v10 / 100, 2) . $c,
-        'h11' => round((float)$m->h11 / 100, 2) . '',
-        'v11' => round((float)$m->v11 / 100, 2) . $c,
-        'h12' => round((float)$m->h12 / 100, 2) . '',
-        'v12' => round((float)$m->v12 / 100, 2) . $c,
-        'h13' => round((float)$m->h13 / 100, 2) . '',
-        'v13' => round((float)$m->v13 / 100, 2) . $c,
+        'h01' => round((float)$m->h01 / 100, 2),
+        'v01' => round((float)$m->v01 / 100, 2),
+        'h02' => round((float)$m->h02 / 100, 2),
+        'v02' => round((float)$m->v02 / 100, 2),
+        'h03' => round((float)$m->h03 / 100, 2),
+        'v03' => round((float)$m->v03 / 100, 2),
+        'h04' => round((float)$m->h04 / 100, 2),
+        'v04' => round((float)$m->v04 / 100, 2),
+        'h05' => round((float)$m->h05 / 100, 2),
+        'v05' => round((float)$m->v05 / 100, 2),
+        'h06' => round((float)$m->h06 / 100, 2),
+        'v06' => round((float)$m->v06 / 100, 2),
+        'h07' => round((float)$m->h07 / 100, 2),
+        'v07' => round((float)$m->v07 / 100, 2),
+        'h08' => round((float)$m->h08 / 100, 2),
+        'v08' => round((float)$m->v08 / 100, 2),
+        'h09' => round((float)$m->h09 / 100, 2),
+        'v09' => round((float)$m->v09 / 100, 2),
+        'h10' => round((float)$m->h10 / 100, 2),
+        'v10' => round((float)$m->v10 / 100, 2),
+        'h11' => round((float)$m->h11 / 100, 2),
+        'v11' => round((float)$m->v11 / 100, 2),
+        'h12' => round((float)$m->h12 / 100, 2),
+        'v12' => round((float)$m->v12 / 100, 2),
+        'h13' => round((float)$m->h13 / 100, 2),
+        'v13' => round((float)$m->v13 / 100, 2),
       ],
       'next' => $m->next()->slug(),
       'prev' => $m->prev()->slug(),
@@ -133,54 +136,62 @@ class MonthController extends Controller
     //
   }
 
+  public function str2num(string $num)
+  {
+    $float = (float)$num;
+    $int = $float*100;
+    return (int)number_format($int, 0, '.', '');
+  }
+
   /**
    * Update the specified resource in storage.
    */
   public function update(UpdateMonthRequest $request, Month $month)
   {
+    //dd($request);
     $month = Month::findOrFail($request->id);
-    $month->bruto = (int)((float)$request->bruto * 100);
-    $month->minuli = (int)((float)$request->minuli * 100);
-    $month->odbitak = (int)((float)$request->odbitak * 100);
-    $month->prirez = (int)((float)$request->prirez * 100);
-    $month->prijevoz = (int)((float)$request->prijevoz * 100);
-    $month->prehrana = (int)((float)$request->prehrana * 100);
-    $month->stimulacija = (int)((float)$request->stimulacija * 100);
-    $month->nagrada = (int)((float)$request->nagrada * 100);
-    $month->regres = (int)((float)$request->regres * 100);
-    $month->bozicnica = (int)((float)$request->bozicnica * 100);
-    $month->prigodna = (int)((float)$request->prigodna * 100);
-    $month->kredit = (int)((float)$request->kredit * 100);
-    $month->sindikat = (int)((float)$request->sindikat * 100);
+    $month->bruto = (new MonthController)->str2num($request->bruto);
+    $month->minuli = (new MonthController)->str2num($request->minuli);
+    $month->odbitak = (new MonthController)->str2num($request->odbitak);
+    $month->prirez = (new MonthController)->str2num($request->prirez);
+    $month->prijevoz = (new MonthController)->str2num($request->prijevoz);
+    $month->prehrana = (new MonthController)->str2num($request->prehrana);
+    $month->stimulacija = (new MonthController)->str2num($request->stimulacija);
+    $month->nagrada = (new MonthController)->str2num($request->nagrada);
+    $month->regres = (new MonthController)->str2num($request->regres);
+    $month->bozicnica = (new MonthController)->str2num($request->bozicnica);
+    $month->prigodna = (new MonthController)->str2num($request->prigodna);
+    $month->kredit = (new MonthController)->str2num($request->kredit);
+    $month->sindikat = (new MonthController)->str2num($request->sindikat);
     $month->first = $request->first;
     $month->last = $request->last;
-    $month->h01 = (int)((float)$request->h01 * 100);
-    $month->v01 = (int)((float)$request->v01 * 100);
-    $month->h02 = (int)((float)$request->h02 * 100);
-    $month->v02 = (int)((float)$request->v02 * 100);
-    $month->h03 = (int)((float)$request->h03 * 100);
-    $month->v03 = (int)((float)$request->v03 * 100);
-    $month->h04 = (int)((float)$request->h04 * 100);
-    $month->v04 = (int)((float)$request->v04 * 100);
-    $month->h05 = (int)((float)$request->h05 * 100);
-    $month->v05 = (int)((float)$request->v05 * 100);
-    $month->h06 = (int)((float)$request->h06 * 100);
-    $month->v06 = (int)((float)$request->v06 * 100);
-    $month->h07 = (int)((float)$request->h07 * 100);
-    $month->v07 = (int)((float)$request->v07 * 100);
-    $month->h08 = (int)((float)$request->h08 * 100);
-    $month->v08 = (int)((float)$request->v08 * 100);
-    $month->h09 = (int)((float)$request->h09 * 100);
-    $month->v09 = (int)((float)$request->v09 * 100);
-    $month->h10 = (int)((float)$request->h10 * 100);
-    $month->v10 = (int)((float)$request->v10 * 100);
-    $month->h11 = (int)((float)$request->h11 * 100);
-    $month->v11 = (int)((float)$request->v11 * 100);
-    $month->h12 = (int)((float)$request->h12 * 100);
-    $month->v12 = (int)((float)$request->v12 * 100);
-    $month->h13 = (int)((float)$request->h13 * 100);
-    $month->v13 = (int)((float)$request->v13 * 100);
-    //dd($month);
+    $month->h01 = (new MonthController)->str2num($request->h01);
+    $month->v01 = (new MonthController)->str2num($request->v01);
+    $month->h02 = (new MonthController)->str2num($request->h02);
+    $month->v02 = (new MonthController)->str2num($request->v02);
+    $month->h03 = (new MonthController)->str2num($request->h03);
+    $month->v03 = (new MonthController)->str2num($request->v03);
+    $month->h04 = (new MonthController)->str2num($request->h04);
+    $month->v04 = (new MonthController)->str2num($request->v04);
+    $month->h05 = (new MonthController)->str2num($request->h05);
+    $month->v05 = (new MonthController)->str2num($request->v05);
+    $month->h06 = (new MonthController)->str2num($request->h06);
+    $month->v06 = (new MonthController)->str2num($request->v06);
+    $month->h07 = (new MonthController)->str2num($request->h07);
+    $month->v07 = (new MonthController)->str2num($request->v07);
+    $month->h08 = (new MonthController)->str2num($request->h08);
+    $month->v08 = (new MonthController)->str2num($request->v08);
+    $month->h09 = (new MonthController)->str2num($request->h09);
+    $month->v09 = (new MonthController)->str2num($request->v09);
+    $month->h10 = (new MonthController)->str2num($request->h10);
+    $month->v10 = (new MonthController)->str2num($request->v10);
+    $month->h11 = (new MonthController)->str2num($request->h11);
+    $month->v11 = (new MonthController)->str2num($request->v11);
+    $month->h12 = (new MonthController)->str2num($request->h12);
+    $month->v12 = (new MonthController)->str2num($request->v12);
+    $month->h13 = (new MonthController)->str2num($request->h13);
+    $month->v13 = (new MonthController)->str2num($request->v13);
+    //dd($month,$request);
     $month->save();
   }
 
