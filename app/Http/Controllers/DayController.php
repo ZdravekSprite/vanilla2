@@ -101,10 +101,20 @@ class DayController extends Controller
    */
   public function update(UpdateDayRequest $request, Day $day)
   {
-    $day = Day::where('user_id', $request->user_id)->where('date', date("Y-m-d H:i:s", strtotime($request->date)))->where('firm_id', $request->firm_id)->first();
-    if (!$day) dd($request);
+    $user_id = $request->user_id ?? Auth::user()->id;
+    $firm_id = isset($request->firm_id) ? $request->firm_id : $request->firm;
+
+    $day = Day::where('user_id', $user_id)->where('date', date("Y-m-d", strtotime($request->date)))->where('firm_id', $firm_id)->first();
+    /*OrNew(
+      ['date' => date('Y-m-d', strtotime($request->date))],
+      ['user_id' => $user_id],
+      ['firm_id' => $firm_id]
+    );*/
+    if (!$day) dd('no day',$request);
+    if (!$firm_id) dd($request,$firm_id);
+    //dd($day,$firm_id);
     $day->state = $request->state;
-    $day->night = $request->night;
+    $day->night = $request->night ?? $day->night ?? '00:00';
     $day->start = $request->start;
     $day->end = $request->end;
     $day->save();

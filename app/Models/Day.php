@@ -27,6 +27,9 @@ class Day extends Model
 
   protected $casts = [
     'date' => 'datetime:Y-m-d',
+    'night' => 'datetime:H:i',
+    'start' => 'datetime:H:i',
+    'end' => 'datetime:H:i',
   ];
 
     /**

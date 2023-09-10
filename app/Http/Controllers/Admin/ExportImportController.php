@@ -71,7 +71,7 @@ class ExportImportController extends Controller
     }
 
     if ($request->input('model') == 'month') {
-      $months = Month::all();
+      $months = Month::orderBy('month', 'ASC')->get();
       foreach ($months as $key => $value) {
         $value['user'] = $value->user()->name;
         $value['firm'] = $value->firm()->name;
@@ -82,7 +82,7 @@ class ExportImportController extends Controller
     }
 
     if ($request->input('model') == 'day') {
-      $days = Day::all();
+      $days = Day::orderBy('date', 'ASC')->get();
       foreach ($days as $key => $value) {
         $value['user'] = $value->user()->name;
         $value['firm'] = $value->firm()->name;
@@ -189,7 +189,7 @@ class ExportImportController extends Controller
         }
 
         if ($request->input('model') == 'holiday') {
-          $date = date("Y-m-d H:i:s", strtotime($dataRow['date']));
+          $date = date("Y-m-d", strtotime($dataRow['date']));
           if (!Holiday::where('date', $date)->first()) {
             Holiday::insert([
               'date' => $date,
@@ -199,7 +199,7 @@ class ExportImportController extends Controller
         }
 
         if ($request->input('model') == 'day') {
-          $date = date("Y-m-d H:i:s", strtotime($dataRow['date']));
+          $date = date("Y-m-d", strtotime($dataRow['date']));
           $user_id = ExportImportController::getUserId($dataRow['user']);
           if (!Day::where('date', $date)->where('user_id', $user_id)->first()) {
             Day::insert([
