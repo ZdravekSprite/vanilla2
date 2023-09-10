@@ -19,6 +19,7 @@ interface Day {
   night: string;
   start: string;
   end: string;
+  next_night: string;
   holiday: string;
 }
 

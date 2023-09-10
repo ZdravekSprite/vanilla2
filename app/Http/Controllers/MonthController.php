@@ -66,9 +66,13 @@ class MonthController extends Controller
   public function show(Int $month)
   {
     $m = Month::where('id', $month)->first();
+    $days = $m->days();
     $c = $m->year() > 2022 ? ' €' : ' kn';
+    foreach ($days as $key => $value) {
+      $value['next_night'] = $value->nextNight();
+    }
     return Inertia::render('Month', [
-      'days' => $m->days(),
+      'days' => $days,
       'data' => [
         'id' => $m->id,
         'slug' => $m->slug(),

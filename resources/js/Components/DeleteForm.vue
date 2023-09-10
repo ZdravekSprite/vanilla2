@@ -18,7 +18,6 @@ const form = useForm({
 
 const confirmDeletion = () => {
   confirmingDeletion.value = true;
-  console.log(props)
 };
 
 const deleteElement = () => {

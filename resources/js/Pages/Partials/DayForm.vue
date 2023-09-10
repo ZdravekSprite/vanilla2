@@ -21,11 +21,12 @@ const form = useForm({
   firm: props.day.firm_id,
   state: props.day.state ?? 0,
   start: props.day.start ?? '08:00',
-  end: props.day.end ?? '16:00',
+  end: props.day.end == '00:00' ? props.day.next_night : '16:00',
 });
 
 const confirmUpdate = () => {
   confirmingUpdate.value = true;
+  console.log(props)
 };
 
 const update = () => {

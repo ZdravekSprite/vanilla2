@@ -158,8 +158,12 @@ class DayController extends Controller
 
     //dd($day,$next_day);
     if ($next_day) {
-      $next_day->night = "00:00";
-      $next_day->save();
+      if (!$next_day->start && $next_day->state == 0) {
+        $next_day->delete();
+      } else {
+        $next_day->night = "00:00";
+        $next_day->save();
+      }
     }
 
     if ($day->night->format('H:i') == "00:00") {

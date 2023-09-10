@@ -47,4 +47,22 @@ class Day extends Model
     return $this->belongsTo(Firm::class)->first();
   }
 
+  /**
+   * Get the next night.
+   */
+  public function nextDay()
+  {
+    $next_date = $this->date->addDays(1)->format('Y-m-d');
+    $next_day = Day::where('user_id', $this->user_id)->where('firm_id', $this->firm_id)->where('date', $next_date)->first();
+    return $next_day;
+  }
+  /**
+   * Get the next night.
+   */
+  public function nextNight()
+  {
+    $next_day = $this->nextDay();
+    $next_night = $next_day ? $next_day->night->format('H:i') : $this->end;
+    return $next_night;
+  }
 }
