@@ -5,14 +5,17 @@ import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Btn from '@/Components/Btn.vue';
 
-const props = defineProps<{
-  api_key?: string;
-  api_secret?: string;
-}>();
+const settings = usePage().props.auth.settings;
 
 const form = useForm({
-  key: props.api_key ?? '',
-  secret: props.api_secret ?? '',
+  start1: (settings && settings.start1) ? settings.start1 : '00:00',
+  end1: (settings && settings.start1) ? settings.start1 : '00:00',
+  start2: (settings && settings.start1) ? settings.start1 : '00:00',
+  end2: (settings && settings.start1) ? settings.start1 : '00:00',
+  start3: (settings && settings.start1) ? settings.start1 : '00:00',
+  end3: (settings && settings.start1) ? settings.start1 : '00:00',
+  key: (settings && settings.BINANCE_API_KEY) ? settings.BINANCE_API_KEY : '',
+  secret: (settings && settings.BINANCE_API_SECRET) ? settings.BINANCE_API_SECRET : '',
 });
 </script>
 

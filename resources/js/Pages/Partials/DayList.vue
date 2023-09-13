@@ -150,7 +150,7 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
         </td>
         <td>
           <template v-if="e['start'] && e['start'] != '00:00'">
-            <DayForm class="float-left" :day="e" />
+            <DayForm class="float-left" :day="e" set="edit"/>
             <DeleteForm class="float-right" :element="e" destroyRoute="day.destroy" />
           </template>
           <template v-else>

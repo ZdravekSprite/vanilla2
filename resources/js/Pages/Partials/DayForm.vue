@@ -10,6 +10,7 @@ import Btn from '@/Components/Btn.vue';
 
 const props = defineProps({
   day: Object,
+  set: String,
 });
 
 const confirmingUpdate = ref(false);

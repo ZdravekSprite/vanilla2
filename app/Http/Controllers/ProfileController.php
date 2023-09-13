@@ -25,8 +25,6 @@ class ProfileController extends Controller
       'roles' => $request->user()->roles,
       'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
       'status' => session('status'),
-      'BINANCE_API_KEY' => $settings->BINANCE_API_KEY,
-      'BINANCE_API_SECRET' => $settings->BINANCE_API_SECRET,
     ]);
   }
 

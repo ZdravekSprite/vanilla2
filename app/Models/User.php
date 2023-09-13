@@ -60,6 +60,6 @@ class User extends Authenticatable
 
   public function settings()
   {
-    return $this->belongsTo(Settings::class);
+    return $this->hasOne(Settings::class);
   }
 }

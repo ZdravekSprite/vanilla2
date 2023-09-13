@@ -3,16 +3,26 @@ export interface User {
   name: string;
   email: string;
   email_verified_at: string;
-  roles: Array<{
-    id: number;
-    name: string;
-  }>;
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
   auth: {
+    settings?: {
+      start1: string;
+      end1: string;
+      start2: string;
+      end2: string;
+      start3: string;
+      end3: string;
+      BINANCE_API_KEY: string;
+      BINANCE_API_SECRET: string;
+    };
     user: User;
     is_admin: boolean;
+    roles: Array<{
+      id: number;
+      name: string;
+    }>;
   };
   impersonate: {
     id: number;
