@@ -2,6 +2,12 @@
 import { Link } from '@inertiajs/vue3';
 import DayForm from './DayForm.vue';
 import DeleteForm from '@/Components/DeleteForm.vue';
+import IconCalendarPlus from '@/Components/IconCalendarPlus.vue';
+import IconSunrise from '@/Components/IconSunrise.vue';
+import IconSun from '@/Components/IconSun.vue';
+import IconSunset from '@/Components/IconSunset.vue';
+import IconMoonStars from '@/Components/IconMoonStars.vue';
+import Btn from '@/Components/Btn.vue';
 interface Day {
   id: number;
   date: Date;
@@ -119,7 +125,7 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
       <tr>
         <th class="w-32">day</th>
         <th></th>
-        <th class="w-32">actions</th>
+        <th class="w-52">actions</th>
       </tr>
     </thead>
     <tbody>
@@ -128,8 +134,8 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
         <td>
           <div :title="dateFormat(e['date'])" class="w-full rounded-md relative" :class="bgColor(e['state'], e['date'])"
             style="min-height: 18px;">
-            <div v-if="e['night'] && e['night'] != '00:00'" class="absolute rounded-l-md min-h-full" :class="bgColorBar(e['state'])"
-              :style="{ width: barWidth('00:00', e['night']) }"></div>
+            <div v-if="e['night'] && e['night'] != '00:00'" class="absolute rounded-l-md min-h-full"
+              :class="bgColorBar(e['state'])" :style="{ width: barWidth('00:00', e['night']) }"></div>
             <template v-if="e['state'] == 1">
               <div v-if="e['end'] && e['end'] > e['start']" class="absolute min-h-full" :class="bgColorBar(e['state'])"
                 :style="{ 'margin-left': barWidth('00:00', e['start']), width: barWidth(e['start'], e['end']) }">
@@ -143,8 +149,24 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
           </div>
         </td>
         <td>
-          <DayForm class="float-left" :day="e" />
-          <DeleteForm v-if="e['start'] && e['start'] != '00:00'" class="float-right" :element="e" destroyRoute="day.destroy" />
+          <template v-if="e['start'] && e['start'] != '00:00'">
+            <DayForm class="float-left" :day="e" />
+            <DeleteForm class="float-right" :element="e" destroyRoute="day.destroy" />
+          </template>
+          <template v-else>
+            <Btn secondary>
+              <IconCalendarPlus class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
+            </Btn>
+            <Btn secondary>
+              <IconSunrise class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
+            </Btn>
+            <Btn secondary>
+              <IconSun class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
+            </Btn>
+            <Btn secondary>
+              <IconMoonStars class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
+            </Btn>
+          </template>
         </td>
       </tr>
     </tbody>

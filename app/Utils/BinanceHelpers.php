@@ -303,9 +303,6 @@ class BinanceHelpers
     $settings = (new BinanceHelpers)->getSettings();
     if ($settings->BINANCE_API_KEY == '' || $settings->BINANCE_API_SECRET == '') return false;
 
-    //dd($models);
-    $count = $models->count();
-    if ($count == 0) return true;
 
     if ($force) return true;
 
@@ -314,7 +311,10 @@ class BinanceHelpers
     $diff = $last_update->diff($now);
     $hours = $now->format('H');
 
-    if (($diff && $diff->d > 1) && $hours > $from && $hours < $to) return true;
+    //dd($models);
+    $count = $models->count();
+    
+    if (($count || ($diff && $diff->d > 1)) && $hours > $from && $hours < $to) return true;
 
     return false;
   }
