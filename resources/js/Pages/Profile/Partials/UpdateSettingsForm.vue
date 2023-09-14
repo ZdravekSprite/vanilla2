@@ -4,8 +4,12 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Btn from '@/Components/Btn.vue';
+import { ref } from 'vue';
 
 const settings = usePage().props.auth.settings;
+
+const start1 = ref<HTMLInputElement | null>(null);
+const end1 = ref<HTMLInputElement | null>(null);
 
 const form = useForm({
   start1: (settings && settings.start1) ? settings.start1 : '08:00',

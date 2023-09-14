@@ -66,7 +66,8 @@ Route::middleware('auth')->group(function () {
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-  Route::resource('settings', SettingsController::class);
+  //Route::resource('settings', SettingsController::class);
+  Route::patch('/settings', [SettingsController::class, 'update'])->name('settings.update');
 
   Route::get('/euros', [EuroController::class, 'index'])->name('euros');
 

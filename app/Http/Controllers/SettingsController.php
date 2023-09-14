@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Settings;
 use App\Http\Requests\StoreSettingsRequest;
 use App\Http\Requests\UpdateSettingsRequest;
+use Illuminate\Support\Facades\Auth;
 
 class SettingsController extends Controller
 {
@@ -53,7 +54,19 @@ class SettingsController extends Controller
    */
   public function update(UpdateSettingsRequest $request, Settings $settings)
   {
-    //
+    $settings = Settings::where('user_id',Auth::user()->id)->first();
+    if (!$settings) $settings = Settings::factory()->create([
+      'user_id' => Auth::user()->id,
+    ]);
+    $settings->start1 = $request->start1;
+    $settings->end1 = $request->end1;
+    $settings->start2 = $request->start2;
+    $settings->end2 = $request->end2;
+    $settings->start3 = $request->start3;
+    $settings->end3 = $request->end3;
+    $settings->BINANCE_API_KEY = $request->BINANCE_API_KEY;
+    $settings->BINANCE_API_SECRET = $request->BINANCE_API_SECRET;
+    $settings->save();
   }
 
   /**
