@@ -8,12 +8,12 @@ import Btn from '@/Components/Btn.vue';
 const settings = usePage().props.auth.settings;
 
 const form = useForm({
-  start1: (settings && settings.start1) ? settings.start1 : '00:00',
-  end1: (settings && settings.start1) ? settings.start1 : '00:00',
-  start2: (settings && settings.start1) ? settings.start1 : '00:00',
-  end2: (settings && settings.start1) ? settings.start1 : '00:00',
-  start3: (settings && settings.start1) ? settings.start1 : '00:00',
-  end3: (settings && settings.start1) ? settings.start1 : '00:00',
+  start1: (settings && settings.start1) ? settings.start1 : '08:00',
+  end1: (settings && settings.start1) ? settings.start1 : '16:00',
+  start2: (settings && settings.start1) ? settings.start1 : '16:00',
+  end2: (settings && settings.start1) ? settings.start1 : '22:00',
+  start3: (settings && settings.start1) ? settings.start1 : '22:00',
+  end3: (settings && settings.start1) ? settings.start1 : '08:00',
   key: (settings && settings.BINANCE_API_KEY) ? settings.BINANCE_API_KEY : '',
   secret: (settings && settings.BINANCE_API_SECRET) ? settings.BINANCE_API_SECRET : '',
 });
@@ -30,6 +30,38 @@ const form = useForm({
     </header>
 
     <form @submit.prevent="form.patch(route('settings.update'))" class="mt-6 space-y-6">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <InputLabel for="start1" value="start1" />
+          <TextInput id="start1" type="time" class="mt-1 block w-full" v-model="form.start1" />
+          <InputError class="mt-2" :message="form.errors.start1" />
+        </div>
+        <div>
+          <InputLabel for="end1" value="end1" />
+          <TextInput id="end1" type="time" class="mt-1 block w-full" v-model="form.end1" />
+          <InputError class="mt-2" :message="form.errors.end1" />
+        </div>
+        <div>
+          <InputLabel for="start2" value="start2" />
+          <TextInput id="start2" type="time" class="mt-1 block w-full" v-model="form.start2" />
+          <InputError class="mt-2" :message="form.errors.start2" />
+        </div>
+        <div>
+          <InputLabel for="end2" value="end2" />
+          <TextInput id="end2" type="time" class="mt-1 block w-full" v-model="form.end2" />
+          <InputError class="mt-2" :message="form.errors.end2" />
+        </div>
+        <div>
+          <InputLabel for="start3" value="start3" />
+          <TextInput id="start3" type="time" class="mt-1 block w-full" v-model="form.start3" />
+          <InputError class="mt-2" :message="form.errors.start3" />
+        </div>
+        <div>
+          <InputLabel for="end3" value="end3" />
+          <TextInput id="end3" type="time" class="mt-1 block w-full" v-model="form.end3" />
+          <InputError class="mt-2" :message="form.errors.end3" />
+        </div>
+      </div>
       <div>
         <InputLabel for="key" value="BINANCE_API_KEY" />
         <TextInput id="key" type="text" class="mt-1 block w-full" v-model="form.key" />
