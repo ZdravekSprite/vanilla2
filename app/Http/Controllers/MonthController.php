@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Month;
+use App\Models\Firm;
 use App\Http\Requests\StoreMonthRequest;
 use App\Http\Requests\UpdateMonthRequest;
 use Inertia\Inertia;
@@ -18,7 +19,7 @@ class MonthController extends Controller
    */
   public function index()
   {
-    $selected = ['id', 'month', 'user_id', 'bruto', 'minuli', 'odbitak', 'prirez', 'prijevoz', 'prehrana'];
+    $selected = ['id', 'month', 'user_id', 'firm_id', 'bruto', 'minuli', 'odbitak', 'prirez', 'prijevoz', 'prehrana'];
     //$all = Month::where('user_id',Auth::user()->id)->count();
     $months = Month::where('user_id', Auth::user()->id)->select($selected)->paginate(14);
     $all = Month::all()->count();
@@ -26,12 +27,17 @@ class MonthController extends Controller
     foreach ($months as $key => $value) {
       $value['slug'] = $value->slug();
       $value['user'] = $value->user()->name;
+      $value['firm'] = $value->firm()->name;
       $value['_month'] = $value->month();
       $value['_year'] = $value->year();
     }
     return Inertia::render('Months', [
       'all' => $all,
       'months' => $months,
+      'firms' => Firm::all()->map(fn ($f) => [
+        'id' => $f->id,
+        'name' => $f->name,
+      ]),
     ]);
   }
 
@@ -55,7 +61,9 @@ class MonthController extends Controller
     $month = new Month;
     $month->month = $request->input('_month') - 1 + $request->input('_year') * 12;
     $month->user_id = Auth::user()->id;
+    $month->firm_id = $request->input('firm');
     $old_month = Month::where('user_id', $month->user_id)->where('month', '=', $month->month)->first();
+    //dd($request,$month,$old_month);
     if ($old_month) return redirect(route('months.edit', ['month' => $month->slug()]))->with('new_month', $month)->with('warning', 'Manth already exist');
     $month->save();
   }

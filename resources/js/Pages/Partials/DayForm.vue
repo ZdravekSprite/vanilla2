@@ -18,7 +18,14 @@ const props = defineProps({
   set: String,
 });
 
-const settings = usePage().props.auth.settings;
+const settings = usePage().props.auth.settings ?? {
+  start1: '08:00',
+  end1: '16:00',
+  start2: '16:00',
+  end2: '24:00',
+  start3: '00:00',
+  end3: '08:00',
+};
 
 const confirmingUpdate = ref(false);
 
