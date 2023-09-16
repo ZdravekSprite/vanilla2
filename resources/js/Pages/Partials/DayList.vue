@@ -2,7 +2,6 @@
 import { Link } from '@inertiajs/vue3';
 import DayForm from './DayForm.vue';
 import DeleteForm from '@/Components/DeleteForm.vue';
-import IconCalendarPlus from '@/Components/IconCalendarPlus.vue';
 import IconSunrise from '@/Components/IconSunrise.vue';
 import IconSun from '@/Components/IconSun.vue';
 import IconSunset from '@/Components/IconSunset.vue';
@@ -125,7 +124,7 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
       <tr>
         <th class="w-32">day</th>
         <th></th>
-        <th class="w-52">actions</th>
+        <th class="w-48">actions</th>
       </tr>
     </thead>
     <tbody>
@@ -154,18 +153,9 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
             <DeleteForm class="float-right" :element="e" destroyRoute="day.destroy" />
           </template>
           <template v-else>
-            <Btn secondary>
-              <IconCalendarPlus class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
-            </Btn>
-            <Btn secondary>
-              <IconSunrise class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
-            </Btn>
-            <Btn secondary>
-              <IconSun class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
-            </Btn>
-            <Btn secondary>
-              <IconMoonStars class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
-            </Btn>
+            <DayForm class="float-left" :day="e" set="new1"/>
+            <DayForm class="float-left" :day="e" set="new2"/>
+            <DayForm class="float-left" :day="e" set="new3"/>
           </template>
         </td>
       </tr>

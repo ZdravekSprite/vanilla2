@@ -7,17 +7,15 @@ import Btn from '@/Components/Btn.vue';
 import { ref } from 'vue';
 
 const settings = usePage().props.auth.settings;
-
-const start1 = ref<HTMLInputElement | null>(null);
-const end1 = ref<HTMLInputElement | null>(null);
+console.log(settings);
 
 const form = useForm({
   start1: (settings && settings.start1) ? settings.start1 : '08:00',
-  end1: (settings && settings.start1) ? settings.start1 : '16:00',
-  start2: (settings && settings.start1) ? settings.start1 : '16:00',
-  end2: (settings && settings.start1) ? settings.start1 : '22:00',
-  start3: (settings && settings.start1) ? settings.start1 : '22:00',
-  end3: (settings && settings.start1) ? settings.start1 : '08:00',
+  end1: (settings && settings.end1) ? settings.end1 : '16:00',
+  start2: (settings && settings.start2) ? settings.start2 : '16:00',
+  end2: (settings && settings.end2) ? settings.end2 : '22:00',
+  start3: (settings && settings.start3) ? settings.start3 : '22:00',
+  end3: (settings && settings.end3) ? settings.end3 : '08:00',
   key: (settings && settings.BINANCE_API_KEY) ? settings.BINANCE_API_KEY : '',
   secret: (settings && settings.BINANCE_API_SECRET) ? settings.BINANCE_API_SECRET : '',
 });
