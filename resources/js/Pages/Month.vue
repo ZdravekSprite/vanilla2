@@ -74,13 +74,14 @@ const props = defineProps<{
   next_id: number;
   prev_id: number;
 }>();
+console.log(props.days)
 
-const showPayroll = ref(true);
+const showPayroll = ref(false);
 const clickShowPayroll = () => {
   showPayroll.value = !showPayroll.value;
 };
 
-const showDayList = ref(false);
+const showDayList = ref(true);
 const clickShowDayList = () => {
   showDayList.value = !showDayList.value;
 };

@@ -31,7 +31,7 @@ const props = defineProps<{
   next_id: number;
   prev_id: number;
 }>();
-
+//console.log(props.days)
 const dateFormat = (date: Date) => {
   let objectDate = new Date(date);
   let day = objectDate.getDate();

@@ -112,9 +112,8 @@ class Month extends Model
     $firstDate = '01.' . $this->slug();
     $from = CarbonImmutable::createFromFormat('d.m.Y', $firstDate)->firstOfMonth();
     $to = Carbon::createFromFormat('d.m.Y', $firstDate)->endOfMonth();
-    //dd($firstDate,$from,$to);
-    $daysColection = Day::whereBetween('date', [$from, $to])->where('user_id', $this->user_id)->get();
-    $holidaysColection = Holiday::whereBetween('date', [$from, $to])->get();
+    $daysColection = Day::whereBetween('date', [$from->addDays(-1), $to])->where('user_id', $this->user_id)->get();
+    $holidaysColection = Holiday::whereBetween('date', [$from->addDays(-1), $to])->get();
     $datesArray = array();
     for ($i = 0; $i < $from->daysInMonth; $i++) {
       if ($daysColection->where('date', $from->addDays($i))->first() != null) {
@@ -126,17 +125,13 @@ class Month extends Model
         $temp_date->user = $this->user()->name;
         $temp_date->firm_id = $this->firm_id;
         $temp_date->firm = $this->firm()->name;
-        //dd($temp_date);
       }
-      //$temp_date = $from->addDays($i);
       if ($holidaysColection->where('date', $from->addDays($i))->first() != null) {
-        //dd($holidaysColection->where('date', '=', $from->addDays($i))->first());
         $temp_date->holiday = $holidaysColection->where('date', $from->addDays($i))->first()->name;
       }
       $datesArray[] = $temp_date;
     }
     $days = $datesArray;
-
     return $days;
   }
 }
