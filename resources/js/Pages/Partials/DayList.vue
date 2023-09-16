@@ -2,11 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import DayForm from './DayForm.vue';
 import DeleteForm from '@/Components/DeleteForm.vue';
-import IconSunrise from '@/Components/IconSunrise.vue';
-import IconSun from '@/Components/IconSun.vue';
-import IconSunset from '@/Components/IconSunset.vue';
-import IconMoonStars from '@/Components/IconMoonStars.vue';
-import Btn from '@/Components/Btn.vue';
+
 interface Day {
   id: number;
   date: Date;
@@ -124,7 +120,7 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
       <tr>
         <th class="w-32">day</th>
         <th></th>
-        <th class="w-48">actions</th>
+        <th class="w-36">actions</th>
       </tr>
     </thead>
     <tbody>
@@ -148,8 +144,8 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
           </div>
         </td>
         <td>
-          <template v-if="e['start'] && e['start'] != '00:00'">
-            <DayForm class="float-left" :day="e" set="edit"/>
+          <template v-if="(e['start'] && e['start'] != '00:00') || e['state']">
+            <DayForm class="float-left" :day="e" set="edit" />
             <DeleteForm class="float-right" :element="e" destroyRoute="day.destroy" />
           </template>
           <template v-else>

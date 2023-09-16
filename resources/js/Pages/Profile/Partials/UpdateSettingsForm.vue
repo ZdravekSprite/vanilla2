@@ -7,7 +7,6 @@ import Btn from '@/Components/Btn.vue';
 import { ref } from 'vue';
 
 const settings = usePage().props.auth.settings;
-console.log(settings);
 
 const form = useForm({
   start1: (settings && settings.start1) ? settings.start1 : '08:00',
