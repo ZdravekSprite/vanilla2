@@ -6,6 +6,7 @@ import Payroll from './Partials/Payroll.vue';
 import EditForm from '@/Components/EditForm.vue';
 import Btn from '@/Components/Btn.vue';
 import { ref } from 'vue';
+import MonthForm from './Partials/MonthForm.vue';
 
 interface Day {
   id: number;
@@ -74,7 +75,6 @@ const props = defineProps<{
   next_id: number;
   prev_id: number;
 }>();
-console.log(props.days)
 
 const showPayroll = ref(false);
 const clickShowPayroll = () => {
@@ -98,6 +98,7 @@ const clickShowDayList = () => {
           {{ new Date(props.data.first).getFullYear() }}</h2>
         <EditForm class="float-left" :element="data" updateRoute="month.update"
           :labels="[['bruto'], ['minuli'], ['odbitak'], ['prirez'], ['prijevoz'], ['prehrana'], ['stimulacija'], ['nagrada'], ['regres'], ['bozicnica'], ['prigodna'], ['kredit'], ['sindikat'], ['first'], ['last'], ['h01'], ['v01'], ['h02'], ['v02'], ['h03'], ['v03'], ['h04'], ['v04'], ['h05'], ['v05'], ['h06'], ['v06'], ['h07'], ['v07'], ['h08'], ['v08'], ['h09'], ['v09'], ['h10'], ['v10'], ['h11'], ['v11'], ['h12'], ['v12'], ['h13'], ['v13']]" />
+        <MonthForm class="float-left" :month="data" />
         <Btn @click="clickShowPayroll">{{ !showPayroll ? 'show' : 'hide' }} Payroll</Btn>
         <Btn @click="clickShowDayList">{{ !showDayList ? 'show' : 'hide' }} DayList</Btn>
       </div>
