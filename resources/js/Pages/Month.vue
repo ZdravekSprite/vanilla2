@@ -96,8 +96,6 @@ const clickShowDayList = () => {
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pr-4">Month
           {{ new Date(props.data.first).getMonth() + 1 }}
           {{ new Date(props.data.first).getFullYear() }}</h2>
-        <EditForm class="float-left" :element="data" updateRoute="month.update"
-          :labels="[['bruto'], ['minuli'], ['odbitak'], ['prirez'], ['prijevoz'], ['prehrana'], ['stimulacija'], ['nagrada'], ['regres'], ['bozicnica'], ['prigodna'], ['kredit'], ['sindikat'], ['first'], ['last'], ['h01'], ['v01'], ['h02'], ['v02'], ['h03'], ['v03'], ['h04'], ['v04'], ['h05'], ['v05'], ['h06'], ['v06'], ['h07'], ['v07'], ['h08'], ['v08'], ['h09'], ['v09'], ['h10'], ['v10'], ['h11'], ['v11'], ['h12'], ['v12'], ['h13'], ['v13']]" />
         <MonthForm class="float-left" :month="data" />
         <Btn @click="clickShowPayroll">{{ !showPayroll ? 'show' : 'hide' }} Payroll</Btn>
         <Btn @click="clickShowDayList">{{ !showDayList ? 'show' : 'hide' }} DayList</Btn>

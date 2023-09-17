@@ -120,7 +120,7 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
       <tr>
         <th class="w-32">day</th>
         <th></th>
-        <th class="w-36">actions</th>
+        <th class="w-40">actions</th>
       </tr>
     </thead>
     <tbody>
