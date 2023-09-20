@@ -2,7 +2,24 @@
 import TableTr from '@/Components/TableTr.vue';
 import { Link } from '@inertiajs/vue3';
 
+interface Firm {
+  id: number;
+  name: string;
+  address: string;
+  oib: string;
+  iban: string;
+  bank: string;
+}
+interface User {
+  id: number;
+  name: String;
+  email: String;
+  roles: Array<object>;
+  isSuper: boolean;
+}
 const props = defineProps<{
+  firm: Firm;
+  user: User;
   month: {
     valuta: string,
     bruto: number,
@@ -102,17 +119,17 @@ const t15 = t13 - t14;
         <td class="border p-2">
           <ul>
             <li><b>I. PODACI O POSLODAVCU</b></li>
-            <li>1. Tvrtka/ Ime i prezime: ____</li>
-            <li>2. Sjedište / Adresa: ____</li>
-            <li>3. Osobni identifikacijski broj: ____</li>
-            <li>4. IBAN broj računa ____ kod ____</li>
+            <li>1. Tvrtka/ Ime i prezime: {{ firm.name }}</li>
+            <li>2. Sjedište / Adresa: {{ firm.address }}</li>
+            <li>3. Osobni identifikacijski broj: {{ firm.oib }}</li>
+            <li>4. IBAN broj računa {{ firm.iban }} kod {{ firm.bank }}</li>
           </ul>
         </td>
         <td class="border p-2" colspan="3">
           <ul>
             <li><b>II. PODACI O RADNIKU/RADNICI</b></li>
             <li>
-              1. Ime i prezime: {{ $page.props.auth.user.name }}
+              1. Ime i prezime: {{ user.name }}
             </li>
             <li>2. Adresa: ____</li>
             <li>3. Osobni identifikacijski broj: ____</li>

@@ -2,7 +2,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import DayList from './Partials/DayList.vue';
-import Payroll from './Partials/Payroll.vue';
+import Payroll1 from './Partials/Payroll1.vue';
+import Payroll2 from './Partials/Payroll2.vue';
 import EditForm from '@/Components/EditForm.vue';
 import Btn from '@/Components/Btn.vue';
 import { ref } from 'vue';
@@ -23,9 +24,26 @@ interface Day {
   next_night: string;
   holiday: string;
 }
+interface Firm {
+  id: number;
+  name: string;
+  address: string;
+  oib: string;
+  iban: string;
+  bank: string;
+}
+interface User {
+  id: number;
+  name: String;
+  email: String;
+  roles: Array<object>;
+  isSuper: boolean;
+}
 
 const props = defineProps<{
   days: Array<Day>;
+  firm: Firm;
+  user: User;
   data: {
     valuta: string,
     bruto: number,
@@ -76,12 +94,12 @@ const props = defineProps<{
   prev_id: number;
 }>();
 
-const showPayroll = ref(false);
+const showPayroll = ref(true);
 const clickShowPayroll = () => {
   showPayroll.value = !showPayroll.value;
 };
 
-const showDayList = ref(true);
+const showDayList = ref(false);
 const clickShowDayList = () => {
   showDayList.value = !showDayList.value;
 };
@@ -106,7 +124,8 @@ const clickShowDayList = () => {
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
         <div v-if="showPayroll" class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-4 sm:p-8 text-gray-900 dark:text-gray-100">
-            <Payroll :month="data" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
+            <Payroll1 v-if="firm.id == 1" :user="user" :firm="firm" :month="data" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
+            <Payroll2 v-if="firm.id != 1" :user="user" :firm="firm" :month="data" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
           </div>
         </div>
         <div v-if="showDayList"

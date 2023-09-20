@@ -6,6 +6,7 @@ use App\Models\Month;
 use App\Models\Firm;
 use App\Http\Requests\StoreMonthRequest;
 use App\Http\Requests\UpdateMonthRequest;
+use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -21,7 +22,12 @@ class MonthController extends Controller
   {
     $selected = ['id', 'month', 'user_id', 'firm_id', 'bruto', 'minuli', 'odbitak', 'prirez', 'prijevoz', 'prehrana'];
     //$all = Month::where('user_id',Auth::user()->id)->count();
-    $months = Month::where('user_id', Auth::user()->id)->select($selected)->paginate(14);
+    $user = User::find(Auth::user()->id);
+    if ($user->hasAnyRole('superadmin')) {
+      $months = Month::select($selected)->paginate(14);
+    } else {
+      $months = Month::where('user_id', Auth::user()->id)->select($selected)->paginate(14);
+    }
     $all = Month::all()->count();
     //$months = Month::select($selected)->paginate(14);
     foreach ($months as $key => $value) {
@@ -83,6 +89,8 @@ class MonthController extends Controller
     //dd($m);
     return Inertia::render('Month', [
       'days' => $days,
+      'user' => $m->user(),
+      'firm' => $m->firm(),
       'data' => [
         'id' => $m->id,
         'slug' => $m->slug(),
