@@ -125,7 +125,8 @@ const clickShowDayList = () => {
         <div v-if="showPayroll" class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-4 sm:p-8 text-gray-900 dark:text-gray-100">
             <Payroll1 v-if="firm.id == 1" :user="user" :firm="firm" :month="data" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
-            <Payroll2 v-if="firm.id != 1" :user="user" :firm="firm" :month="data" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
+            <Payroll2 v-if="firm.id == 2" :user="user" :firm="firm" :month="data" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
+            <Payroll2 v-if="firm.id > 2" :user="user" :firm="firm" :month="data" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
           </div>
         </div>
         <div v-if="showDayList"
