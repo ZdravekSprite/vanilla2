@@ -69,11 +69,9 @@ const props = defineProps<{
   next_id: number,
   prev_id: number,
 }>();
-const t1 = Math.round((props.month.v01 + props.month.v02 + props.month.v03 + props.month.v04 + props.month.v05 + props.month.v06 + props.month.v07 + props.month.v08 + props.month.v09) * 100) / 100;
+const t1 = Math.round((props.month.v01 + props.month.v02 + props.month.v03 + props.month.v04 + props.month.v05 + props.month.v06 + props.month.v07 + props.month.v08 + props.month.v09 + props.month.v10 + props.month.v11) * 100) / 100;
 const t2 = props.month.stimulacija + props.month.v12;
-const t3 = props.month.prijevoz + props.month.regres;
-const tm = props.month.minuli ? Math.round(props.month.minuli * (t1 + t2)) / 100 : 0;
-const t4 = Math.round((t1 + t2 + tm) * 100) / 100;
+const t4 = Math.round((t1 + t2) * 100) / 100;
 const t5 = t4;
 const t6 = Math.round((Math.round(t5 * 15) / 100 + Math.round(t5 * 5) / 100) * 100) / 100;
 const t7 = Math.round((t5 - t6) * 100) / 100;
@@ -150,6 +148,7 @@ const t15 = t13 - t14;
       <TableTr td1="Obračun plaće:" td2="sati rada" :td3="'iznos u' + month.valuta" :indent="false" />
       <TableTr td1="PLAĆA (BRUTO SVOTA)" :td3="t1 + month.valuta" :bold="true" :indent="false" />
       <TableTr v-if="month.h01 != 0" td1="Redovan rad" :td2="month.h01 + ''" :td3="month.v01 + ''" />
+      <TableTr v-if="month.h10 != 0" td1="Godišnji odmori" :td2="month.h10 + ''" :td3="month.v10 + ''" />
       <TableTr v-if="month.h02 != 0" td1="Rad noću" :td2="month.h02 + ''" :td3="month.v02 + ''" />
       <TableTr v-if="month.h05 != 0" td1="Rada u dane državnog praznika/blagdana" :td2="month.h05 + ''"
         :td3="month.v05 + ''" />
@@ -161,7 +160,7 @@ const t15 = t13 - t14;
         :td3="month.v06 + ''" />
       <TableTr v-if="month.h08 != 0" td1="1.10. sati redovnog rada nedeljom + drž.praznikom/blagdanom + noću"
         :td2="month.h08 + ''" :td3="month.v08 + ''" />
-      <TableTr td1="Prekovremeni rad" :td2="month.h09 + ''" :td3="month.v09 + ''" />
+      <TableTr v-if="month.h09 != 0" td1="Prekovremeni rad" :td2="month.h09 + ''" :td3="month.v09 + ''" />
 
       <TableTr v-if="t2 != 0" td1="2. SATI ZA KOJE SE OSTVARUJE PRAVO NA NAKNADU" :indent="false" />
       <TableTr v-if="month.h12 != 0" td1="2.3. sati blagdana i neradnih dana" :td2="month.h12 + ''"
@@ -173,31 +172,31 @@ const t15 = t13 - t14;
 
       <TableTr td1="DOHODAK - PLAĆA PRIJE OPOREZIVANJA" :td3="t7 ? t7 + month.valuta : ''" :bold="true" :indent="false" />
 
-      <TableTr td1="OBRAĆUN POREZA" td3="OSNOVICA" :indent="false" />
-      <TableTr td1="Osobni odbitak" td2="1.60" :td3="t8 ? t8 + month.valuta : ''" :indent="true" />
-      <TableTr td1="Osnovica za oporezivanje" :td3="t9 ? t9 + month.valuta : ''" :indent="true" />
-      <TableTr td1="Porez po stopi od" td2="20.00" :td3="(Math.round(t9 * 20) / 100) + month.valuta" :indent="true" />
-      <TableTr td1="Porez po stopi od" td2="30.00" td3="0.00" :indent="true" />
-      <TableTr td1="Prirez na porez" :td2="month.prirez + ''"
-        :td3="Math.round(t9 * 0.2 * month.prirez) / 100 + month.valuta" />
-      <TableTr td1="Ukupno porez i prirez" :td3="t10 + month.valuta" :bold="true" :indent="false" />
+      <TableTr td1="Osobni odbici" :td3="t8 + month.valuta" :indent="false" />
+      <TableTr td1="Osnovica za porez" :td3="t9 + month.valuta" :indent="false" />
+      <TableTr v-if="t9 != 0" td1="Porez po stopi  20%" :td3="(Math.round(t9 * 20) / 100) + month.valuta"
+        :indent="false" />
+      <TableTr v-if="t9 != 0" td1="UKUPNO POREZ" :td3="(Math.round(t9 * 20) / 100) + month.valuta" :indent="false" />
+      <TableTr v-if="t9 != 0" :td1="'Prirez na porez po stopi ' + month.prirez + '%'"
+        :td3="Math.round(t9 * 0.2 * month.prirez) / 100 + month.valuta" :indent="false" />
+      <TableTr v-if="t9 != 0" td1="UKUPNO POREZ I PRIREZ" :td3="t10 + month.valuta" :bold="true" :indent="false" />
 
-      <TableTr td1="PLAĆA NAKON OPOREZIVANJA" :td3="t11 + month.valuta" :bold="true" :indent="false" />
+      <TableTr td1="NETO PLAĆA" :td3="t11 + month.valuta" :bold="true" :indent="false" />
 
-      <TableTr td1="NEOPOREZIVE NAKNADE I OSTALE ISPLATE" :td3="t12 + month.valuta" :indent="false" />
-      <TableTr td1="PRIJEVOZ" :td3="month.prijevoz + month.valuta" :indent="true" />
-      <TableTr td1="!Prehrana" :td3="month.prehrana + month.valuta" :indent="true" />
-      <TableTr td1="!Nagrada" :td3="month.nagrada + month.valuta" :indent="true" />
+      <TableTr v-if="t12 != 0" td1="NEOPOREZIVE NAKNADE I OSTALE ISPLATE" :td3="t12 + month.valuta" :indent="false" />
+      <TableTr v-if="month.prijevoz != 0" td1="PRIJEVOZ" :td3="month.prijevoz + month.valuta" :indent="true" />
+      <TableTr v-if="month.prehrana != 0" td1="!Prehrana" :td3="month.prehrana + month.valuta" :indent="true" />
+      <TableTr v-if="month.nagrada != 0" td1="!Nagrada" :td3="month.nagrada + month.valuta" :indent="true" />
 
-      <TableTr td1="Za isplatu" :td3="t13 + month.valuta" :bold="true" :indent="false" />
+      <TableTr td1="IZNOS ZA ISPLATU" :td3="t13 + month.valuta" :bold="true" :indent="false" />
 
-      <TableTr td1="DOPRINOS NA PLAĆE" :indent="false" />
-      <TableTr td1="zdrastveno" td2="16.50" :td3="Math.round(t4 * 16.5) / 100 + month.valuta" :indent="true" />
-      <TableTr td1="UKUPNO DOPRINOSI NA PLAĆE" td2="16.50" :td3="Math.round(t4 * 16.5) / 100 + month.valuta"
+      <TableTr td1="Doprinos na plaću - (16.5%)" :td3="Math.round(t4 * 16.5) / 100 + month.valuta" :bold="true"
+        :indent="false" />
+      <TableTr td1="Doprinos za zdrastveno osiguranje - (16.5%)" :td3="Math.round(t4 * 16.5) / 100 + month.valuta"
         :indent="true" />
 
-      <TableTr td1="UKUPNO BRUTTO, NAKNADE I DOPRINOSI NA PLAĆE"
-        :td3="Math.round(t4 * 116.5 + t12 * 100) / 100 + month.valuta" :indent="true" />
+      <TableTr td1="UKUPNI TROŠAK POSLODAVCA" :td3="Math.round(t4 * 116.5 + t12 * 100) / 100 + month.valuta"
+        :indent="false" />
     </tbody>
   </table>
 </template>

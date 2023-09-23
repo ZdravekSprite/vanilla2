@@ -70,9 +70,9 @@ const props = defineProps<{
   prev_id: number,
 }>();
 const t1 = Math.round((props.month.v01 + props.month.v02 + props.month.v03 + props.month.v04 + props.month.v05 + props.month.v06 + props.month.v07 + props.month.v08) * 100) / 100;
-const t2 = props.month.stimulacija + props.month.v12;
+const t2 = props.month.stimulacija + props.month.v10 + props.month.v12;
 const t3 = props.month.prijevoz + props.month.regres;
-const tm = props.month.minuli ? Math.round(props.month.minuli * (t1+t2)) / 100 : 0;
+const tm = props.month.minuli ? Math.round(props.month.minuli * (t1 + t2)) / 100 : 0;
 const t4 = Math.round((t1 + t2 + tm) * 100) / 100;
 const t5 = t4;
 const t6 = Math.round(t5 * 15) / 100 + Math.round(t5 * 5) / 100;
@@ -81,7 +81,7 @@ const t8 = t7 - props.month.odbitak > 0 ? props.month.odbitak : t7;
 const t9 = Math.round((t7 - t8) * 100) / 100;
 const t10 = (Math.round(t9 * 20) + Math.round(Math.round(t9 * 20) / 100 * props.month.prirez)) / 100;
 const t11 = Math.round((t7 - t10) * 100) / 100;
-const t12 = Math.round((props.month.prijevoz + props.month.prehrana + props.month.nagrada) * 100) / 100;
+const t12 = Math.round((props.month.prijevoz + props.month.prehrana + props.month.nagrada + props.month.prigodna) * 100) / 100;
 const t13 = Math.round((t11 + t12) * 100) / 100;
 const t14 = props.month.sindikat + props.month.kredit;
 const t15 = t13 - t14;
@@ -160,14 +160,15 @@ const t15 = t13 - t14;
         :td2="month.h07 + ''" :td3="month.v07 + ''" />
       <TableTr v-if="month.h06 != 0" td1="1.10. sati redovnog rada drž.praznikom/blagdanom + noću" :td2="month.h06 + ''"
         :td3="month.v06 + ''" />
-      <TableTr v-if="month.h08 != 0" td1="1.10. sati redovnog rada nedeljom + drž.praznikom/blagdanom + noću"
+      <TableTr v-if="month.h08 != 0" td1="sati redovnog rada nedeljom + drž.praznikom/blagdanom + noću"
         :td2="month.h08 + ''" :td3="month.v08 + ''" />
 
       <TableTr v-if="t2 != 0" td1="2. SATI ZA KOJE SE OSTVARUJE PRAVO NA NAKNADU" :indent="false" />
-      <TableTr v-if="month.h12 != 0" td1="2.3. sati blagdana i neradnih dana" :td2="month.h12 + ''" :td3="month.v12 + ''" />
+      <TableTr v-if="month.h10 != 0" td1="2.1. sati godišnjeg odmora" :td2="month.h10 + ''" :td3="month.v10 + ''" />
+      <TableTr v-if="month.h12 != 0" td1="2.3. sati blagdana i neradnih dana" :td2="month.h12 + ''"
+        :td3="month.v12 + ''" />
 
-      <TableTr td1="Propisani ili ugovoreni dodaci na plaću radnika i novčani iznosi po toj osnovi"
-        :td3="tm ? tm + month.valuta : ''" :indent="false" />
+      <TableTr td1="Propisani ili ugovoreni dodaci na plaću radnika i novčani iznosi po toj osnovi" :indent="false" />
       <TableTr v-if="month.minuli != 0" td1="Minuli rad" :td2="month.minuli + ''" :td3="tm + month.valuta" />
 
       <TableTr td1="ZBROJENI IZNOSI PRIMITAKA PO SVIM OSNOVAMA - BRUTTO PLAĆA" :td3="t4 ? t4 + month.valuta : ''"
@@ -194,9 +195,10 @@ const t15 = t13 - t14;
       <TableTr td1="PLAĆA NAKON OPOREZIVANJA" :td3="t11 + month.valuta" :bold="true" :indent="false" />
 
       <TableTr td1="NEOPOREZIVE NAKNADE I OSTALE ISPLATE" :td3="t12 + month.valuta" :indent="false" />
-      <TableTr td1="PRIJEVOZ" :td3="month.prijevoz + month.valuta" :indent="true" />
-      <TableTr td1="!Prehrana" :td3="month.prehrana + month.valuta" :indent="true" />
-      <TableTr td1="!Nagrada" :td3="month.nagrada + month.valuta" :indent="true" />
+      <TableTr v-if="month.prijevoz != 0" td1="PRIJEVOZ" :td3="month.prijevoz + month.valuta" :indent="true" />
+      <TableTr v-if="month.nagrada != 0" td1="!Nagrada" :td3="month.nagrada + month.valuta" :indent="true" />
+      <TableTr v-if="month.prehrana != 0" td1="!Prehrana" :td3="month.prehrana + month.valuta" :indent="true" />
+      <TableTr v-if="month.prigodna != 0" td1="!Prigodna" :td3="month.prigodna + month.valuta" :indent="true" />
 
       <TableTr td1="Za isplatu" :td3="t13 + month.valuta" :bold="true" :indent="false" />
 

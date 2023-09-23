@@ -73,78 +73,91 @@ const closeModal = () => {
             <InputLabel for="bruto" value="Bruto" />
             <TextInput v-model="form.bruto" id="bruto" type="number" name="bruto" step="0.01" class="mt-1 block w-full"
               :value="form.bruto" required />
+            <InputError class="mt-2" :message="form.errors.bruto" />
           </div>
           <!-- prirez -->
           <div id="prirez_div" class="mt-6">
             <InputLabel for="prirez" value="Prirez" />
             <TextInput v-model="form.prirez" id="prirez" type="number" name="prirez" step="0.01" class="mt-1 block w-full"
               :value="form.prirez" required />
+            <InputError class="mt-2" :message="form.errors.prirez" />
           </div>
           <!-- minuli -->
           <div id="minuli_div" class="mt-6">
             <InputLabel for="minuli" value="Minuli rad" />
             <TextInput v-model="form.minuli" id="minuli" type="number" name="minuli" step="0.01" class="mt-1 block w-full"
               :value="form.minuli" required />
+            <InputError class="mt-2" :message="form.errors.minuli" />
           </div>
           <!-- prijevoz -->
           <div id="prijevoz_div" class="mt-6">
             <InputLabel for="prijevoz" value="Prijevoz" />
-            <TextInput v-model="form.prijevoz" id="prijevoz" type="number" name="prijevoz" step="0.01" class="mt-1 block w-full"
-              :value="form.prijevoz" required />
+            <TextInput v-model="form.prijevoz" id="prijevoz" type="number" name="prijevoz" step="0.01"
+              class="mt-1 block w-full" :value="form.prijevoz" required />
+            <InputError class="mt-2" :message="form.errors.prijevoz" />
           </div>
           <!-- prehrana -->
           <div id="prehrana_div" class="mt-6">
             <InputLabel for="prehrana" value="Prehrana" />
-            <TextInput v-model="form.prehrana" id="prehrana" type="number" name="prehrana" step="0.01" class="mt-1 block w-full"
-              :value="form.prehrana" required />
+            <TextInput v-model="form.prehrana" id="prehrana" type="number" name="prehrana" step="0.01"
+              class="mt-1 block w-full" :value="form.prehrana" required />
+            <InputError class="mt-2" :message="form.errors.prehrana" />
           </div>
           <!-- odbitak -->
           <div id="odbitak_div" class="mt-6">
             <InputLabel for="odbitak" value="Odbitak" />
-            <TextInput v-model="form.odbitak" id="odbitak" type="number" name="odbitak" step="0.01" class="mt-1 block w-full"
-              :value="form.odbitak" required />
+            <TextInput v-model="form.odbitak" id="odbitak" type="number" name="odbitak" step="0.01"
+              class="mt-1 block w-full" :value="form.odbitak" required />
+            <InputError class="mt-2" :message="form.errors.odbitak" />
           </div>
           <!-- nagrada -->
           <div id="nagrada_div" class="mt-6">
             <InputLabel for="nagrada" value="Nagrada" />
-            <TextInput v-model="form.nagrada" id="nagrada" type="number" name="nagrada" step="0.01" class="mt-1 block w-full"
-              :value="form.nagrada" required />
+            <TextInput v-model="form.nagrada" id="nagrada" type="number" name="nagrada" step="0.01"
+              class="mt-1 block w-full" :value="form.nagrada" required />
+            <InputError class="mt-2" :message="form.errors.nagrada" />
           </div>
           <!-- regres -->
           <div id="regres_div" class="mt-6">
             <InputLabel for="regres" value="Regres" />
             <TextInput v-model="form.regres" id="regres" type="number" name="regres" step="0.01" class="mt-1 block w-full"
               :value="form.regres" required />
+            <InputError class="mt-2" :message="form.errors.regres" />
           </div>
           <!-- prigodna -->
           <div id="prigodna_div" class="mt-6">
             <InputLabel for="prigodna" value="Prigodna" />
-            <TextInput v-model="form.prigodna" id="prigodna" type="number" name="prigodna" step="0.01" class="mt-1 block w-full"
-              :value="form.prigodna" required />
+            <TextInput v-model="form.prigodna" id="prigodna" type="number" name="prigodna" step="0.01"
+              class="mt-1 block w-full" :value="form.prigodna" required />
+            <InputError class="mt-2" :message="form.errors.prigodna" />
           </div>
           <!-- sindikat -->
           <div id="sindikat_div" class="mt-6">
             <InputLabel for="sindikat" value="Sindikat" />
-            <TextInput v-model="form.sindikat" id="sindikat" type="number" name="sindikat" step="0.01" class="mt-1 block w-full"
-              :value="form.sindikat" required />
+            <TextInput v-model="form.sindikat" id="sindikat" type="number" name="sindikat" step="0.01"
+              class="mt-1 block w-full" :value="form.sindikat" required />
+            <InputError class="mt-2" :message="form.errors.sindikat" />
           </div>
           <!-- stimulacija -->
           <div id="stimulacija_div" class="mt-6">
             <InputLabel for="stimulacija" value="Stimulacija" />
             <TextInput v-model="form.stimulacija" id="stimulacija" type="number" name="stimulacija" step="0.01"
               class="mt-1 block w-full" :value="form.stimulacija" required />
+            <InputError class="mt-2" :message="form.errors.stimulacija" />
           </div>
           <!-- bozicnica -->
           <div id="bozicnica_div" class="mt-6">
             <InputLabel for="bozicnica" value="Božičnica" />
             <TextInput v-model="form.bozicnica" id="bozicnica" type="number" name="bozicnica" step="0.01"
               class="mt-1 block w-full" :value="form.bozicnica" required />
+            <InputError class="mt-2" :message="form.errors.bozicnica" />
           </div>
           <!-- kredit -->
           <div id="kredit_div" class="mt-6">
             <InputLabel for="kredit" value="Kredit" />
             <TextInput v-model="form.kredit" id="kredit" type="number" name="kredit" step="0.01" class="mt-1 block w-full"
               :value="form.kredit" required />
+            <InputError class="mt-2" :message="form.errors.kredit" />
           </div>
         </div>
         <div v-if="showPanel2" class="grid grid-cols-4 gap-1">
@@ -232,64 +245,64 @@ const closeModal = () => {
             <TextInput v-model="form.v08" id="v08" type="number" name="v08" step="0.01" class="mt-1 block w-full"
               :value="form.v08" required />
           </div>
+        </div>
+        <div v-if="showPanel3" class="grid grid-cols-2 gap-1">
+          <!-- prekovremeni rad h09 v09 -->
+          <div id="h09_div" class="mt-6">
+            <InputLabel for="h09" value="prekovremeni rad" />
+            <TextInput v-model="form.h09" id="h09" type="number" name="h09" step="0.1" class="mt-1 block w-full"
+              :value="form.h09" required />
           </div>
-          <div v-if="showPanel3" class="grid grid-cols-2 gap-1">
-            <!-- prekovremeni rad h09 v09 -->
-            <div id="h09_div" class="mt-6">
-              <InputLabel for="h09" value="prekovremeni rad" />
-              <TextInput v-model="form.h09" id="h09" type="number" name="h09" step="0.1" class="mt-1 block w-full"
-                :value="form.h09" required />
-            </div>
-            <div id="v09_div" class="mt-6">
-              <InputLabel for="v09" value="v09" />
-              <TextInput v-model="form.v09" id="v09" type="number" name="v09" step="0.01" class="mt-1 block w-full"
-                :value="form.v09" required />
-            </div>
-            <!-- godišnji odmor h10 v10 -->
-            <div id="h10_div" class="mt-6">
-              <InputLabel for="h10" value="godišnji odmor" />
-              <TextInput v-model="form.h10" id="h10" type="number" name="h10" step="0.1" class="mt-1 block w-full"
-                :value="form.h10" required />
-            </div>
-            <div id="v10_div" class="mt-6">
-              <InputLabel for="v10" value="v10" />
-              <TextInput v-model="form.v10" id="v10" type="number" name="v10" step="0.01" class="mt-1 block w-full"
-                :value="form.v10" required />
-            </div>
-            <!-- bolovanje h11 v11 -->
-            <div id="h11_div" class="mt-6">
-              <InputLabel for="h11" value="bolovanje" />
-              <TextInput v-model="form.h11" id="h11" type="number" name="h11" step="0.1" class="mt-1 block w-full"
-                :value="form.h11" required />
-            </div>
-            <div id="v11_div" class="mt-6">
-              <InputLabel for="v11" value="v11" />
-              <TextInput v-model="form.v11" id="v11" type="number" name="v11" step="0.01" class="mt-1 block w-full"
-                :value="form.v11" required />
-            </div>
-            <!-- blagdani,izbori h12 v12 -->
-            <div id="h12_div" class="mt-6">
-              <InputLabel for="h12" value="blagdani,izbori" />
-              <TextInput v-model="form.h12" id="h12" type="number" name="h12" step="0.1" class="mt-1 block w-full"
-                :value="form.h12" required />
-            </div>
-            <div id="v12_div" class="mt-6">
-              <InputLabel for="v12" value="v12" />
-              <TextInput v-model="form.v12" id="v12" type="number" name="v12" step="0.01" class="mt-1 block w-full"
-                :value="form.v12" required />
-            </div>
-            <!-- plaćeni dopust h13 v13 -->
-            <div id="h13_div" class="mt-6">
-              <InputLabel for="h13" value="plaćeni dopust" />
-              <TextInput v-model="form.h13" id="h13" type="number" name="h13" step="0.1" class="mt-1 block w-full"
-                :value="form.h13" required />
-            </div>
-            <div id="v13_div" class="mt-6">
-              <InputLabel for="v13" value="v13" />
-              <TextInput v-model="form.v13" id="v13" type="number" name="v13" step="0.01" class="mt-1 block w-full"
-                :value="form.v13" required />
-            </div>
+          <div id="v09_div" class="mt-6">
+            <InputLabel for="v09" value="v09" />
+            <TextInput v-model="form.v09" id="v09" type="number" name="v09" step="0.01" class="mt-1 block w-full"
+              :value="form.v09" required />
           </div>
+          <!-- godišnji odmor h10 v10 -->
+          <div id="h10_div" class="mt-6">
+            <InputLabel for="h10" value="godišnji odmor" />
+            <TextInput v-model="form.h10" id="h10" type="number" name="h10" step="0.1" class="mt-1 block w-full"
+              :value="form.h10" required />
+          </div>
+          <div id="v10_div" class="mt-6">
+            <InputLabel for="v10" value="v10" />
+            <TextInput v-model="form.v10" id="v10" type="number" name="v10" step="0.01" class="mt-1 block w-full"
+              :value="form.v10" required />
+          </div>
+          <!-- bolovanje h11 v11 -->
+          <div id="h11_div" class="mt-6">
+            <InputLabel for="h11" value="bolovanje" />
+            <TextInput v-model="form.h11" id="h11" type="number" name="h11" step="0.1" class="mt-1 block w-full"
+              :value="form.h11" required />
+          </div>
+          <div id="v11_div" class="mt-6">
+            <InputLabel for="v11" value="v11" />
+            <TextInput v-model="form.v11" id="v11" type="number" name="v11" step="0.01" class="mt-1 block w-full"
+              :value="form.v11" required />
+          </div>
+          <!-- blagdani,izbori h12 v12 -->
+          <div id="h12_div" class="mt-6">
+            <InputLabel for="h12" value="blagdani,izbori" />
+            <TextInput v-model="form.h12" id="h12" type="number" name="h12" step="0.1" class="mt-1 block w-full"
+              :value="form.h12" required />
+          </div>
+          <div id="v12_div" class="mt-6">
+            <InputLabel for="v12" value="v12" />
+            <TextInput v-model="form.v12" id="v12" type="number" name="v12" step="0.01" class="mt-1 block w-full"
+              :value="form.v12" required />
+          </div>
+          <!-- plaćeni dopust h13 v13 -->
+          <div id="h13_div" class="mt-6">
+            <InputLabel for="h13" value="plaćeni dopust" />
+            <TextInput v-model="form.h13" id="h13" type="number" name="h13" step="0.1" class="mt-1 block w-full"
+              :value="form.h13" required />
+          </div>
+          <div id="v13_div" class="mt-6">
+            <InputLabel for="v13" value="v13" />
+            <TextInput v-model="form.v13" id="v13" type="number" name="v13" step="0.01" class="mt-1 block w-full"
+              :value="form.v13" required />
+          </div>
+        </div>
         <div class="mt-6 flex justify-end">
           <Btn secondary @click="closeModal">Cancel</Btn>
           <Btn primary class="ml-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"

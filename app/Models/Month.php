@@ -72,7 +72,7 @@ class Month extends Model
    */
   public function next()
   {
-    $next = Month::orderBy('month', 'asc')->where('user_id', $this->user_id)->where('month', '>', $this->month)->first();
+    $next = Month::orderBy('month', 'asc')->where('user_id', $this->user_id)->where('id', '>', $this->id)->first();
     return $next ?? $this;
   }
 
@@ -81,7 +81,7 @@ class Month extends Model
    */
   public function prev()
   {
-    $prev = Month::orderBy('month', 'desc')->where('user_id', $this->user_id)->where('month', '<', $this->month)->first();
+    $prev = Month::orderBy('month', 'desc')->where('user_id', $this->user_id)->where('id', '<', $this->id)->first();
     return $prev ?? $this;
   }
 
