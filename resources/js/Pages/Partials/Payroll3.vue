@@ -69,13 +69,13 @@ const props = defineProps<{
   next_id: number,
   prev_id: number,
 }>();
-const t1 = Math.round((props.month.v01 + props.month.v02 + props.month.v03 + props.month.v04 + props.month.v05 + props.month.v06 + props.month.v07 + props.month.v08) * 100) / 100;
+const t1 = Math.round((props.month.v01 + props.month.v02 + props.month.v03 + props.month.v04 + props.month.v05 + props.month.v06 + props.month.v07 + props.month.v08 + props.month.v09) * 100) / 100;
 const t2 = props.month.stimulacija + props.month.v12;
 const t3 = props.month.prijevoz + props.month.regres;
-const tm = props.month.minuli ? Math.round(props.month.minuli * (t1+t2)) / 100 : 0;
+const tm = props.month.minuli ? Math.round(props.month.minuli * (t1 + t2)) / 100 : 0;
 const t4 = Math.round((t1 + t2 + tm) * 100) / 100;
 const t5 = t4;
-const t6 = Math.round(t5 * 15) / 100 + Math.round(t5 * 5) / 100;
+const t6 = Math.round((Math.round(t5 * 15) / 100 + Math.round(t5 * 5) / 100) * 100) / 100;
 const t7 = Math.round((t5 - t6) * 100) / 100;
 const t8 = t7 - props.month.odbitak > 0 ? props.month.odbitak : t7;
 const t9 = Math.round((t7 - t8) * 100) / 100;
@@ -147,38 +147,29 @@ const t15 = t13 - t14;
     Date(month.first).getDate() }} DO {{ new Date(month.last).getDate() }}</td>
       </tr>
 
-      <TableTr td1="1. OSTVARENI SATI PO VREMENU" td2="sati rada" :td3="'iznos' + month.valuta" :bold="true"
-        :indent="false" />
-      <TableTr v-if="month.h01 != 0" td1="1.1. sati redovnog rada" :td2="month.h01 + ''" :td3="month.v01 + ''" />
-      <TableTr v-if="month.h02 != 0" td1="1.2. sati redovnog rada noću" :td2="month.h02 + ''" :td3="month.v02 + ''" />
-      <TableTr v-if="month.h05 != 0" td1="1.3. sati redovnog rada u dane državnog praznika/blagdana" :td2="month.h05 + ''"
+      <TableTr td1="Obračun plaće:" td2="sati rada" :td3="'iznos u' + month.valuta" :indent="false" />
+      <TableTr td1="PLAĆA (BRUTO SVOTA)" :td3="t1 + month.valuta" :bold="true" :indent="false" />
+      <TableTr v-if="month.h01 != 0" td1="Redovan rad" :td2="month.h01 + ''" :td3="month.v01 + ''" />
+      <TableTr v-if="month.h02 != 0" td1="Rad noću" :td2="month.h02 + ''" :td3="month.v02 + ''" />
+      <TableTr v-if="month.h05 != 0" td1="Rada u dane državnog praznika/blagdana" :td2="month.h05 + ''"
         :td3="month.v05 + ''" />
-      <TableTr v-if="month.h03 != 0" td1="1.7. sati redovnog rada nedeljom" :td2="month.h03 + ''" :td3="month.v03 + ''" />
-      <TableTr v-if="month.h04 != 0" td1="1.8. sati redovnog rada nedeljom + noću" :td2="month.h04 + ''"
-        :td3="month.v04 + ''" />
+      <TableTr v-if="month.h03 != 0" td1="Rad nedjeljom" :td2="month.h03 + ''" :td3="month.v03 + ''" />
+      <TableTr v-if="month.h04 != 0" td1="Rad noću i nedjeljom" :td2="month.h04 + ''" :td3="month.v04 + ''" />
       <TableTr v-if="month.h07 != 0" td1="1.9. sati redovnog rada nedeljom + drž.praznikom/blagdanom"
         :td2="month.h07 + ''" :td3="month.v07 + ''" />
       <TableTr v-if="month.h06 != 0" td1="1.10. sati redovnog rada drž.praznikom/blagdanom + noću" :td2="month.h06 + ''"
         :td3="month.v06 + ''" />
       <TableTr v-if="month.h08 != 0" td1="1.10. sati redovnog rada nedeljom + drž.praznikom/blagdanom + noću"
         :td2="month.h08 + ''" :td3="month.v08 + ''" />
+      <TableTr td1="Prekovremeni rad" :td2="month.h09 + ''" :td3="month.v09 + ''" />
 
       <TableTr v-if="t2 != 0" td1="2. SATI ZA KOJE SE OSTVARUJE PRAVO NA NAKNADU" :indent="false" />
-      <TableTr v-if="month.h12 != 0" td1="2.3. sati blagdana i neradnih dana" :td2="month.h12 + ''" :td3="month.v12 + ''" />
+      <TableTr v-if="month.h12 != 0" td1="2.3. sati blagdana i neradnih dana" :td2="month.h12 + ''"
+        :td3="month.v12 + ''" />
 
-      <TableTr td1="Propisani ili ugovoreni dodaci na plaću radnika i novčani iznosi po toj osnovi"
-        :td3="tm ? tm + month.valuta : ''" :indent="false" />
-      <TableTr v-if="month.minuli != 0" td1="Minuli rad" :td2="month.minuli + ''" :td3="tm + month.valuta" />
-
-      <TableTr td1="ZBROJENI IZNOSI PRIMITAKA PO SVIM OSNOVAMA - BRUTTO PLAĆA" :td3="t4 ? t4 + month.valuta : ''"
-        :indent="false" />
-
-      <TableTr td1="OSNOVICA ZA OBRAČUN DOPRINOSA" :td3="t5 + month.valuta" :indent="false" />
-
-      <TableTr td1="Vrste i iznosi doprinosa za obvezna osiguranja koji se obustavljaju iz plaće" :indent="false" />
+      <TableTr td1="Doprinosi iz plaće - (20%)" :td3="t6 + month.valuta" :bold="true" :indent="false" />
       <TableTr td1="MIO" :td3="(Math.round(t5 * 15) / 100) + month.valuta" />
       <TableTr td1="MIO II" :td3="(Math.round(t5 * 5) / 100) + month.valuta" />
-      <TableTr td1="UKUPNO DOPRINOSI IZ PLAĆE" :td3="t6 ? t6 + month.valuta : ''" :bold="true" :indent="false" />
 
       <TableTr td1="DOHODAK - PLAĆA PRIJE OPOREZIVANJA" :td3="t7 ? t7 + month.valuta : ''" :bold="true" :indent="false" />
 

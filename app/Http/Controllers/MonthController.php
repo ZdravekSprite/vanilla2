@@ -82,7 +82,7 @@ class MonthController extends Controller
   {
     $m = Month::where('id', $month)->first();
     $days = $m->days();
-    $c = $m->year() > 2022 ? ' €' : ' kn';
+    $c = $m->month > 24274 ? ' €' : ' kn';
     foreach ($days as $key => $value) {
       $value['next_night'] = $value->nextNight();
     }

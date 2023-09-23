@@ -4,6 +4,7 @@ import { Head } from '@inertiajs/vue3';
 import DayList from './Partials/DayList.vue';
 import Payroll1 from './Partials/Payroll1.vue';
 import Payroll2 from './Partials/Payroll2.vue';
+import Payroll3 from './Partials/Payroll3.vue';
 import EditForm from '@/Components/EditForm.vue';
 import Btn from '@/Components/Btn.vue';
 import { ref } from 'vue';
@@ -124,9 +125,16 @@ const clickShowDayList = () => {
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
         <div v-if="showPayroll" class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-4 sm:p-8 text-gray-900 dark:text-gray-100">
-            <Payroll1 v-if="firm.id == 1" :user="user" :firm="firm" :month="data" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
-            <Payroll2 v-if="firm.id == 2" :user="user" :firm="firm" :month="data" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
-            <Payroll2 v-if="firm.id > 2" :user="user" :firm="firm" :month="data" :next="next" :prev="prev" :next_id="next_id" :prev_id="prev_id" />
+            <Payroll1 v-if="firm.id == 1" :user="user" :firm="firm" :month="data" :next="next" :prev="prev"
+              :next_id="next_id" :prev_id="prev_id" />
+            <Payroll2 v-if="firm.id == 2" :user="user" :firm="firm" :month="data" :next="next" :prev="prev"
+              :next_id="next_id" :prev_id="prev_id" />
+            <Payroll3 v-if="firm.id == 3" :user="user" :firm="firm" :month="data" :next="next" :prev="prev"
+              :next_id="next_id" :prev_id="prev_id" />
+            <Payroll2 v-if="firm.id == 4" :user="user" :firm="firm" :month="data" :next="next" :prev="prev"
+              :next_id="next_id" :prev_id="prev_id" />
+            <Payroll3 v-if="firm.id > 4" :user="user" :firm="firm" :month="data" :next="next" :prev="prev"
+              :next_id="next_id" :prev_id="prev_id" />
           </div>
         </div>
         <div v-if="showDayList"
@@ -136,6 +144,5 @@ const clickShowDayList = () => {
           </div>
         </div>
       </div>
-    </div>
-  </AuthenticatedLayout>
-</template>
+  </div>
+</AuthenticatedLayout></template>
