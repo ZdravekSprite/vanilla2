@@ -31,7 +31,7 @@ class Month extends Model
     return $this->belongsTo(User::class)->first();
   }
 
-    /**
+  /**
    * Get the firm that owns the month.
    */
   public function firm()
@@ -105,6 +105,9 @@ class Month extends Model
     return $to->format('Y-m-d');
   }
 
+  /**
+   * Get the days of month.
+   */
   public function days()
   {
     $firstDate = '01.' . $this->slug();
@@ -131,5 +134,36 @@ class Month extends Model
     }
     $days = $datesArray;
     return $days;
+  }
+
+  /**
+   * Get the hours Norm of month.
+   */
+  public function data()
+  {
+    $firstDate = '01.' . $this->slug();
+    $from = CarbonImmutable::createFromFormat('d.m.Y', $firstDate)->firstOfMonth();
+
+    $hoursNormAll = 0;
+
+    foreach ($this->days() as $d) {
+      $dayOfWeek = $d->date->dayOfWeek;
+      switch ($dayOfWeek) {
+        case 0:
+          $def_h = 0;
+          break;
+        case 6:
+          $def_h = 0;
+          break;
+        default:
+          $def_h = 8;
+          break;
+      }
+      $hoursNormAll += $def_h;
+    }
+    $data = (object) [
+      'All' => $hoursNormAll,
+    ];
+    return $data;
   }
 }
