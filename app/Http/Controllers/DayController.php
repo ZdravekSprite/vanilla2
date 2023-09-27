@@ -42,6 +42,7 @@ class DayController extends Controller
       $value['state_id'] = $value['state'];
       $value['state'] = $states[$value['state_id']]->name;
     }
+    //dd($days);
     return Inertia::render('Days', [
       'all' => $all,
       'days' => $days,

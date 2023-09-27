@@ -20,7 +20,7 @@ class MonthController extends Controller
    */
   public function index()
   {
-    $selected = ['id', 'month', 'user_id', 'firm_id', 'bruto', 'minuli', 'odbitak', 'prirez', 'prijevoz', 'prehrana'];
+    $selected = ['id', 'month', 'user_id', 'firm_id', 'bruto', 'minuli', 'odbitak', 'prirez', 'prijevoz', 'prehrana', 'first', 'last'];
     //$all = Month::where('user_id',Auth::user()->id)->count();
     $user = User::find(Auth::user()->id);
     if ($user->hasAnyRole('superadmin')) {
@@ -37,6 +37,7 @@ class MonthController extends Controller
       $value['_month'] = $value->month();
       $value['_year'] = $value->year();
     }
+    //dd($months);
     return Inertia::render('Months', [
       'all' => $all,
       'months' => $months,
@@ -167,6 +168,8 @@ class MonthController extends Controller
     //dd($request);
     $month = Month::findOrFail($request->id);
     if (isset($request->firm)) $month->firm_id = $request->firm;
+    if (isset($request->first)) $month->first = $request->first;
+    if (isset($request->last)) $month->last = $request->last;
     if (isset($request->bruto)) {
       $month->bruto = (new MonthController)->str2num($request->bruto);
       $month->minuli = (new MonthController)->str2num($request->minuli);
@@ -181,8 +184,6 @@ class MonthController extends Controller
       $month->prigodna = (new MonthController)->str2num($request->prigodna);
       $month->kredit = (new MonthController)->str2num($request->kredit);
       $month->sindikat = (new MonthController)->str2num($request->sindikat);
-      $month->first = $request->first;
-      $month->last = $request->last;
       $month->h01 = (new MonthController)->str2num($request->h01);
       $month->v01 = (new MonthController)->str2num($request->v01);
       $month->h02 = (new MonthController)->str2num($request->h02);

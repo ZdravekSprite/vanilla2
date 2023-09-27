@@ -25,7 +25,7 @@ const dateFormat = (d) => {
   let year = objectDate.getFullYear();
   return day + '. ' + month + '. ' + year + '.'
 }
-//console.log(props.elements.data,props.labels_show);
+//console.log(props.elements.data);
 </script>
 
 <template>
