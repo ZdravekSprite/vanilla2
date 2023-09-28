@@ -109,6 +109,7 @@ const showDayList = ref(false);
 const clickShowDayList = () => {
   showDayList.value = !showDayList.value;
 };
+console.log(props.data.norm)
 </script>
 
 <template>
