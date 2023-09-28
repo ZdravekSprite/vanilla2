@@ -2,6 +2,18 @@
 import TableTr from '@/Components/TableTr.vue';
 import { Link } from '@inertiajs/vue3';
 
+interface Norm {
+  Full: number;
+  All: number;
+  min: number;
+  minHoli: number;
+  minHoliNight: number;
+  minHoliSunday: number;
+  minHoliSundayNight: number;
+  minNight: number;
+  minSunday: number;
+  minSundayNight: number;
+}
 interface Firm {
   id: number;
   name: string;
@@ -21,6 +33,7 @@ const props = defineProps<{
   firm: Firm;
   user: User;
   month: {
+    norm: Norm,
     valuta: string,
     bruto: number,
     minuli: number,
@@ -147,13 +160,13 @@ const t15 = t13 - t14;
 
       <TableTr td1="Obračun plaće:" td2="sati rada" :td3="'iznos u' + month.valuta" :indent="false" />
       <TableTr td1="PLAĆA (BRUTO SVOTA)" :td3="t1 + month.valuta" :bold="true" :indent="false" />
-      <TableTr v-if="month.h01 != 0" td1="Redovan rad" :td2="month.h01 + ''" :td3="month.v01 + ''" />
+      <TableTr v-if="month.h01 != 0" td1="Redovan rad" :td2="month.h01 + '(' + month.norm.min + ')'" :td3="month.v01 + ''" />
       <TableTr v-if="month.h10 != 0" td1="Godišnji odmori" :td2="month.h10 + ''" :td3="month.v10 + ''" />
-      <TableTr v-if="month.h02 != 0" td1="Rad noću" :td2="month.h02 + ''" :td3="month.v02 + ''" />
+      <TableTr v-if="month.h02 != 0" td1="Rad noću" :td2="month.h02 + '(' + month.norm.minNight + ')'" :td3="month.v02 + ''" />
       <TableTr v-if="month.h05 != 0" td1="Rada u dane državnog praznika/blagdana" :td2="month.h05 + ''"
         :td3="month.v05 + ''" />
-      <TableTr v-if="month.h03 != 0" td1="Rad nedjeljom" :td2="month.h03 + ''" :td3="month.v03 + ''" />
-      <TableTr v-if="month.h04 != 0" td1="Rad noću i nedjeljom" :td2="month.h04 + ''" :td3="month.v04 + ''" />
+      <TableTr v-if="month.h03 != 0" td1="Rad nedjeljom" :td2="month.h03 + '(' + month.norm.minSunday + ')'" :td3="month.v03 + ''" />
+      <TableTr v-if="month.h04 != 0" td1="Rad noću i nedjeljom" :td2="month.h04 + '(' + month.norm.minSundayNight + ')'" :td3="month.v04 + ''" />
       <TableTr v-if="month.h07 != 0" td1="1.9. sati redovnog rada nedeljom + drž.praznikom/blagdanom"
         :td2="month.h07 + ''" :td3="month.v07 + ''" />
       <TableTr v-if="month.h06 != 0" td1="1.10. sati redovnog rada drž.praznikom/blagdanom + noću" :td2="month.h06 + ''"

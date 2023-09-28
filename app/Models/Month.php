@@ -150,14 +150,10 @@ class Month extends Model
     //dd($firstFrom);
 
     $hoursNormFull = 0; //580
-    $hoursNormFull_575 = 0;
     $hoursNormAll = 0;
-    $hoursNormAll_575 = 0;
 
     $hoursNormHoliFull = 0;
-    $hoursNormHoliFull_575 = 0;
     $hoursNormHoliAll = 0;
-    $hoursNormHoliAll_575 = 0;
 
     $minWork = 0;
     $minWorkNight = 0;
@@ -169,11 +165,8 @@ class Month extends Model
     $minWorkHoliSundayNight = 0;
 
     foreach ($this->days() as $d) {
-      $day_minWork = $d->minWork();
-      $minWork += $day_minWork;
+      $day_minWork = $d->minWork() - $d->minWorkNight();
       $day_minWorkNight = $d->minWorkNight();
-      $minWorkNight += $day_minWorkNight;
-
       $day_minWorkSunday = 0;
       $day_minWorkSundayNight = 0;
 
@@ -181,57 +174,67 @@ class Month extends Model
       switch ($dayOfWeek) {
         case 0:
           $def_h = 0;
-          $def_575_h = 0;
           $day_minWorkSunday = $day_minWork;
           $day_minWorkSundayNight = $day_minWorkNight;
-          $minWorkSunday += $day_minWorkSunday;
-          $minWorkSundayNight += $day_minWorkSundayNight;
           break;
         case 6:
           $def_h = 0;
-          $def_575_h = 5;
           break;
         default:
           $def_h = 8;
-          $def_575_h = 7;
           break;
       }
-      $hoursNormFull += $def_h;
-      $hoursNormFull_575 += $def_575_h;
 
       if ($d->holiday) {
         $hoursNormHoliFull += $def_h;
-        $hoursNormHoliFull_575 += $def_575_h;
-
-        $minWorkHoli += $day_minWork;
-        $minWorkHoliNight += $day_minWorkNight;
-        $minWorkHoliSunday += $day_minWorkSunday;
-        $minWorkHoliSundayNight += $day_minWorkSundayNight;
+        if ($day_minWorkSunday) {
+          $minWorkHoliSunday += $day_minWorkSunday;
+        } else {
+          $minWorkHoli += $day_minWork;
+        }
+        if ($day_minWorkSundayNight) {
+          $minWorkHoliSundayNight += $day_minWorkSundayNight;
+        } else {
+          $minWorkHoliNight += $day_minWorkNight;
+        }
+      } else {
+        $hoursNormFull += $def_h;
+        if ($day_minWorkSunday) {
+          $minWorkSunday += $day_minWorkSunday;
+        } else {
+          $minWork += $day_minWork;
+        }
+        if ($day_minWorkSundayNight) {
+          $minWorkSundayNight += $day_minWorkSundayNight;
+        } else {
+          $minWorkNight += $day_minWorkNight;
+        }
       }
+
 
       if ($first <= $d->date && $d->date <= $last) {
         $hoursNormAll += $def_h;
-        $hoursNormAll_575 += $def_575_h;
 
         if ($d->holiday) {
           $hoursNormHoliAll += $def_h;
-          $hoursNormHoliAll_575 += $def_575_h;
         }
       }
     }
+    $All = $hoursNormAll;
+    $Holiday = $hoursNormHoliAll;
     $data = (object) [
-      'Full' => $is575 ? $hoursNormFull_575 : $hoursNormFull,
-      'FullHoliday' => $is575 ? $hoursNormHoliFull_575 : $hoursNormHoliFull,
-      'All' => $is575 ? $hoursNormAll_575 : $hoursNormAll,
-      'Holiday' => $is575 ? $hoursNormHoliAll_575 : $hoursNormHoliAll,
-      'min' => $minWork,
-      'minNight' => $minWorkNight,
-      'minSunday' => $minWorkSunday,
-      'minSundayNight' => $minWorkSundayNight,
-      'minHoli' => $minWorkHoli,
-      'minHoliNight' => $minWorkHoliNight,
-      'minHoliSunday' => $minWorkHoliSunday,
-      'minHoliSundayNight' => $minWorkHoliSundayNight,
+      'Full' => $hoursNormFull,
+      'FullHoliday' => $hoursNormHoliFull,
+      'All' => $All,
+      'Holiday' => $Holiday,
+      'min' => $minWork / 60,
+      'minNight' => $minWorkNight / 60,
+      'minSunday' => $minWorkSunday / 60,
+      'minSundayNight' => $minWorkSundayNight / 60,
+      'minHoli' => $minWorkHoli / 60,
+      'minHoliNight' => $minWorkHoliNight / 60,
+      'minHoliSunday' => $minWorkHoliSunday / 60,
+      'minHoliSundayNight' => $minWorkHoliSundayNight / 60,
     ];
     return $data;
   }

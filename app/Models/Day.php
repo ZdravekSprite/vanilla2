@@ -31,7 +31,7 @@ class Day extends Model
     'end' => 'datetime:H:i',
   ];
 
-    /**
+  /**
    * Get the user that owns the month.
    */
   public function user()
@@ -39,7 +39,7 @@ class Day extends Model
     return $this->belongsTo(User::class)->first();
   }
 
-    /**
+  /**
    * Get the firm that owns the month.
    */
   public function firm()
@@ -82,15 +82,14 @@ class Day extends Model
 
   public function minWork()
   {
-    if ($this->stateDayBefore() == 1) {
-      $night = $this->night ? $this->minutes($this->night) : 0;
-    } else {
-      $night = 0;
-    }
+    $night = 0;
+    if ($this->stateDayBefore() == 1) $night = $this->night ? $this->minutes($this->night) : 0;
+    $startEnd = 0;
     if ($this->state == 1) {
-      $startEnd = $this->start ? ($this->end ? $this->end->diffInMinutes($this->start) : 24 * 60 - $this->minutes($this->start)) : 0;
-    } else {
-      $startEnd = 0;
+      $startMin = $this->start ? $this->minutes($this->start) : 0;
+      $endMin = $this->end ? $this->minutes($this->end) : 0;
+      if ($startMin > 0 && $endMin == 0) $endMin = 1440;
+      $startEnd = $endMin - $startMin;
     }
     $day_minWork = $startEnd + $night;
     return $day_minWork;
@@ -98,11 +97,10 @@ class Day extends Model
 
   public function minWorkNight()
   {
-    if ($this->stateDayBefore() == 1) {
-      $night = $this->night ? ($this->night->hour > 6 ? 360 : $this->minutes($this->night)) : 0;
-    } else {
-      $night = 0;
-    }
+    $night = 0;
+    if ($this->stateDayBefore() == 1) $night = $this->night ? ($this->night->hour > 6 ? 360 : $this->minutes($this->night)) : 0;
+    $start = 0;
+    $end = 0;
     if ($this->state == 1) {
       $startMin = $this->start ? $this->minutes($this->start) : 0;
       $endMin = $this->end ? $this->minutes($this->end) : 0;
@@ -111,12 +109,8 @@ class Day extends Model
       $start = $this->start ? ($startMin > 360 ? 0 : 360 - $startMin) : 0;
       // after 22:00 (1320 min)
       $end = $this->start ? ($startMin < 1320 ? ($endMin > 1320 ? $endMin - 1320 : 0) : $endMin - $startMin) : 0;
-    } else {
-      $start = 0;
-      $end = 0;
     }
     $day_minWorkNight = $night + $start + $end;
     return $day_minWorkNight;
   }
-
 }

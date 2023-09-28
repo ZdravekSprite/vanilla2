@@ -13,6 +13,14 @@ import MonthForm from './Partials/MonthForm.vue';
 interface Norm {
   Full: number;
   All: number;
+  min: number;
+  minHoli: number;
+  minHoliNight: number;
+  minHoliSunday: number;
+  minHoliSundayNight: number;
+  minNight: number;
+  minSunday: number;
+  minSundayNight: number;
 }
 interface Day {
   id: number;
