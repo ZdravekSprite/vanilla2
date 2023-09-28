@@ -11,8 +11,8 @@ import { ref } from 'vue';
 import MonthForm from './Partials/MonthForm.vue';
 
 interface Norm {
+  Full: number;
   All: number;
-  Allx: number;
 }
 interface Day {
   id: number;
@@ -120,7 +120,11 @@ const clickShowDayList = () => {
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pr-4">Month
           {{ new Date(props.data.first).getMonth() + 1 }}
           {{ new Date(props.data.first).getFullYear() }}
-          {{ props.data.norm.All }} ({{ props.data.norm.Allx }})</h2>
+          {{ props.data.norm.Full }}
+          <template v-if="props.data.norm.Full != props.data.norm.All">
+            ({{ props.data.norm.All }})
+          </template>
+        </h2>
         <MonthForm class="float-left" :month="data" />
         <Btn @click="clickShowPayroll">{{ !showPayroll ? 'show' : 'hide' }} Payroll</Btn>
         <Btn @click="clickShowDayList">{{ !showDayList ? 'show' : 'hide' }} DayList</Btn>

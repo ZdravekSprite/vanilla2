@@ -146,32 +146,40 @@ class Month extends Model
     $lastOfMonth = CarbonImmutable::createFromFormat('d.m.Y', $firstDate)->lastOfMonth();
     $first = $this->first ? Carbon::parse($this->first) : $firstOfMonth;
     $last = $this->last ? Carbon::parse($this->last) : $lastOfMonth;
+    $is575 = $this->firm_id == 1;
     //dd($firstFrom);
 
+    $hoursNormFull = 0; //580
+    $hoursNormFull_575 = 0;
     $hoursNormAll = 0;
-    $hoursNormAllx = 0;
+    $hoursNormAll_575 = 0;
 
     foreach ($this->days() as $d) {
       $dayOfWeek = $d->date->dayOfWeek;
       switch ($dayOfWeek) {
         case 0:
           $def_h = 0;
+          $def_575_h = 0;
           break;
         case 6:
           $def_h = 0;
+          $def_575_h = 5;
           break;
         default:
           $def_h = 8;
+          $def_575_h = 7;
           break;
       }
-      $hoursNormAll += $def_h;
+      $hoursNormFull += $def_h;
+      $hoursNormFull_575 += $def_575_h;
       if ($first <= $d->date && $d->date <= $last) {
-        $hoursNormAllx += $def_h;
+        $hoursNormAll += $def_h;
+        $hoursNormAll_575 += $def_575_h;
       }
     }
     $data = (object) [
-      'All' => $hoursNormAll,
-      'Allx' => $hoursNormAllx,
+      'Full' => $is575 ? $hoursNormFull_575 : $hoursNormFull,
+      'All' => $is575 ? $hoursNormAll_575 : $hoursNormAll,
     ];
     return $data;
   }
