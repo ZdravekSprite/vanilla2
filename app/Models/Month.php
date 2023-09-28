@@ -142,9 +142,14 @@ class Month extends Model
   public function data()
   {
     $firstDate = '01.' . $this->slug();
-    $from = CarbonImmutable::createFromFormat('d.m.Y', $firstDate)->firstOfMonth();
+    $firstOfMonth = CarbonImmutable::createFromFormat('d.m.Y', $firstDate)->firstOfMonth();
+    $lastOfMonth = CarbonImmutable::createFromFormat('d.m.Y', $firstDate)->lastOfMonth();
+    $first = $this->first ? Carbon::parse($this->first) : $firstOfMonth;
+    $last = $this->last ? Carbon::parse($this->last) : $lastOfMonth;
+    //dd($firstFrom);
 
     $hoursNormAll = 0;
+    $hoursNormAllx = 0;
 
     foreach ($this->days() as $d) {
       $dayOfWeek = $d->date->dayOfWeek;
@@ -160,9 +165,13 @@ class Month extends Model
           break;
       }
       $hoursNormAll += $def_h;
+      if ($first <= $d->date && $d->date <= $last) {
+        $hoursNormAllx += $def_h;
+      }
     }
     $data = (object) [
       'All' => $hoursNormAll,
+      'Allx' => $hoursNormAllx,
     ];
     return $data;
   }

@@ -95,7 +95,7 @@ class MonthController extends Controller
       'data' => [
         'id' => $m->id,
         'slug' => $m->slug(),
-        'norm' => $m->data()->All,
+        'norm' => $m->data(),
         'valuta' => $c,
         'bruto' => round((int)$m->bruto / 100, 2),
         'minuli' => round((int)$m->minuli / 100, 2),
