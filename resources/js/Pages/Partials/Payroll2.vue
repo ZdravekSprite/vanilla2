@@ -83,8 +83,25 @@ const props = defineProps<{
   next_id: number,
   prev_id: number,
 }>();
-const v1 = Math.round((props.month.norm.min * props.month.bruto / props.month.norm.All) * 100) / 100 ;
-const t1 = Math.round(((props.month.v01 ? props.month.v01 : v1) + props.month.v02 + props.month.v03 + props.month.v04 + props.month.v05 + props.month.v06 + props.month.v07 + props.month.v08) * 100) / 100;
+const vh = props.month.bruto / props.month.norm.All;
+const v1 = Math.round((props.month.norm.min * vh) * 100) / 100 ;
+const v01 = props.month.v01 ? props.month.v01 : v1;
+const v2 = Math.round((props.month.norm.minNight * vh * 1.35) * 100) / 100 ;
+const v02 = props.month.v02 ? props.month.v02 : v2;
+const v3 = Math.round((props.month.norm.minSunday * vh * 1.5) * 100) / 100 ;
+const v03 = props.month.v03 ? props.month.v03 : v3;
+const v4 = Math.round((props.month.norm.minSundayNight * vh * 1.65) * 100) / 100 ;
+const v04 = props.month.v04 ? props.month.v04 : v4;
+const v5 = Math.round((props.month.norm.minHoli * vh * 1.5) * 100) / 100 ;
+const v05 = props.month.v05 ? props.month.v05 : v5;
+const v6 = Math.round((props.month.norm.minHoliNight * vh * 1.85) * 100) / 100 ;
+const v06 = props.month.v06 ? props.month.v06 : v6;
+const v7 = Math.round((props.month.norm.minHoliSunday * vh * 1.8) * 100) / 100 ;
+const v07 = props.month.v07 ? props.month.v07 : v7;
+const v8 = Math.round((props.month.norm.minHoliSundayNight * vh * 1.85) * 100) / 100 ;
+const v08 = props.month.v08 ? props.month.v08 : v8;
+
+const t1 = Math.round((v01 + v02 + v03 + v04 + v05 + v06 + v07 + v08) * 100) / 100;
 const t2 = props.month.stimulacija + props.month.v10 + props.month.v12;
 const t3 = props.month.prijevoz + props.month.regres;
 const tm = props.month.minuli ? Math.round(props.month.minuli * (t1 + t2)) / 100 : 0;
@@ -167,19 +184,19 @@ const t15 = t13 - t14;
       <TableTr v-if="month.h01 != 0 || month.norm.min != 0" td1="1.1. sati redovnog rada"
         :td2="month.h01 + '(' + month.norm.min + ')'" :td3="month.v01 + (month.v01 != v1 ? '(' + v1+ ')' : '')" />
       <TableTr v-if="month.h02 != 0 || month.norm.minNight != 0" td1="1.2. sati redovnog rada noću"
-        :td2="month.h02 + '(' + month.norm.minNight + ')'" :td3="month.v02 + ''" />
+        :td2="month.h02 + '(' + month.norm.minNight + ')'" :td3="month.v02 + (month.v02 != v2 ? '(' + v2+ ')' : '')" />
       <TableTr v-if="month.h05 != 0 || month.norm.minHoli != 0" td1="1.3. sati redovnog rada u dane državnog praznika/blagdana"
-        :td2="month.h05 + '(' + month.norm.minHoli + ')'" :td3="month.v05 + ''" />
+        :td2="month.h05 + '(' + month.norm.minHoli + ')'" :td3="month.v05 + (month.v05 != v5 ? '(' + v5+ ')' : '')" />
       <TableTr v-if="month.h03 != 0 || month.norm.minSunday != 0" td1="1.7. sati redovnog rada nedeljom"
-        :td2="month.h03 + '(' + month.norm.minSunday + ')'" :td3="month.v03 + ''" />
+        :td2="month.h03 + '(' + month.norm.minSunday + ')'" :td3="month.v03 + (month.v03 != v3 ? '(' + v3+ ')' : '')" />
       <TableTr v-if="month.h04 != 0 || month.norm.minSundayNight != 0" td1="1.8. sati redovnog rada nedeljom + noću"
-        :td2="month.h04 + '(' + month.norm.minSundayNight + ')'" :td3="month.v04 + ''" />
+        :td2="month.h04 + '(' + month.norm.minSundayNight + ')'" :td3="month.v04 + (month.v04 != v4 ? '(' + v4+ ')' : '')" />
       <TableTr v-if="month.h07 != 0 || month.norm.minHoliSunday != 0" td1="1.9. sati redovnog rada nedeljom + drž.praznikom/blagdanom"
-        :td2="month.h07 + '(' + month.norm.minHoliSunday + ')'" :td3="month.v07 + ''" />
+        :td2="month.h07 + '(' + month.norm.minHoliSunday + ')'" :td3="month.v07 + (month.v07 != v7 ? '(' + v7+ ')' : '')" />
       <TableTr v-if="month.h06 != 0 || month.norm.minHoliNight != 0" td1="1.10. sati redovnog rada drž.praznikom/blagdanom + noću"
-        :td2="month.h06 + '(' + month.norm.minHoliNight + ')'" :td3="month.v06 + ''" />
+        :td2="month.h06 + '(' + month.norm.minHoliNight + ')'" :td3="month.v06 + (month.v06 != v6 ? '(' + v6+ ')' : '')" />
       <TableTr v-if="month.h08 != 0 || month.norm.minHoliSundayNight != 0" td1="sati redovnog rada nedeljom + drž.praznikom/blagdanom + noću"
-        :td2="month.h08 + '(' + month.norm.minHoliSundayNight + ')'" :td3="month.v08 + ''" />
+        :td2="month.h08 + '(' + month.norm.minHoliSundayNight + ')'" :td3="month.v08 + (month.v08 != v8 ? '(' + v8+ ')' : '')" />
 
       <TableTr v-if="t2 != 0" td1="2. SATI ZA KOJE SE OSTVARUJE PRAVO NA NAKNADU" :indent="false" />
       <TableTr v-if="month.h10 != 0" td1="2.1. sati godišnjeg odmora" :td2="month.h10 + ''" :td3="month.v10 + ''" />
