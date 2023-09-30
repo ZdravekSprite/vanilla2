@@ -83,7 +83,8 @@ const props = defineProps<{
   next_id: number,
   prev_id: number,
 }>();
-const t1 = Math.round((props.month.v01 + props.month.v02 + props.month.v03 + props.month.v04 + props.month.v05 + props.month.v06 + props.month.v07 + props.month.v08) * 100) / 100;
+const v1 = Math.round((props.month.norm.min * props.month.bruto / props.month.norm.All) * 100) / 100 ;
+const t1 = Math.round(((props.month.v01 ? props.month.v01 : v1) + props.month.v02 + props.month.v03 + props.month.v04 + props.month.v05 + props.month.v06 + props.month.v07 + props.month.v08) * 100) / 100;
 const t2 = props.month.stimulacija + props.month.v10 + props.month.v12;
 const t3 = props.month.prijevoz + props.month.regres;
 const tm = props.month.minuli ? Math.round(props.month.minuli * (t1 + t2)) / 100 : 0;
@@ -164,7 +165,7 @@ const t15 = t13 - t14;
       <TableTr td1="1. OSTVARENI SATI PO VREMENU" td2="sati rada" :td3="'iznos' + month.valuta" :bold="true"
         :indent="false" />
       <TableTr v-if="month.h01 != 0 || month.norm.min != 0" td1="1.1. sati redovnog rada"
-        :td2="month.h01 + '(' + month.norm.min + ')'" :td3="month.v01 + ''" />
+        :td2="month.h01 + '(' + month.norm.min + ')'" :td3="month.v01 + (month.v01 != v1 ? '(' + v1+ ')' : '')" />
       <TableTr v-if="month.h02 != 0 || month.norm.minNight != 0" td1="1.2. sati redovnog rada noću"
         :td2="month.h02 + '(' + month.norm.minNight + ')'" :td3="month.v02 + ''" />
       <TableTr v-if="month.h05 != 0 || month.norm.minHoli != 0" td1="1.3. sati redovnog rada u dane državnog praznika/blagdana"
