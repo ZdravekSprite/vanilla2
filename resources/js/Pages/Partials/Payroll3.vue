@@ -13,6 +13,7 @@ interface Norm {
   minNight: number;
   minSunday: number;
   minSundayNight: number;
+  over: number;
 }
 interface Firm {
   id: number;
@@ -173,7 +174,7 @@ const t15 = t13 - t14;
         :td3="month.v06 + ''" />
       <TableTr v-if="month.h08 != 0" td1="1.10. sati redovnog rada nedeljom + drž.praznikom/blagdanom + noću"
         :td2="month.h08 + ''" :td3="month.v08 + ''" />
-      <TableTr v-if="month.h09 != 0" td1="Prekovremeni rad" :td2="month.h09 + ''" :td3="month.v09 + ''" />
+      <TableTr v-if="month.h09 != 0" td1="Prekovremeni rad" :td2="month.h09 + '(' + month.norm.over + ')'" :td3="month.v09 + ''" />
 
       <TableTr v-if="t2 != 0" td1="2. SATI ZA KOJE SE OSTVARUJE PRAVO NA NAKNADU" :indent="false" />
       <TableTr v-if="month.h12 != 0" td1="2.3. sati blagdana i neradnih dana" :td2="month.h12 + ''"

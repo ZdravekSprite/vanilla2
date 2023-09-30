@@ -222,12 +222,15 @@ class Month extends Model
     }
     $All = $hoursNormAll;
     $Holiday = $hoursNormHoliAll;
+    $allNotMin = $minWorkNight + $minWorkSunday + $minWorkSundayNight + $minWorkHoli + $minWorkHoliNight + $minWorkHoliSunday + $minWorkHoliSundayNight;
+    $over = ($allNotMin + $minWork) / 60 - $All;
+    $min = $over > 0 ? $All - $allNotMin / 60 : $minWork / 60;
     $data = (object) [
       'Full' => $hoursNormFull,
       'FullHoliday' => $hoursNormHoliFull,
       'All' => $All,
       'Holiday' => $Holiday,
-      'min' => $minWork / 60,
+      'min' => $min,
       'minNight' => $minWorkNight / 60,
       'minSunday' => $minWorkSunday / 60,
       'minSundayNight' => $minWorkSundayNight / 60,
@@ -235,6 +238,7 @@ class Month extends Model
       'minHoliNight' => $minWorkHoliNight / 60,
       'minHoliSunday' => $minWorkHoliSunday / 60,
       'minHoliSundayNight' => $minWorkHoliSundayNight / 60,
+      'over' => $over > 0 ? $over : 0,
     ];
     return $data;
   }

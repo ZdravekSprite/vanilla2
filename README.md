@@ -70,6 +70,7 @@ defineProps<{
 
 ```bash
 npm install && npm run dev
+npm install && npm run build
 ```
 
 ```bash
@@ -77,7 +78,7 @@ php artisan serve
 ```
 
 ```bash
-git add . && git commit -am "v0093"
+git add . && git commit -am "v0094"
 git push
 ```
 

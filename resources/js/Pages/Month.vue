@@ -21,6 +21,7 @@ interface Norm {
   minNight: number;
   minSunday: number;
   minSundayNight: number;
+  over: number;
 }
 interface Day {
   id: number;
