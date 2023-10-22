@@ -26,13 +26,23 @@ const props = defineProps<{
   next_id: number;
   prev_id: number;
 }>();
-//console.log(props.days)
+console.log(props.days)
+const dani = [
+  'Ned',
+  'Pon',
+  'Uto',
+  'Sri',
+  'Čet',
+  'Pet',
+  'Sub'
+]
 const dateFormat = (date: Date) => {
   let objectDate = new Date(date);
   let day = objectDate.getDate();
   let month = objectDate.getMonth() + 1;
   let year = objectDate.getFullYear();
-  return day + '. ' + month + '. ' + year + '.'
+  let day_week = objectDate.getDay();
+  return day + '. ' + month + '. ' + year + '. ' + dani[day_week];
 }
 
 const bgColor = (state: number, date: Date) => {
@@ -120,7 +130,7 @@ const barWidth = (start: String = '00:00', end: String = '00:00') => {
       <tr>
         <th class="w-32">day</th>
         <th></th>
-        <th class="w-40">actions</th>
+        <th class="w-24">actions</th>
       </tr>
     </thead>
     <tbody>

@@ -90,11 +90,11 @@ const closeModal = () => {
 
 <template>
   <div>
-    <Btn secondary @click="confirmUpdate" class="ring-inset py-0">
-      <IconPen v-if="set == 'edit'" class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
-      <IconCalendarPlus v-if="set == 'new1'" class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
-      <IconSun v-if="set == 'new2'" class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
-      <IconMoonStars v-if="set == 'new3'" class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
+    <Btn secondary @click="confirmUpdate" class="ring-inset">
+      <IconPen v-if="set == 'edit'" class="block h-4 w-auto fill-current" />
+      <IconCalendarPlus v-if="set == 'new1'" class="block h-4 w-auto fill-current" />
+      <IconSun v-if="set == 'new2'" class="block h-4 w-auto fill-current" />
+      <IconMoonStars v-if="set == 'new3'" class="block h-4 w-auto fill-current" />
     </Btn>
 
     <Modal :show="confirmingUpdate" @close="closeModal">

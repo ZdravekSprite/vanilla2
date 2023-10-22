@@ -66,7 +66,7 @@ const closeModal = () => {
 <template>
   <div>
     <Btn secondary @click="confirmUpdate">
-      <IconPen class="block h-4 w-auto fill-current text-gray-800 dark:text-gray-200" />
+      <IconPen class="block h-4 w-auto fill-current" />
     </Btn>
 
     <Modal :show="confirmingUpdate" @close="closeModal">
