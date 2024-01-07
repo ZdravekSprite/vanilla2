@@ -306,14 +306,16 @@ class BinanceHelpers
 
     if ($force) return true;
 
+    //dd($models);
+    $count = $models->count();
+
+    if ($count == 0) return true;
+
     $now = new DateTime();
     $last_update = $models->sortByDesc('updated_at')->first()->updated_at;
     $diff = $last_update->diff($now);
     $hours = $now->format('H');
 
-    //dd($models);
-    $count = $models->count();
-    
     if (($count || ($diff && $diff->d > 1)) && $hours > $from && $hours < $to) return true;
 
     return false;

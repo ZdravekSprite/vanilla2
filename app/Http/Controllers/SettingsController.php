@@ -54,6 +54,7 @@ class SettingsController extends Controller
    */
   public function update(UpdateSettingsRequest $request, Settings $settings)
   {
+    //dd($request, $settings);
     $settings = Settings::where('user_id',Auth::user()->id)->first();
     if (!$settings) $settings = Settings::factory()->create([
       'user_id' => Auth::user()->id,
@@ -64,8 +65,8 @@ class SettingsController extends Controller
     $settings->end2 = $request->end2;
     $settings->start3 = $request->start3;
     $settings->end3 = $request->end3;
-    $settings->BINANCE_API_KEY = $request->BINANCE_API_KEY;
-    $settings->BINANCE_API_SECRET = $request->BINANCE_API_SECRET;
+    $settings->BINANCE_API_KEY = $request->key;
+    $settings->BINANCE_API_SECRET = $request->secret;
     $settings->save();
   }
 
