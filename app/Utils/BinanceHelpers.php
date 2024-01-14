@@ -133,6 +133,7 @@ class BinanceHelpers
   {
     if ((new BinanceHelpers)->toUpdate(EarnLP::all(), $force, 9, 10)) {
       $simpleEarnLockedPosition = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/simple-earn/locked/position');
+      EarnLP::truncate();
       //dd($simpleEarnLockedPosition);
       foreach ($simpleEarnLockedPosition->rows as $key => $value) {
         $earn = EarnLP::where('positionId', $value->positionId)->first();
@@ -199,6 +200,7 @@ class BinanceHelpers
     if ((new BinanceHelpers)->toUpdate(EarnFP::all(), $force, 5, 6)) {
       $simpleEarnFlexiblePosition = (new BinanceHelpers)->getHttp('https://api.binance.com/sapi/v1/simple-earn/flexible/position');
       //dd($simpleEarnFlexiblePosition);
+      EarnFP::truncate();
       foreach ($simpleEarnFlexiblePosition->rows as $key => $value) {
         $earn = EarnFP::where('productId', $value->productId)->first();
         if (!$earn) $earn = new EarnFP();
@@ -232,16 +234,20 @@ class BinanceHelpers
         if (!$earn) $earn = new EarnFL();
         $earn->productId = $value->productId;
         $earn->user_id = Auth::user()->id;
-        $earn->asset_id = (new BinanceHelpers)->getCoin($value->asset)->id;
-        $earn->latestAnnualPercentageRate = $value->latestAnnualPercentageRate;
-        $earn->canPurchase = $value->canPurchase;
-        $earn->canRedeem = $value->canRedeem;
-        $earn->isSoldOut = $value->isSoldOut;
-        $earn->hot = $value->hot;
-        $earn->minPurchaseAmount = $value->minPurchaseAmount;
-        $earn->subscriptionStartTime = $value->subscriptionStartTime;
-        $earn->status = $value->status;
-        $earn->save();
+        if ((new BinanceHelpers)->getCoin($value->asset)) {
+          $earn->asset_id = (new BinanceHelpers)->getCoin($value->asset)->id;
+          $earn->latestAnnualPercentageRate = $value->latestAnnualPercentageRate;
+          $earn->canPurchase = $value->canPurchase;
+          $earn->canRedeem = $value->canRedeem;
+          $earn->isSoldOut = $value->isSoldOut;
+          $earn->hot = $value->hot;
+          $earn->minPurchaseAmount = $value->minPurchaseAmount;
+          $earn->subscriptionStartTime = $value->subscriptionStartTime;
+          $earn->status = $value->status;
+          $earn->save();
+        } else {
+          //dd($value->productId);
+        }
       }
     }
     $earns = EarnFL::all();
