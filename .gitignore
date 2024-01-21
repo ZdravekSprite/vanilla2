@@ -21,3 +21,5 @@ yarn-error.log
 /.vscode
 
 /resources/js/Components/Icon.vue
+composer.lock
+package-lock.json
