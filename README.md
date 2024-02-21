@@ -3,6 +3,7 @@
 ```bash
 composer create-project laravel/laravel vanilla2
 touch database/database.sqlite
+sudo apt-get install php-sqlite3
 ```
 
 - .gitignore
@@ -16,6 +17,11 @@ touch database/database.sqlite
 ```edit
 APP_NAME="Vanilla2"
 DB_CONNECTION=sqlite
+DB_DATABASE=/absolute/path/to/database.sqlite
+DB_FOREIGN_KEYS=true
+SUPER_ADMIN_NAME="Super admin"
+SUPER_ADMIN_EMAIL="super@admin.com"
+SUPER_ADMIN_PASS="password"
 ```
 
 ```bash
@@ -78,14 +84,19 @@ php artisan serve
 ```
 
 ```bash
-git add . && git commit -am "v0101"
+git add . && git commit -am "v0102"
 git push
 ```
 
 ```bash
 git clone https://github.com/ZdravekSprite/vanilla2.git
+cd vanilla2
+touch database/database.sqlite
+sudo apt-get install php-sqlite3
+php artisan key:generate
 npm install
 composer update
+
 php artisan migrate
 php artisan migrate:rollback
 php artisan migrate --seed
